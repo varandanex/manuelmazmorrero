@@ -18,6 +18,7 @@ let joystickPointer = null, attackPointer = null, dashPointer = null;
 let artReady = false;
 const audio = createAudio({ onChange: updateSoundLabel });
 try { audio.setVolumes(JSON.parse(localStorage.getItem('manolo-audio-volumes-v1')) || {}); } catch { /* Audio remains usable without storage. */ }
+updateSoundLabel();
 
 function readSave() {
   try { saved = parseCheckpoint(localStorage.getItem(storageKey)); } catch { saved = null; }
@@ -36,6 +37,13 @@ function clearSave() {
 }
 
 function unlockAudio() { void audio.unlock(); }
+
+// Start on the first browser-authorized interaction, without a separate sound toggle.
+// Bubble after button actions so choosing mute never briefly starts playback.
+window.addEventListener('click', unlockAudio);
+window.addEventListener('keydown', event => {
+  if (!event.repeat && !event.ctrlKey && !event.metaKey && !event.altKey) unlockAudio();
+});
 
 function updateSoundLabel() {
   const state = audio.status();

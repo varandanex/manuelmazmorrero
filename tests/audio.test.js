@@ -3,10 +3,13 @@ import assert from 'node:assert/strict';
 import { createAudio } from '../src/audio.js';
 import { browserAudio } from './helpers/audio-browser.js';
 
-test('audio is opt-in, decodes supplied effects once, and never replays stale loading cues', async () => {
+test('audio defaults on, starts on a gesture, decodes effects once, and drops stale loading cues', async () => {
   const browser = browserAudio(), audio = createAudio(browser.options);
+  assert.equal(audio.status().enabled, true);
+  assert.deepEqual(audio.status().volumes, { effects: .7, music: .45 });
   assert.equal(audio.play('dash'), false); assert.equal(browser.contexts, 0); assert.equal(browser.requests.length, 0);
-  const ready = audio.setEnabled(true); assert.equal(audio.play('dash'), false);
+  assert.equal(browser.media.playCount, 0);
+  const ready = audio.unlock(); assert.equal(audio.play('dash'), false);
   await ready;
   assert.equal(browser.contexts, 1); assert.equal(browser.requests.length, 31);
   assert.equal(browser.sources.length, 0);
@@ -112,4 +115,16 @@ test('a finished victory track stays finished until another scene or an explicit
   audio.setScene('won'); browser.media.ended = true; browser.media.paused = true;
   const plays = browser.media.playCount; await audio.unlock(); assert.equal(browser.media.playCount, plays);
   audio.setScene('lobby'); assert.equal(browser.media.playCount, plays + 1);
+});
+
+
+test('explicit mute survives later gestures but a fresh visit defaults on again', async () => {
+  const browser = browserAudio(), audio = createAudio(browser.options);
+  await audio.setEnabled(false); await audio.unlock();
+  assert.equal(audio.status().enabled, false); assert.equal(browser.contexts, 0);
+  assert.equal(browser.media.playCount, 0);
+  const nextVisit = createAudio(browser.options);
+  assert.equal(nextVisit.status().enabled, true);
+  await nextVisit.unlock(); assert.equal(browser.media.paused, false);
+  assert.equal(nextVisit.play('dash'), true);
 });

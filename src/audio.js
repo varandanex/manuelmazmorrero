@@ -7,7 +7,8 @@ export function createAudio({
   onChange = () => {},
   setTimer = (fn, delay) => setTimeout(fn, delay), clearTimer = id => clearTimeout(id),
 } = {}) {
-  let context, effectsGain, musicGain, media, loading, enabled = false, scene = 'lobby', currentTrack = null;
+  // Default-on preference; browser resources still wait for a user gesture.
+  let context, effectsGain, musicGain, media, loading, enabled = true, scene = 'lobby', currentTrack = null;
   let paused = false, background = false, musicWaiting = false;
   let musicEpoch = 0, musicError = '', error = '';
   const pending = new Set();

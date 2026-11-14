@@ -20,7 +20,7 @@ This is a local preview, not a public deployment. The public website can be host
 - Attack: hold the attack button, Space or J. Short-range attacks aim at a nearby enemy.
 - Dodge: dodge button, Shift or K. Brief invulnerability, followed by a cooldown.
 - Pause: pause button, P or Escape. Losing window focus also pauses the game.
-- Audio: opt in with the sound toggle. Adjust effects and music independently in Help or Pause. Volume preferences are saved locally; sound remains off on a new page load.
+- Audio: music and effects are enabled by default and start on the first click, tap or key press permitted by the browser. The sound toggle still mutes both. Adjust effects and music independently in Help or Pause. Volume preferences are saved locally; each new page load defaults to sound on. An explicit mute is respected for the current visit.
 - Mobile combat owns touch gestures to avoid accidental pinch/double-tap zoom. Normal zoom remains available in the lobby and dialogs. Portrait prioritizes arena width over the large logo; shorter screens also omit the narrator/header, with audio still available in Pause.
 - Automatic result screens wait at least one second and require all held keys/fingers to be released, followed by a 200 ms quiet interval. Repeated attack input cannot choose an upgrade or restart a run. Explicit pause/help menus remain immediate.
 
@@ -55,7 +55,7 @@ Generated PNG originals are kept for provenance. The browser loads the smaller W
 
 ## Audio verification
 
-31 WAV effects are decoded on opt-in; six MP3 tracks are streamed by screen/floor. Combat cues follow simulation outcomes, impacts are capped, danger is prioritized, and pause/background/transitions cancel old sounds. The development server supports encoded filenames, MIME and byte ranges. See `docs/audio-integration/verification.md` for checks and remaining physical-phone listening acceptance.
+31 WAV effects are decoded on the first enabled user interaction; six MP3 tracks are streamed by screen/floor. Combat cues follow simulation outcomes, impacts are capped, danger is prioritized, and pause/background/transitions cancel old sounds. The development server supports encoded filenames, MIME and byte ranges. See `docs/audio-integration/verification.md` for checks and remaining physical-phone listening acceptance.
 
 ## Manu identity assets
 
