@@ -21,7 +21,8 @@ This is a local preview, not a public deployment. The public website can be host
 - Dodge: dodge button, Shift or K. Brief invulnerability, followed by a cooldown.
 - Pause: pause button, P or Escape. Losing window focus also pauses the game.
 - Audio: music and effects are enabled by default and start on the first click, tap or key press permitted by the browser. The sound toggle still mutes both. Adjust effects and music independently in Help or Pause. Volume preferences are saved locally; each new page load defaults to sound on. An explicit mute is respected for the current visit.
-- Mobile combat owns touch gestures to avoid accidental pinch/double-tap zoom. Normal zoom remains available in the lobby and dialogs. Portrait prioritizes arena width over the large logo; shorter screens also omit the narrator/header, with audio still available in Pause.
+- Mobile combat owns touch gestures to avoid accidental pinch/double-tap zoom. Normal zoom remains available in the lobby and dialogs. Portrait prioritizes arena width; combat omits the header and narrative copy, with audio still available in Pause.
+- Combat shows health bars, floor numbers and icon-only controls. Boss states use a shield, lightning or warning icon; advice, commentary, score and perks are available in Pause. Floor titles appear only before combat.
 - Automatic result screens wait at least one second and require all held keys/fingers to be released, followed by a 200 ms quiet interval. Repeated attack input cannot choose an upgrade or restart a run. Explicit pause/help menus remain immediate.
 
 Each of three floors contains two enemy waves and one boss. El Juicer telegraphs charges, La Acaparadora uses projectile volleys and toxic pools, and the Clon de Krakaren uses destructible shield generators and warning beams. Goblins, Scatterers and malicious llamas replace the original regular enemies without changing their combat roles. These are game adaptations, not claims about canonical abilities. Choose one permanent advantage after each of the first two floors. Death restarts the current floor, not the entire run.
@@ -48,6 +49,8 @@ npm test
 ## Visual direction
 
 The approved visual system uses the first editorial-screenprint concept and the clear adult poses of the second concept. Black, electric yellow, magenta and warm cream replace the muted pixel-art palette. Original art sources, prompts and licenses are kept in `assets/`; references and visual QA evidence are in `docs/redesign/`.
+
+Headings, buttons and combat numbers use locally hosted [Pixelify Sans](https://github.com/google/fonts/tree/main/ofl/pixelifysans) (SIL OFL 1.1; license in `assets/fonts/Pixelify-Sans-OFL.txt`). Long descriptions retain Inter for readability. The illustrated logo and screenprinted artwork are unchanged.
 
 The 480 × 420 simulation, collisions, timings, enemy statistics and save format remain unchanged. The legacy storage key is intentionally retained so existing checkpoints continue working. Artwork must finish loading before play starts; failures provide a reload action rather than starting with invisible enemies.
 

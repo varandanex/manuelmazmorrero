@@ -140,10 +140,19 @@ export function renderGame(ctx, game, time, reducedMotion = false) {
   }
   for (const fx of game.effects) {
     if (fx.type === 'number') {
-      ctx.globalAlpha = Math.min(1, fx.life * 3); ctx.font = '800 14px "Barlow Condensed", sans-serif'; ctx.textAlign = 'center';
+      ctx.globalAlpha = Math.min(1, fx.life * 3); ctx.font = '600 14px "Pixelify Sans", monospace'; ctx.textAlign = 'center';
       const y = fx.y - (1 - fx.life / fx.maxLife) * 22;
-      ctx.lineWidth = 3; ctx.strokeStyle = ink; ctx.strokeText(fx.value, fx.x, y);
-      ctx.fillStyle = paper; ctx.fillText(fx.value, fx.x, y); ctx.globalAlpha = 1;
+      if (fx.value === 'ESCUDO') {
+        // Keep shield-hit feedback visual, rather than repeating a combat label.
+        ctx.beginPath(); ctx.moveTo(fx.x, y - 14); ctx.lineTo(fx.x + 7, y - 11);
+        ctx.lineTo(fx.x + 6, y - 4); ctx.lineTo(fx.x, y); ctx.lineTo(fx.x - 6, y - 4);
+        ctx.lineTo(fx.x - 7, y - 11); ctx.closePath();
+        ctx.fillStyle = ink; ctx.fill(); ctx.strokeStyle = yellow; ctx.lineWidth = 2; ctx.stroke();
+      } else {
+        ctx.lineWidth = 3; ctx.strokeStyle = ink; ctx.strokeText(fx.value, fx.x, y);
+        ctx.fillStyle = paper; ctx.fillText(fx.value, fx.x, y);
+      }
+      ctx.globalAlpha = 1;
     } else if (fx.type === 'hit') {
       ctx.strokeStyle = yellow; ctx.lineWidth = 2; ctx.globalAlpha = fx.life / fx.maxLife;
       ctx.beginPath(); ctx.arc(fx.x, fx.y, (1 - fx.life / fx.maxLife) * 21, 0, Math.PI * 2); ctx.stroke(); ctx.globalAlpha = 1;

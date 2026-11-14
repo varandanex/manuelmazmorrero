@@ -1,0 +1,67 @@
+
+> manolo-el-mazmorrero@0.1.0 test
+> node --test tests/*.test.js
+
+✔ every shipped art asset is a PNG with usable dimensions (32.155667ms)
+✔ art loader waits for every required asset and reports complete progress (1.393875ms)
+✔ art loader rejects a missing enemy instead of silently rendering it invisible (0.456541ms)
+✔ every original has a delivery WebP asset (6.16175ms)
+✔ late image completions cannot overwrite the loading error message (26.977459ms)
+✔ all 31 manifest effects are mapped to real PCM WAVs and all six music files exist (21.613417ms)
+✔ audio defaults on, starts on a gesture, decodes effects once, and drops stale loading cues (1.871167ms)
+✔ each screen selects its supplied music and music/effect sliders control separate buses (1.185667ms)
+✔ pause, background, mute and scene changes stop active effects and preserve music pause position (0.616584ms)
+✔ impact overlap is capped, danger can interrupt weaker voices, and swing/hit variants rotate (0.655292ms)
+✔ event batches sequence floor entry, select terminal-only cues and cancel pending work on pause (0.779459ms)
+✔ failed media play is reported, and stale rejection cannot overwrite a newer scene (2.783791ms)
+✔ failed SFX fetches do not block gameplay or replay late sounds after muting (0.537541ms)
+✔ delayed floor and victory music never leak into another scene or after mute/background (0.397959ms)
+✔ a finished victory track stays finished until another scene or an explicit restart (0.295791ms)
+✔ explicit mute survives later gestures but a fresh visit defaults on again (1.041042ms)
+✔ accepted attacks emit swing plus the actual impact outcome; cooldown input is silent (2.863583ms)
+✔ shield, generator destruction and recovery hits have distinct outcomes (0.461042ms)
+✔ terminal cues replace ordinary damage/death and floor entry is explicit (0.287125ms)
+✔ boss entry, butcher windup, charge and recovery sound once per transition (1.401667ms)
+✔ spore volleys share warning and activation cues without per-frame or per-projectile spam (0.778209ms)
+✔ host phase change and two-beam volley have one cue each; casters emit cast cues (0.715708ms)
+✔ a new run starts with full health and a floor announcement (1.015792ms)
+✔ input vectors are normalized and arena bounds contain the player (1.681291ms)
+✔ pause freezes every gameplay clock and health (0.1965ms)
+✔ attack auto-aims, respects range and awards one kill (0.422916ms)
+✔ holding attack respects its cooldown (0.204208ms)
+✔ dash avoids damage and cannot be retriggered before recharge (0.190333ms)
+✔ damage grants invulnerability and transitions to death only once (0.215625ms)
+✔ a floor has two waves, a warning and a boss (1.170667ms)
+✔ the butcher locks his charge and exposes a recovery window (2.07325ms)
+✔ the spore boss fires projectiles and telegraphs poison pools (0.856708ms)
+✔ a shielded host takes no damage until generators are destroyed (0.181459ms)
+✔ host restores generators once at half health (0.095125ms)
+✔ a vulnerable boss takes increased damage (0.058708ms)
+✔ floor victory opens upgrades and rejects invalid choices (0.095334ms)
+✔ all three floors can progress through to the final victory (2.143917ms)
+✔ retry preserves advantages but resets score and kills to the checkpoint (0.142333ms)
+✔ checkpoints reject corrupt, unsupported and inconsistent data (0.132584ms)
+✔ resume restores a checkpoint at the beginning of its floor (0.070292ms)
+✔ healing pickups cannot exceed maximum health (0.068042ms)
+✔ expired hazards cannot damage the player (0.047917ms)
+✔ time formatting is stable across minute boundaries (0.050541ms)
+✔ damage and healing numbers use the pixel font without changing their value (1.9025ms)
+✔ shield hits draw an icon rather than combat prose (0.167ms)
+✔ local server delivers real WAV and Unicode/spaced MP3 assets with correct MIME (45.033ms)
+✔ media supports bounded, open and suffix ranges, rejects unsatisfiable ranges and handles HEAD (15.645125ms)
+✔ asset serving does not expose project documents, traversal, malformed paths or symlink targets (6.376125ms)
+✔ result actions wait one second even when no input is held (0.496125ms)
+✔ holding attack across a transition never unlocks the result screen (0.09375ms)
+✔ both joystick and attack fingers must be released (0.625208ms)
+✔ rapid taps during the delay require a quiet gap before menus accept input (0.109334ms)
+✔ a fresh deliberate press after unlocking remains allowed (0.081041ms)
+✔ closing and reopening a result uses a new delay without forgetting held input (0.066459ms)
+✔ lost focus clears missing releases but does not skip the transition delay (0.0725ms)
+ℹ tests 55
+ℹ suites 0
+ℹ pass 55
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 200.822416

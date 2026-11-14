@@ -1,0 +1,520 @@
+[
+  {
+    "width": 320,
+    "height": 568,
+    "results": [
+      {
+        "name": "continue visibility matches the checkpoint",
+        "pass": true
+      },
+      {
+        "name": "new game retains its button class",
+        "pass": true
+      },
+      {
+        "name": "new game has the correct visual priority",
+        "pass": true
+      },
+      {
+        "name": "new game has a concise label",
+        "pass": true
+      },
+      {
+        "name": "new game keeps its icon after save refresh",
+        "pass": true
+      },
+      {
+        "name": "the expected actions are available",
+        "pass": true
+      },
+      {
+        "name": "every action is a large tap target",
+        "pass": true
+      },
+      {
+        "name": "all actions use the same full width",
+        "pass": true
+      },
+      {
+        "name": "actions are clearly separated",
+        "pass": true
+      },
+      {
+        "name": "all actions have visible borders",
+        "pass": true
+      },
+      {
+        "name": "buttons do not overflow horizontally",
+        "pass": true
+      },
+      {
+        "name": "button labels and icons fit their boxes",
+        "pass": true
+      },
+      {
+        "name": "pixel typography is preserved",
+        "pass": true
+      },
+      {
+        "name": "continue has a distinct fill",
+        "pass": true
+      },
+      {
+        "name": "rules have their own border treatment",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "width": 360,
+    "height": 640,
+    "results": [
+      {
+        "name": "continue visibility matches the checkpoint",
+        "pass": true
+      },
+      {
+        "name": "new game retains its button class",
+        "pass": true
+      },
+      {
+        "name": "new game has the correct visual priority",
+        "pass": true
+      },
+      {
+        "name": "new game has a concise label",
+        "pass": true
+      },
+      {
+        "name": "new game keeps its icon after save refresh",
+        "pass": true
+      },
+      {
+        "name": "the expected actions are available",
+        "pass": true
+      },
+      {
+        "name": "every action is a large tap target",
+        "pass": true
+      },
+      {
+        "name": "all actions use the same full width",
+        "pass": true
+      },
+      {
+        "name": "actions are clearly separated",
+        "pass": true
+      },
+      {
+        "name": "all actions have visible borders",
+        "pass": true
+      },
+      {
+        "name": "buttons do not overflow horizontally",
+        "pass": true
+      },
+      {
+        "name": "button labels and icons fit their boxes",
+        "pass": true
+      },
+      {
+        "name": "pixel typography is preserved",
+        "pass": true
+      },
+      {
+        "name": "continue has a distinct fill",
+        "pass": true
+      },
+      {
+        "name": "rules have their own border treatment",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "results": [
+      {
+        "name": "continue visibility matches the checkpoint",
+        "pass": true
+      },
+      {
+        "name": "new game retains its button class",
+        "pass": true
+      },
+      {
+        "name": "new game has the correct visual priority",
+        "pass": true
+      },
+      {
+        "name": "new game has a concise label",
+        "pass": true
+      },
+      {
+        "name": "new game keeps its icon after save refresh",
+        "pass": true
+      },
+      {
+        "name": "the expected actions are available",
+        "pass": true
+      },
+      {
+        "name": "every action is a large tap target",
+        "pass": true
+      },
+      {
+        "name": "all actions use the same full width",
+        "pass": true
+      },
+      {
+        "name": "actions are clearly separated",
+        "pass": true
+      },
+      {
+        "name": "all actions have visible borders",
+        "pass": true
+      },
+      {
+        "name": "buttons do not overflow horizontally",
+        "pass": true
+      },
+      {
+        "name": "button labels and icons fit their boxes",
+        "pass": true
+      },
+      {
+        "name": "pixel typography is preserved",
+        "pass": true
+      },
+      {
+        "name": "continue has a distinct fill",
+        "pass": true
+      },
+      {
+        "name": "rules have their own border treatment",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "width": 430,
+    "height": 740,
+    "results": [
+      {
+        "name": "continue visibility matches the checkpoint",
+        "pass": true
+      },
+      {
+        "name": "new game retains its button class",
+        "pass": true
+      },
+      {
+        "name": "new game has the correct visual priority",
+        "pass": true
+      },
+      {
+        "name": "new game has a concise label",
+        "pass": true
+      },
+      {
+        "name": "new game keeps its icon after save refresh",
+        "pass": true
+      },
+      {
+        "name": "the expected actions are available",
+        "pass": true
+      },
+      {
+        "name": "every action is a large tap target",
+        "pass": true
+      },
+      {
+        "name": "all actions use the same full width",
+        "pass": true
+      },
+      {
+        "name": "actions are clearly separated",
+        "pass": true
+      },
+      {
+        "name": "all actions have visible borders",
+        "pass": true
+      },
+      {
+        "name": "buttons do not overflow horizontally",
+        "pass": true
+      },
+      {
+        "name": "button labels and icons fit their boxes",
+        "pass": true
+      },
+      {
+        "name": "pixel typography is preserved",
+        "pass": true
+      },
+      {
+        "name": "continue has a distinct fill",
+        "pass": true
+      },
+      {
+        "name": "rules have their own border treatment",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "width": 844,
+    "height": 390,
+    "results": [
+      {
+        "name": "continue visibility matches the checkpoint",
+        "pass": true
+      },
+      {
+        "name": "new game retains its button class",
+        "pass": true
+      },
+      {
+        "name": "new game has the correct visual priority",
+        "pass": true
+      },
+      {
+        "name": "new game has a concise label",
+        "pass": true
+      },
+      {
+        "name": "new game keeps its icon after save refresh",
+        "pass": true
+      },
+      {
+        "name": "the expected actions are available",
+        "pass": true
+      },
+      {
+        "name": "every action is a large tap target",
+        "pass": true
+      },
+      {
+        "name": "all actions use the same full width",
+        "pass": true
+      },
+      {
+        "name": "actions are clearly separated",
+        "pass": true
+      },
+      {
+        "name": "all actions have visible borders",
+        "pass": true
+      },
+      {
+        "name": "buttons do not overflow horizontally",
+        "pass": true
+      },
+      {
+        "name": "button labels and icons fit their boxes",
+        "pass": true
+      },
+      {
+        "name": "pixel typography is preserved",
+        "pass": true
+      },
+      {
+        "name": "continue has a distinct fill",
+        "pass": true
+      },
+      {
+        "name": "rules have their own border treatment",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "results": [
+      {
+        "name": "continue visibility matches the checkpoint",
+        "pass": true
+      },
+      {
+        "name": "new game retains its button class",
+        "pass": true
+      },
+      {
+        "name": "new game has the correct visual priority",
+        "pass": true
+      },
+      {
+        "name": "new game has a concise label",
+        "pass": true
+      },
+      {
+        "name": "new game keeps its icon after save refresh",
+        "pass": true
+      },
+      {
+        "name": "the expected actions are available",
+        "pass": true
+      },
+      {
+        "name": "every action is a large tap target",
+        "pass": true
+      },
+      {
+        "name": "all actions use the same full width",
+        "pass": true
+      },
+      {
+        "name": "actions are clearly separated",
+        "pass": true
+      },
+      {
+        "name": "all actions have visible borders",
+        "pass": true
+      },
+      {
+        "name": "buttons do not overflow horizontally",
+        "pass": true
+      },
+      {
+        "name": "button labels and icons fit their boxes",
+        "pass": true
+      },
+      {
+        "name": "pixel typography is preserved",
+        "pass": true
+      },
+      {
+        "name": "continue has a distinct fill",
+        "pass": true
+      },
+      {
+        "name": "rules have their own border treatment",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "scenario": "return-from-pause",
+    "results": [
+      {
+        "name": "continue visibility matches the checkpoint",
+        "pass": true
+      },
+      {
+        "name": "new game retains its button class",
+        "pass": true
+      },
+      {
+        "name": "new game has the correct visual priority",
+        "pass": true
+      },
+      {
+        "name": "new game has a concise label",
+        "pass": true
+      },
+      {
+        "name": "new game keeps its icon after save refresh",
+        "pass": true
+      },
+      {
+        "name": "the expected actions are available",
+        "pass": true
+      },
+      {
+        "name": "every action is a large tap target",
+        "pass": true
+      },
+      {
+        "name": "all actions use the same full width",
+        "pass": true
+      },
+      {
+        "name": "actions are clearly separated",
+        "pass": true
+      },
+      {
+        "name": "all actions have visible borders",
+        "pass": true
+      },
+      {
+        "name": "buttons do not overflow horizontally",
+        "pass": true
+      },
+      {
+        "name": "button labels and icons fit their boxes",
+        "pass": true
+      },
+      {
+        "name": "pixel typography is preserved",
+        "pass": true
+      },
+      {
+        "name": "continue has a distinct fill",
+        "pass": true
+      },
+      {
+        "name": "rules have their own border treatment",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "scenario": "no-checkpoint",
+    "results": [
+      {
+        "name": "continue visibility matches the checkpoint",
+        "pass": true
+      },
+      {
+        "name": "new game retains its button class",
+        "pass": true
+      },
+      {
+        "name": "new game has the correct visual priority",
+        "pass": true
+      },
+      {
+        "name": "new game has a concise label",
+        "pass": true
+      },
+      {
+        "name": "new game keeps its icon after save refresh",
+        "pass": true
+      },
+      {
+        "name": "the expected actions are available",
+        "pass": true
+      },
+      {
+        "name": "every action is a large tap target",
+        "pass": true
+      },
+      {
+        "name": "all actions use the same full width",
+        "pass": true
+      },
+      {
+        "name": "actions are clearly separated",
+        "pass": true
+      },
+      {
+        "name": "all actions have visible borders",
+        "pass": true
+      },
+      {
+        "name": "buttons do not overflow horizontally",
+        "pass": true
+      },
+      {
+        "name": "button labels and icons fit their boxes",
+        "pass": true
+      },
+      {
+        "name": "pixel typography is preserved",
+        "pass": true
+      }
+    ]
+  }
+]

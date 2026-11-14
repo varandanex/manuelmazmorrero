@@ -1,6 +1,6 @@
 // Append to main.js only in a local browser test response. Never ship this hook.
 window.__uiQa = {
-  get state() { return { mode: game?.mode, floor: game?.floor, modal: modalKind, touch: { ...touch }, keys: [...keys] }; },
+  get state() { return { mode: game?.mode, floor: game?.floor, modal: modalKind, elapsed: game?.elapsed, hp: game?.player.hp, phase: game?.phase, enemies: game?.enemies.map(e => e.type), touch: { ...touch }, keys: [...keys] }; },
   start() { start(); game.player.invulnerable = 999; },
   result(kind) {
     game.mode = kind; game.events.push({ type: kind }); consumeEvents(); updateHud();
@@ -8,7 +8,22 @@ window.__uiQa = {
   boss() {
     start(); game.phase = 'warning'; game.phaseTimer = 0; game.enemies = [];
     updateGame(game, 1 / 60); consumeEvents(); game.player.invulnerable = 999;
-    floorToastUntil = 0; announcementUntil = 0; pauseGame(game); updateHud();
+    pauseGame(game); updateHud();
+  },
+  scene(phase, floor = 0, bossMode = 'idle') {
+    start({ version: 1, floor, perks: Array(floor).fill('power'), score: 120, elapsed: 10, kills: 2, deaths: 0 });
+    if (phase === 'boss') {
+      game.phase = 'warning'; game.phaseTimer = 0; updateGame(game, 1 / 60);
+      game.enemies.find(e => e.boss).mode = bossMode;
+    } else if (phase === 'mobs') {
+      game.phaseTimer = 0; updateGame(game, 1 / 60);
+    } else { game.phase = phase; game.phaseTimer = 2; }
+    consumeEvents(); pauseGame(game); updateHud();
+  },
+  resume() { resumeGame(game); game.player.invulnerable = 999; },
+  danger(kind) {
+    game[kind].push({ type: 'pool', x: 240, y: 120, r: 12, life: 2, delay: 1, vx: 0, vy: 0, damage: 5 });
+    updateHud();
   },
   menu: backToMenu,
 };

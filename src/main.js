@@ -13,7 +13,7 @@ const keys = new Set();
 const transitionGuard = createTransitionGuard();
 const touch = { x: 0, y: 0, attack: false, dash: false };
 let game = null, saved = null, lastFrame = 0, accumulator = 0, hudAt = 0;
-let modalKind = '', helpWasPlaying = false, announcementUntil = 0, floorToastUntil = 0;
+let modalKind = '', helpWasPlaying = false, lastNarrator = '';
 let joystickPointer = null, attackPointer = null, dashPointer = null;
 let artReady = false;
 const audio = createAudio({ onChange: updateSoundLabel });
@@ -23,8 +23,9 @@ updateSoundLabel();
 function readSave() {
   try { saved = parseCheckpoint(localStorage.getItem(storageKey)); } catch { saved = null; }
   $('continue').hidden = !saved;
-  $('start').className = saved ? 'text-button' : 'primary-button';
-  $('start').textContent = saved ? 'Empezar una partida nueva' : 'Entrar en la mazmorra';
+  $('start').classList.toggle('entry-primary', !saved);
+  $('start').classList.toggle('entry-secondary', !!saved);
+  $('start-label').textContent = saved ? 'Nueva partida' : 'Entrar en la mazmorra';
 }
 
 function saveCheckpoint() {
@@ -102,6 +103,8 @@ function setModal(kind, eyebrow, title, copy) {
   else transitionGuard.close();
   $('modal-eyebrow').textContent = eyebrow; $('modal-title').textContent = title; $('modal-copy').textContent = copy;
   $('modal-content').replaceChildren(); $('modal-actions').replaceChildren();
+  $('modal-content').after($('modal-actions'));
+  $('modal').dataset.kind = kind;
   updateModalLock();
   if (!$('modal').open) $('modal').showModal();
   $('modal-title').focus({ preventScroll: true });
@@ -146,21 +149,32 @@ function showPause() {
   audio.setPaused(true);
   setModal('pause', 'PAUSA PUBLICITARIA', 'Hasta el caos descansa.', 'La audiencia puede esperar. Tu partida está en pausa.');
   modalButton('Volver al espectáculo', () => { closeModal(); resumeGame(game); audio.setPaused(false); canvas.focus({ preventScroll: true }); });
+  modalButton('Consultar controles', showHelp, true);
   modalButton('Volver al menú', backToMenu, true);
+  // Resume stays reachable without scrolling through the moved combat details.
+  $('modal-content').before($('modal-actions'));
+  const summary = document.createElement('section'); summary.className = 'pause-summary';
+  const title = document.createElement('h3'); title.textContent = `Piso 0${game.floor + 1} · ${FLOORS[game.floor].name}`;
+  const hint = document.createElement('p'); hint.textContent = `${FLOORS[game.floor].boss}: ${FLOORS[game.floor].hint}`;
+  const perks = document.createElement('p'); perks.className = 'pause-perks';
+  perks.textContent = `Ventajas: ${game.perks.length ? game.perks.map(id => UPGRADES.find(u => u.id === id).name).join(' · ') : 'Tu optimismo. De momento.'}`;
+  summary.append(title, hint, perks);
+  if (lastNarrator) { const quote = document.createElement('blockquote'); quote.textContent = lastNarrator; summary.append(quote); }
+  $('modal-content').append(summary); addResults();
   const note = document.createElement('p'); note.className = 'quiet-note'; note.textContent = 'Al salir se conserva el inicio del piso actual, no la sala exacta.'; $('modal-content').append(note);
   addAudioControls();
 }
 
 function showHelp() {
-  helpWasPlaying = game?.mode === 'playing';
+  helpWasPlaying = game?.mode === 'playing' || modalKind === 'pause';
   if (helpWasPlaying) { pauseGame(game); audio.setPaused(true); }
   setModal('help', 'MANUAL DE SUPERVIVENCIA', 'No mueras. Sobre todo eso.', 'Elimina dos oleadas y derrota al jefe de cada piso. Después, elige una mejora.');
   const rows = document.createElement('div'); rows.className = 'help-rows';
   const rules = [
     ['Muévete', 'Móvil: arrastra el joystick izquierdo. Ordenador: WASD o flechas.'],
-    ['Ataca de cerca', 'Mantén pulsado ATACAR o espacio / J. Manolo apunta al enemigo cercano.'],
-    ['Esquiva el peligro', 'Pulsa ESQUIVAR o Mayús / K. Durante el impulso no recibes daño. Espera a que se recargue.'],
-    ['Lee al enemigo', 'Las marcas en el suelo avisan antes de atacar. Aprovecha cuando un jefe esté VULNERABLE.'],
+    ['Ataca de cerca', 'Mantén pulsado el botón amarillo de la llave inglesa o espacio / J. Manolo apunta al enemigo cercano.'],
+    ['Esquiva el peligro', 'Pulsa el botón de las dos flechas o Mayús / K. Durante el impulso no recibes daño. El número indica cuánto falta para recargar.'],
+    ['Lee al enemigo', 'Las marcas en el suelo y el triángulo avisan de un ataque. El rayo indica que el jefe es vulnerable; el escudo, que debes destruir sus emisores.'],
     ['No estás condenado', 'Los botiquines verdes recuperan vida. Si caes, puedes repetir el piso conservando tus mejoras.'],
   ];
   for (const [title, copy] of rules) {
@@ -225,17 +239,8 @@ function consumeEvents() {
   const events = game.events.splice(0);
   audio.handleEvents(events, game);
   for (const event of events) {
-    if (event.type === 'narrator') { $('narrator').textContent = event.text; $('mobile-narrator').textContent = event.text; }
-    if (event.type === 'announcement') { $('announcement').textContent = event.text; announcementUntil = game.elapsed + 4.5; }
-    if (event.type === 'floor') {
-      floorToastUntil = game.elapsed + 2.6; announcementUntil = 0;
-      $('room-number').textContent = `PISO 0${game.floor + 1}`; $('room-name').textContent = FLOORS[game.floor].name;
-      $('floor-label').textContent = `PISO 0${game.floor + 1} / 03`;
-      for (const item of document.querySelectorAll('[data-floor]')) {
-        item.classList.toggle('active', Number(item.dataset.floor) === game.floor); item.classList.toggle('complete', Number(item.dataset.floor) < game.floor);
-      }
-      $('perks').textContent = game.perks.length ? game.perks.map(id => UPGRADES.find(u => u.id === id).name).join(' · ') : 'Tu optimismo. De momento.';
-    }
+    // Commentary belongs in the pause menu, never over active combat.
+    if (event.type === 'narrator') lastNarrator = event.text;
     if (event.type === 'upgrade') showUpgrade();
     if (event.type === 'dead') showDeath();
     if (event.type === 'won') showVictory();
@@ -249,19 +254,32 @@ function updateHud() {
   $('health-text').textContent = `${Math.ceil(p.hp)} / ${p.maxHp}`;
   $('health-fill').style.width = `${p.hp / p.maxHp * 100}%`;
   $('health-fill').style.background = p.hp < p.maxHp * .3 ? 'var(--danger)' : 'var(--mint)';
-  $('timer').textContent = formatTime(game.elapsed); $('run-score').textContent = String(game.score).padStart(4, '0');
+  $('health-bar').setAttribute('aria-valuenow', Math.ceil(p.hp));
+  $('health-bar').setAttribute('aria-valuemax', p.maxHp);
+  $('floor-label').textContent = `0${game.floor + 1} / 03`;
+  $('floor-label').setAttribute('aria-label', `Piso ${game.floor + 1} de 3`);
   $('dash').classList.toggle('cooldown', p.dashCooldown > 0);
-  $('dash-label').textContent = p.dashCooldown > 0 ? `${p.dashCooldown.toFixed(1)} s` : 'ESQUIVAR';
+  $('dash-label').textContent = p.dashCooldown > 0 ? p.dashCooldown.toFixed(1) : '';
   const boss = game.enemies.find(e => e.boss);
   $('boss-hud').hidden = !boss;
   if (boss) {
-    $('boss-name').textContent = FLOORS[game.floor].boss;
+    $('boss-bar').setAttribute('aria-label', `Vida de ${FLOORS[game.floor].boss}`);
+    $('boss-bar').setAttribute('aria-valuenow', Math.ceil(boss.hp));
+    $('boss-bar').setAttribute('aria-valuemax', boss.maxHp);
     $('boss-fill').style.width = `${boss.hp / boss.maxHp * 100}%`;
-    $('boss-state').textContent = boss.type === 'host' && game.enemies.some(e => e.type === 'generator') ? 'ESCUDO' : boss.mode === 'recover' ? 'VULNERABLE' : boss.mode === 'windup' ? '¡CUIDADO!' : '';
+    const state = boss.type === 'host' && game.enemies.some(e => e.type === 'generator') ? 'shield' : boss.mode === 'recover' ? 'vulnerable' : boss.mode === 'windup' ? 'danger' : '';
+    $('boss-state').dataset.state = state;
+    $('boss-state').hidden = !state;
+    $('boss-state').setAttribute('aria-label', { shield: 'Escudo activo', vulnerable: 'Vulnerable', danger: 'Ataque inminente' }[state] || '');
   }
-  $('objective').textContent = game.phase === 'boss' ? FLOORS[game.floor].hint : game.phase === 'warning' ? 'Prepárate. Llega el jefe de piso.' : game.phase === 'intro' ? 'El espectáculo está a punto de empezar.' : game.phase === 'between' ? 'Un respiro. No te acostumbres.' : `OLEADA ${game.wave}/2 · ${game.enemies.length} enemigos restantes`;
-  $('floor-toast').classList.toggle('visible', game.elapsed < floorToastUntil);
-  $('announcement').classList.toggle('visible', game.elapsed < announcementUntil && game.elapsed > floorToastUntil);
+  // Show floor titles only before combat begins.
+  const intro = game.phase === 'intro';
+  const dangerRemains = game.enemies.length || game.projectiles.length || game.hazards.length;
+  $('floor-toast').hidden = !intro || !!dangerRemains;
+  if (intro) {
+    $('room-number').textContent = `PISO 0${game.floor + 1}`;
+    $('room-name').textContent = FLOORS[game.floor].name;
+  }
 }
 
 function frame(now) {
@@ -383,7 +401,7 @@ $('modal').addEventListener('cancel', event => {
   else if (modalKind === 'pause') { closeModal(); resumeGame(game); audio.setPaused(false); unlockAudio(); }
 });
 $('sound').addEventListener('click', toggleSound);
-for (const id of ['help', 'lobby-help', 'sidebar-help']) $(id).addEventListener('click', () => { unlockAudio(); showHelp(); audio.play('ui_confirm'); });
+for (const id of ['help', 'lobby-help']) $(id).addEventListener('click', () => { unlockAudio(); showHelp(); audio.play('ui_confirm'); });
 $('pause').addEventListener('click', () => { showPause(); audio.play('ui_confirm'); });
 $('continue').addEventListener('click', () => start(saved));
 $('start').addEventListener('click', () => {

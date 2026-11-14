@@ -1,0 +1,101 @@
+[
+  {
+    "arenaWidth": 312,
+    "controlsBottom": 449.25,
+    "dialogFits": true,
+    "fit": true,
+    "height": 568,
+    "hintFits": true,
+    "pauseFits": true,
+    "width": 320,
+    "resumeVisible": true
+  },
+  {
+    "arenaWidth": 352,
+    "controlsBottom": 484.25,
+    "dialogFits": true,
+    "fit": true,
+    "height": 640,
+    "hintFits": true,
+    "pauseFits": true,
+    "width": 360,
+    "resumeVisible": true
+  },
+  {
+    "arenaWidth": 382,
+    "controlsBottom": 525.5,
+    "dialogFits": true,
+    "fit": true,
+    "height": 667,
+    "hintFits": true,
+    "pauseFits": true,
+    "width": 390,
+    "resumeVisible": true
+  },
+  {
+    "arenaWidth": 382,
+    "controlsBottom": 535.5,
+    "dialogFits": true,
+    "fit": true,
+    "height": 844,
+    "hintFits": true,
+    "pauseFits": true,
+    "width": 390,
+    "resumeVisible": true
+  },
+  {
+    "arenaWidth": 422,
+    "controlsBottom": 560.5,
+    "dialogFits": true,
+    "fit": true,
+    "height": 740,
+    "hintFits": true,
+    "pauseFits": true,
+    "width": 430,
+    "resumeVisible": true
+  },
+  {
+    "arenaWidth": 422,
+    "controlsBottom": 545.5,
+    "dialogFits": true,
+    "fit": true,
+    "height": 600,
+    "hintFits": true,
+    "pauseFits": true,
+    "width": 430,
+    "resumeVisible": true
+  },
+  {
+    "arenaWidth": 309.7109375,
+    "controlsBottom": 308.8671875,
+    "dialogFits": true,
+    "fit": true,
+    "height": 375,
+    "hintFits": true,
+    "pauseFits": true,
+    "width": 667,
+    "resumeVisible": true
+  },
+  {
+    "arenaWidth": 326.8515625,
+    "controlsBottom": 317.3671875,
+    "dialogFits": true,
+    "fit": true,
+    "height": 390,
+    "hintFits": true,
+    "pauseFits": true,
+    "width": 844,
+    "resumeVisible": true
+  },
+  {
+    "arenaWidth": 600,
+    "controlsBottom": null,
+    "dialogFits": true,
+    "fit": true,
+    "height": 800,
+    "hintFits": true,
+    "pauseFits": true,
+    "width": 1280,
+    "resumeVisible": true
+  }
+]

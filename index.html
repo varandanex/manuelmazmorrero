@@ -8,6 +8,7 @@
   <title>Manolo el Mazmorrero — Que empiece el espectáculo</title>
   <link rel="icon" href="/assets/icons/eye.svg" type="image/svg+xml">
   <link rel="preload" href="/assets/webp/logo.webp" as="image">
+  <link rel="preload" href="/assets/fonts/pixelify-sans-variable.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -22,7 +23,11 @@
         <h1 class="title-lockup"><img class="title-portrait" src="/assets/webp/Manu-01-confianza-temeraria.webp" alt="Manu, el protagonista" width="1254" height="1254"><img class="game-logo" src="/assets/webp/logo.webp" alt="Manolo el Mazmorrero" width="2172" height="724"></h1>
         <p class="tagline">Un año más.<br>Una pésima idea más.</p>
         <p class="intro-description">Tres pisos bajo tierra. Monstruos con problemas.<br class="desktop-only"> Y una audiencia que ha venido a verte sufrir.</p>
-        <div class="entry-actions"><button id="continue" class="primary-button" hidden disabled>Continuar descenso <img src="/assets/icons/arrow-down-right.svg" alt=""></button><button id="start" class="primary-button" disabled>Preparando el espectáculo…</button><button id="lobby-help" class="text-button">Primero, las reglas <img class="icon" src="/assets/icons/arrow-up-right.svg" alt=""></button></div>
+        <div class="entry-actions">
+          <button id="continue" class="entry-button entry-primary" hidden disabled><span>Continuar descenso</span><img src="/assets/icons/arrow-down-right.svg" alt=""></button>
+          <button id="start" class="entry-button entry-primary" disabled><span id="start-label">Preparando el espectáculo…</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg></button>
+          <button id="lobby-help" class="entry-button entry-rules"><span>Primero, las reglas</span><img class="icon" src="/assets/icons/question.svg" alt=""></button>
+        </div>
         <p id="asset-status" class="asset-status" role="status">Cargando la mazmorra…</p>
         <div class="lobby-meta"><span>01 JUGADOR</span><span>03 PISOS</span><span>NINGUNA GARANTÍA</span></div>
       </section>
@@ -36,16 +41,29 @@
     </main>
     <main id="game-screen" class="game-screen" hidden>
       <section class="play-column" aria-label="Partida">
-        <img class="play-logo game-logo" src="/assets/webp/logo.webp" width="2172" height="724" alt="Manolo el Mazmorrero">
-        <div class="player-hud"><div class="player-id"><img class="mini-avatar" src="/assets/webp/Manu-01-confianza-temeraria.webp" alt=""><div><strong>MANOLO</strong><span id="floor-label">PISO 01 / 03</span></div></div><div class="health-block"><div><span>VIDA</span><b id="health-text">100 / 100</b></div><div class="health-track"><div id="health-fill"></div></div></div><button id="pause" class="icon-button" aria-label="Pausar partida"><img class="icon" src="/assets/icons/pause.svg" alt=""></button></div>
-        <div class="arena-wrap"><canvas id="arena" width="960" height="840" tabindex="0" role="img" aria-label="Mazmorra. Mueve a Manolo con WASD o las flechas, ataca con espacio y esquiva con Mayús."></canvas><div id="floor-toast" class="floor-toast"><small id="room-number">PISO 01</small><strong id="room-name">El matadero</strong></div><div id="announcement" class="announcement" aria-live="polite"></div></div>
-        <div id="boss-hud" class="boss-hud" hidden><div><span id="boss-name"></span><span id="boss-state"></span></div><div class="boss-track"><div id="boss-fill"></div></div></div>
-        <div class="room-strip"><span id="objective">Elimina a los enemigos</span><span id="timer">00:00</span></div>
-        <div class="mobile-narrator"><img class="icon" src="/assets/icons/eye.svg" alt="El Sistema"><p id="mobile-narrator">«Corre, Manolo. La audiencia no paga para verte pensar.»</p></div>
-        <div class="touch-controls"><div id="joystick" class="joystick" role="group" aria-label="Joystick táctil para mover a Manolo"><span id="joystick-knob"></span><small>MOVER</small></div><div class="combat-buttons"><button id="dash" class="dash-button" aria-label="Esquivar"><img class="icon" src="/assets/icons/caret-double-right.svg" alt=""><span id="dash-label">ESQUIVAR</span></button><button id="attack" class="attack-button" aria-label="Atacar"><img src="/assets/icons/wrench.svg" alt=""><span>ATACAR</span></button></div></div>
-        <div class="keyboard-hint"><span><kbd>W A S D</kbd> mover</span><span><kbd>ESPACIO</kbd> atacar</span><span><kbd>MAYÚS</kbd> esquivar</span></div>
+        <div class="player-hud">
+          <div class="player-id"><img class="mini-avatar" src="/assets/webp/Manu-01-confianza-temeraria.webp" alt="Manolo"><span id="floor-label" aria-label="Piso 1 de 3">01 / 03</span></div>
+          <div class="health-block"><div><img class="icon" src="/assets/icons/heart.svg" alt=""><b id="health-text" aria-hidden="true">100 / 100</b></div><div id="health-bar" class="health-track" role="progressbar" aria-label="Vida de Manolo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><div id="health-fill"></div></div></div>
+          <button id="pause" class="icon-button" aria-label="Pausar partida"><img class="icon" src="/assets/icons/pause.svg" alt=""></button>
+        </div>
+        <div class="arena-wrap">
+          <canvas id="arena" width="960" height="840" tabindex="0" role="img" aria-label="Mazmorra. Mueve a Manolo con WASD o las flechas, ataca con espacio y esquiva con Mayús."></canvas>
+          <div id="floor-toast" class="floor-toast" role="status" hidden><small id="room-number">PISO 01</small><strong id="room-name">El matadero</strong></div>
+        </div>
+        <div id="boss-hud" class="boss-hud" hidden>
+          <svg class="boss-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l3 4v9h-4v5H7v-5H3V7Z"/><path d="M8 9v3m8-3v3m-4 5v4"/></svg>
+          <div id="boss-bar" class="boss-track" role="progressbar" aria-label="Vida del jefe" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><div id="boss-fill"></div></div>
+          <span id="boss-state" role="img" hidden>
+            <svg class="state-shield" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 6v6c0 5-9 10-9 10S3 17 3 12V6Z"/></svg>
+            <img class="state-vulnerable icon" src="/assets/icons/lightning.svg" alt="">
+            <svg class="state-danger" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 10 18H2Z"/><path d="M12 9v5m0 3v1"/></svg>
+          </span>
+        </div>
+        <div class="touch-controls">
+          <div id="joystick" class="joystick" role="group" aria-label="Joystick táctil para mover a Manolo"><span id="joystick-knob"></span></div>
+          <div class="combat-buttons"><button id="dash" class="dash-button" aria-label="Esquivar"><img class="icon" src="/assets/icons/caret-double-right.svg" alt=""><span id="dash-label" aria-hidden="true"></span></button><button id="attack" class="attack-button" aria-label="Atacar"><img src="/assets/icons/wrench.svg" alt=""></button></div>
+        </div>
       </section>
-      <aside class="game-sidebar"><div class="sidebar-heading"><span class="eyebrow">TU DESCENSO</span><b id="run-score">0000</b><small>PUNTOS DE AUDIENCIA</small></div><ol class="floor-list"><li data-floor="0"><span>01</span><div><strong>El matadero</strong><small>El Juicer</small></div></li><li data-floor="1"><span>02</span><div><strong>El jardín podrido</strong><small>La Acaparadora</small></div></li><li data-floor="2"><span>03</span><div><strong>El plató final</strong><small>Clon de Krakaren</small></div></li></ol><div class="system-comment"><span class="narrator-badge"><img class="icon" src="/assets/icons/eye.svg" alt=""> EL SISTEMA</span><p id="narrator">«Corre, Manolo. La audiencia no paga para verte pensar.»</p></div><div class="loadout"><span class="eyebrow">VENTAJAS ACTIVAS</span><p id="perks">Tu optimismo. De momento.</p></div><button id="sidebar-help" class="text-button">Consultar controles <img class="icon" src="/assets/icons/arrow-up-right.svg" alt=""></button></aside>
     </main>
   </div>
   <dialog id="modal" aria-labelledby="modal-title"><div class="modal-inner"><span id="modal-eyebrow" class="eyebrow"></span><h2 id="modal-title" tabindex="-1"></h2><p id="modal-copy"></p><p id="transition-status" class="quiet-note" role="status" hidden>Un segundo… Suelta los controles.</p><div id="modal-content"></div><div id="modal-actions"></div></div></dialog>
