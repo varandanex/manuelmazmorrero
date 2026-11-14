@@ -1,0 +1,776 @@
+[
+  {
+    "width": 320,
+    "height": 568,
+    "checks": [
+      {
+        "name": "the dedication uses the exact approved text",
+        "pass": true
+      },
+      {
+        "name": "the footer repeats the approved dedication",
+        "pass": true
+      },
+      {
+        "name": "the dedication comes before the menu actions",
+        "pass": true
+      },
+      {
+        "name": "the dedication is above the fold",
+        "pass": true
+      },
+      {
+        "name": "the dedication fits horizontally",
+        "pass": true
+      },
+      {
+        "name": "KYV is prominent rather than footer-sized",
+        "pass": true
+      },
+      {
+        "name": "the dedication has a contrasting printed panel",
+        "pass": true
+      },
+      {
+        "name": "the cover has no horizontal overflow",
+        "pass": true
+      },
+      {
+        "name": "0: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "0: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "0: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "0: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "1: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "1: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "1: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "1: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "2: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "2: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "2: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "2: dedication stays out of combat",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "width": 360,
+    "height": 640,
+    "checks": [
+      {
+        "name": "the dedication uses the exact approved text",
+        "pass": true
+      },
+      {
+        "name": "the footer repeats the approved dedication",
+        "pass": true
+      },
+      {
+        "name": "the dedication comes before the menu actions",
+        "pass": true
+      },
+      {
+        "name": "the dedication is above the fold",
+        "pass": true
+      },
+      {
+        "name": "the dedication fits horizontally",
+        "pass": true
+      },
+      {
+        "name": "KYV is prominent rather than footer-sized",
+        "pass": true
+      },
+      {
+        "name": "the dedication has a contrasting printed panel",
+        "pass": true
+      },
+      {
+        "name": "the cover has no horizontal overflow",
+        "pass": true
+      },
+      {
+        "name": "0: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "0: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "0: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "0: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "1: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "1: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "1: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "1: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "2: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "2: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "2: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "2: dedication stays out of combat",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "height": 667,
+    "checks": [
+      {
+        "name": "the dedication uses the exact approved text",
+        "pass": true
+      },
+      {
+        "name": "the footer repeats the approved dedication",
+        "pass": true
+      },
+      {
+        "name": "the dedication comes before the menu actions",
+        "pass": true
+      },
+      {
+        "name": "the dedication is above the fold",
+        "pass": true
+      },
+      {
+        "name": "the dedication fits horizontally",
+        "pass": true
+      },
+      {
+        "name": "KYV is prominent rather than footer-sized",
+        "pass": true
+      },
+      {
+        "name": "the dedication has a contrasting printed panel",
+        "pass": true
+      },
+      {
+        "name": "the cover has no horizontal overflow",
+        "pass": true
+      },
+      {
+        "name": "0: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "0: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "0: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "0: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "1: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "1: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "1: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "1: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "2: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "2: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "2: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "2: dedication stays out of combat",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "checks": [
+      {
+        "name": "the dedication uses the exact approved text",
+        "pass": true
+      },
+      {
+        "name": "the footer repeats the approved dedication",
+        "pass": true
+      },
+      {
+        "name": "the dedication comes before the menu actions",
+        "pass": true
+      },
+      {
+        "name": "the dedication is above the fold",
+        "pass": true
+      },
+      {
+        "name": "the dedication fits horizontally",
+        "pass": true
+      },
+      {
+        "name": "KYV is prominent rather than footer-sized",
+        "pass": true
+      },
+      {
+        "name": "the dedication has a contrasting printed panel",
+        "pass": true
+      },
+      {
+        "name": "the cover has no horizontal overflow",
+        "pass": true
+      },
+      {
+        "name": "0: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "0: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "0: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "0: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "1: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "1: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "1: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "1: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "2: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "2: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "2: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "2: dedication stays out of combat",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "width": 430,
+    "height": 740,
+    "checks": [
+      {
+        "name": "the dedication uses the exact approved text",
+        "pass": true
+      },
+      {
+        "name": "the footer repeats the approved dedication",
+        "pass": true
+      },
+      {
+        "name": "the dedication comes before the menu actions",
+        "pass": true
+      },
+      {
+        "name": "the dedication is above the fold",
+        "pass": true
+      },
+      {
+        "name": "the dedication fits horizontally",
+        "pass": true
+      },
+      {
+        "name": "KYV is prominent rather than footer-sized",
+        "pass": true
+      },
+      {
+        "name": "the dedication has a contrasting printed panel",
+        "pass": true
+      },
+      {
+        "name": "the cover has no horizontal overflow",
+        "pass": true
+      },
+      {
+        "name": "0: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "0: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "0: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "0: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "1: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "1: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "1: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "1: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "2: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "2: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "2: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "2: dedication stays out of combat",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "width": 430,
+    "height": 600,
+    "checks": [
+      {
+        "name": "the dedication uses the exact approved text",
+        "pass": true
+      },
+      {
+        "name": "the footer repeats the approved dedication",
+        "pass": true
+      },
+      {
+        "name": "the dedication comes before the menu actions",
+        "pass": true
+      },
+      {
+        "name": "the dedication is above the fold",
+        "pass": true
+      },
+      {
+        "name": "the dedication fits horizontally",
+        "pass": true
+      },
+      {
+        "name": "KYV is prominent rather than footer-sized",
+        "pass": true
+      },
+      {
+        "name": "the dedication has a contrasting printed panel",
+        "pass": true
+      },
+      {
+        "name": "the cover has no horizontal overflow",
+        "pass": true
+      },
+      {
+        "name": "0: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "0: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "0: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "0: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "1: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "1: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "1: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "1: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "2: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "2: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "2: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "2: dedication stays out of combat",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "width": 667,
+    "height": 375,
+    "checks": [
+      {
+        "name": "the dedication uses the exact approved text",
+        "pass": true
+      },
+      {
+        "name": "the footer repeats the approved dedication",
+        "pass": true
+      },
+      {
+        "name": "the dedication comes before the menu actions",
+        "pass": true
+      },
+      {
+        "name": "the dedication is above the fold",
+        "pass": true
+      },
+      {
+        "name": "the dedication fits horizontally",
+        "pass": true
+      },
+      {
+        "name": "KYV is prominent rather than footer-sized",
+        "pass": true
+      },
+      {
+        "name": "the dedication has a contrasting printed panel",
+        "pass": true
+      },
+      {
+        "name": "the cover has no horizontal overflow",
+        "pass": true
+      },
+      {
+        "name": "0: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "0: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "0: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "0: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "1: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "1: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "1: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "1: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "2: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "2: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "2: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "2: dedication stays out of combat",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "width": 844,
+    "height": 390,
+    "checks": [
+      {
+        "name": "the dedication uses the exact approved text",
+        "pass": true
+      },
+      {
+        "name": "the footer repeats the approved dedication",
+        "pass": true
+      },
+      {
+        "name": "the dedication comes before the menu actions",
+        "pass": true
+      },
+      {
+        "name": "the dedication is above the fold",
+        "pass": true
+      },
+      {
+        "name": "the dedication fits horizontally",
+        "pass": true
+      },
+      {
+        "name": "KYV is prominent rather than footer-sized",
+        "pass": true
+      },
+      {
+        "name": "the dedication has a contrasting printed panel",
+        "pass": true
+      },
+      {
+        "name": "the cover has no horizontal overflow",
+        "pass": true
+      },
+      {
+        "name": "0: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "0: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "0: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "0: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "1: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "1: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "1: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "1: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "2: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "2: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "2: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "2: dedication stays out of combat",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "checks": [
+      {
+        "name": "the dedication uses the exact approved text",
+        "pass": true
+      },
+      {
+        "name": "the footer repeats the approved dedication",
+        "pass": true
+      },
+      {
+        "name": "the dedication comes before the menu actions",
+        "pass": true
+      },
+      {
+        "name": "the dedication is above the fold",
+        "pass": true
+      },
+      {
+        "name": "the dedication fits horizontally",
+        "pass": true
+      },
+      {
+        "name": "KYV is prominent rather than footer-sized",
+        "pass": true
+      },
+      {
+        "name": "the dedication has a contrasting printed panel",
+        "pass": true
+      },
+      {
+        "name": "the cover has no horizontal overflow",
+        "pass": true
+      },
+      {
+        "name": "0: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "0: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "0: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "0: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "1: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "1: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "1: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "1: dedication stays out of combat",
+        "pass": true
+      },
+      {
+        "name": "2: arena fits the viewport",
+        "pass": true
+      },
+      {
+        "name": "2: player and boss health remain available",
+        "pass": true
+      },
+      {
+        "name": "2: combat remains free of prose",
+        "pass": true
+      },
+      {
+        "name": "2: dedication stays out of combat",
+        "pass": true
+      }
+    ]
+  }
+]

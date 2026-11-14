@@ -3,7 +3,7 @@
 set -eu
 cd "$(dirname "$0")/.."
 mkdir -p assets/webp
-for source in assets/art/*.png assets/art/enemies/*.png; do
+for source in assets/art/*.png assets/art/enemies/*.png assets/art/environments/*.png; do
   name=${source#assets/art/}
   name=${name%.png}
   mkdir -p "assets/webp/$(dirname "$name")"

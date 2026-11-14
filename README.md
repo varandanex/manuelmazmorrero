@@ -52,11 +52,25 @@ npm test
 
 The approved visual system uses the first editorial-screenprint concept and the clear adult poses of the second concept. Black, electric yellow, magenta and warm cream replace the muted pixel-art palette. Original art sources, prompts and licenses are kept in `assets/`; references and visual QA evidence are in `docs/redesign/`.
 
-Headings, buttons and combat numbers use locally hosted [Pixelify Sans](https://github.com/google/fonts/tree/main/ofl/pixelifysans) (SIL OFL 1.1; license in `assets/fonts/Pixelify-Sans-OFL.txt`). Long descriptions retain Inter for readability. The illustrated logo and screenprinted artwork are unchanged.
+Headings, buttons and combat numbers use locally hosted [Pixelify Sans](https://github.com/google/fonts/tree/main/ofl/pixelifysans) (SIL OFL 1.1; license in `assets/fonts/Pixelify-Sans-OFL.txt`). Long descriptions retain Inter for readability. The illustrated logo and characters retain the approved screenprinted identity.
 
 The 480 × 420 simulation, collisions, enemy attack timings, statistics and save format remain unchanged; only the new player-paced pre-boss conversation pauses progression. The legacy storage key is intentionally retained so existing checkpoints continue working. Artwork must finish loading before play starts; failures provide a reload action rather than starting with invisible enemies.
 
 Generated PNG originals are kept for provenance. The browser loads the smaller WebP files. Regenerate delivery assets with `./scripts/encode-art.sh` if the originals change (requires `cwebp`). See `design-qa.md` for verification and remaining real-device checks.
+
+### Distinct environments and cover dedication
+
+Each floor now has its own background and obstacle artwork in `assets/art/environments/`, with delivery files in `assets/webp/environments/`:
+
+- **El matadero:** tiled industrial walls, iron doors, pipes, hooks and steel bollards.
+- **El jardín podrido:** an overgrown greenhouse, muted moss-earth, roots, fungi and tree stumps.
+- **El plató final:** a television soundstage, cameras, screens, modular flooring and studio-light pedestals.
+
+Only artwork selection changes. Arena bounds, all four pillar positions/radii, sprite foot anchors, boss mechanics and save data are untouched. Decoration stays at the perimeter; quiet floor textures keep attack indicators readable. The lobby preview uses the new matadero. Previous environment originals remain for provenance and are not loaded.
+
+The exact dedication **UNA AVENTURA HECHA CON ❤️ POR KYV** appears on a contrasting cover panel directly under the logo, before the game buttons, and is repeated in the footer. It never appears during combat.
+
+See `docs/environments/verification.md` for visual checks and `docs/environments/prompts.json` for the built-in image-generation prompt set.
 
 ## Audio verification
 

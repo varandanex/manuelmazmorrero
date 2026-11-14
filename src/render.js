@@ -1,13 +1,20 @@
 import { WIDTH, HEIGHT, BOUNDS, PILLARS } from './game.js';
 
 // Artwork is separate from simulation. World coordinates and hitboxes stay unchanged.
-const ART_NAMES = ['room', 'room-spore', 'room-host', 'hero', 'grunt', 'bat', 'caster', 'butcher', 'spore', 'host', 'generator', 'pillar'];
+const ART_NAMES = ['room', 'room-spore', 'room-host', 'hero', 'grunt', 'bat', 'caster', 'butcher', 'spore', 'host', 'generator', 'pillar', 'pillar-spore', 'pillar-host'];
 // Stable simulation roles map to the approved replacement artwork.
 const ART_FILES = {
+  room: 'environments/room-matadero', 'room-spore': 'environments/room-jardin', 'room-host': 'environments/room-plato',
+  pillar: 'environments/pillar-matadero', 'pillar-spore': 'environments/pillar-jardin', 'pillar-host': 'environments/pillar-plato',
   hero: 'hero-manu-umbrella', grunt: 'enemies/enemy-goblin', bat: 'enemies/enemy-scatterer',
   caster: 'enemies/enemy-evil-llama', butcher: 'enemies/boss-juicer',
   spore: 'enemies/boss-hoarder', host: 'enemies/boss-krakaren',
 };
+const FLOOR_ART = [
+  { room: 'room', pillar: 'pillar' },
+  { room: 'room-spore', pillar: 'pillar-spore' },
+  { room: 'room-host', pillar: 'pillar-host' },
+];
 const art = new Map();
 const ink = '#0b0b0e', paper = '#f4eddd', yellow = '#ffe000', magenta = '#ed147b';
 // Visual sizes only: foot anchors, collision radii and attack ranges are unchanged.
@@ -110,7 +117,8 @@ export function renderGame(ctx, game, time, reducedMotion = false) {
   ctx.setTransform(ctx.canvas.width / WIDTH, 0, 0, ctx.canvas.height / HEIGHT, 0, 0);
   ctx.clearRect(0, 0, WIDTH, HEIGHT); ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
   if (game.shake > 0 && !reducedMotion) ctx.translate(Math.sin(time * 90) * 1.5, Math.cos(time * 110) * 1.5);
-  const room = art.get(['room', 'room-spore', 'room-host'][game.floor || 0]);
+  const environment = FLOOR_ART[game.floor || 0];
+  const room = art.get(environment.room);
   if (room) ctx.drawImage(room, 0, 0, WIDTH, HEIGHT);
   for (const hazard of game.hazards) {
     const path = new Path2D();
@@ -129,7 +137,7 @@ export function renderGame(ctx, game, time, reducedMotion = false) {
   const actors = [...PILLARS.map(p => ({ ...p, kind: 'pillar' })), ...game.enemies.map(e => ({ ...e, kind: 'enemy' })), { ...game.player, kind: 'player' }].sort((a, b) => a.y - b.y);
   const animationTime = reducedMotion ? 0 : time;
   for (const actor of actors) {
-    if (actor.kind === 'pillar') sprite(ctx, 'pillar', actor.x, actor.y, 48);
+    if (actor.kind === 'pillar') sprite(ctx, environment.pillar, actor.x, actor.y, 48);
     else if (actor.kind === 'enemy') drawEnemy(ctx, actor, animationTime, game);
     else drawPlayer(ctx, actor, animationTime);
   }

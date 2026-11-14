@@ -1,0 +1,56 @@
+[
+  {
+    "asset": "pillar-jardin",
+    "width": 1254,
+    "height": 1254,
+    "pngColorType": 6,
+    "hasAlphaChannel": true,
+    "originalBytes": 1461697,
+    "webpBytes": 301610
+  },
+  {
+    "asset": "pillar-matadero",
+    "width": 1254,
+    "height": 1254,
+    "pngColorType": 6,
+    "hasAlphaChannel": true,
+    "originalBytes": 1484018,
+    "webpBytes": 312398
+  },
+  {
+    "asset": "pillar-plato",
+    "width": 1254,
+    "height": 1254,
+    "pngColorType": 6,
+    "hasAlphaChannel": true,
+    "originalBytes": 1275551,
+    "webpBytes": 252390
+  },
+  {
+    "asset": "room-jardin",
+    "width": 1341,
+    "height": 1173,
+    "pngColorType": 2,
+    "hasAlphaChannel": false,
+    "originalBytes": 2434582,
+    "webpBytes": 259110
+  },
+  {
+    "asset": "room-matadero",
+    "width": 1341,
+    "height": 1173,
+    "pngColorType": 2,
+    "hasAlphaChannel": false,
+    "originalBytes": 2788343,
+    "webpBytes": 385464
+  },
+  {
+    "asset": "room-plato",
+    "width": 1341,
+    "height": 1173,
+    "pngColorType": 2,
+    "hasAlphaChannel": false,
+    "originalBytes": 2227352,
+    "webpBytes": 174854
+  }
+]

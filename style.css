@@ -280,3 +280,27 @@ dialog[data-kind="boss-intro"] #modal-actions { margin-top: 12px; }
   dialog[data-kind="boss-intro"] .modal-inner { padding: 12px; }
   .duel-stage { padding-bottom: 8px; }
 }
+
+/* A dedication on the cover, not a credit hidden below the fold. */
+.creator-credit {
+  width: fit-content; max-width: calc(100% - 4px); margin: 0 0 24px;
+  padding: 12px 22px; background: var(--ink); color: var(--bg);
+  border-left: 5px solid var(--pink); box-shadow: 4px 4px 0 var(--pink);
+  text-align: center;
+}
+.creator-credit > span { display: block; font: 500 14px/1.2 var(--display); letter-spacing: 1px; }
+.creator-credit > strong { display: block; margin-top: 4px; font: 700 30px/1.2 var(--display); white-space: nowrap; }
+.credit-heart { font-family: 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif; font-size: .85em; }
+.credit-signature { color: #b90b55; }
+@media (max-width: 740px) { .creator-credit { margin: 0 auto 24px; } }
+@media (max-width: 365px) {
+  .creator-credit { padding: 10px 18px; }
+  .creator-credit > span { font-size: 13px; }
+  .creator-credit > strong { font-size: 27px; }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  .lobby { padding-top: 20px; }
+  .title-lockup { max-width: 380px; margin: 12px auto; }
+  .creator-credit { padding: 8px 18px; margin-bottom: 18px; }
+  .creator-credit > strong { font-size: 27px; }
+}

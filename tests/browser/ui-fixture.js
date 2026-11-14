@@ -28,8 +28,8 @@ window.__uiQa = {
   },
   dialogueLine(index) { bossDialogueIndex = index; updateBossDialogue(); },
   resume() { resumeGame(game); game.player.invulnerable = 999; },
-  danger(kind) {
-    game[kind].push({ type: 'pool', x: 240, y: 120, r: 12, life: 2, delay: 1, vx: 0, vy: 0, damage: 5 });
+  danger(kind, overrides = {}) {
+    game[kind].push({ type: 'pool', x: 240, y: 120, r: 12, life: 2, delay: 1, vx: 0, vy: 0, damage: 5, ...overrides });
     updateHud();
   },
   menu: backToMenu,

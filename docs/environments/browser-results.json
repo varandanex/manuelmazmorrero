@@ -1,0 +1,1055 @@
+[
+  {
+    "file": "combat-ui-regression.js",
+    "checks": [
+      {
+        "name": "local pixel font loads with Spanish text",
+        "pass": true
+      },
+      {
+        "name": "0/mobs: no prose during combat",
+        "pass": true
+      },
+      {
+        "name": "0/mobs: no transition overlay",
+        "pass": true
+      },
+      {
+        "name": "0/mobs: player health remains accessible",
+        "pass": true
+      },
+      {
+        "name": "0/boss: no prose during combat",
+        "pass": true
+      },
+      {
+        "name": "0/boss: no transition overlay",
+        "pass": true
+      },
+      {
+        "name": "0/boss: player health remains accessible",
+        "pass": true
+      },
+      {
+        "name": "0: floor title is limited to its transition",
+        "pass": true
+      },
+      {
+        "name": "0: boss warning does not duplicate the conversation",
+        "pass": true
+      },
+      {
+        "name": "1/mobs: no prose during combat",
+        "pass": true
+      },
+      {
+        "name": "1/mobs: no transition overlay",
+        "pass": true
+      },
+      {
+        "name": "1/mobs: player health remains accessible",
+        "pass": true
+      },
+      {
+        "name": "1/boss: no prose during combat",
+        "pass": true
+      },
+      {
+        "name": "1/boss: no transition overlay",
+        "pass": true
+      },
+      {
+        "name": "1/boss: player health remains accessible",
+        "pass": true
+      },
+      {
+        "name": "1: floor title is limited to its transition",
+        "pass": true
+      },
+      {
+        "name": "1: boss warning does not duplicate the conversation",
+        "pass": true
+      },
+      {
+        "name": "2/mobs: no prose during combat",
+        "pass": true
+      },
+      {
+        "name": "2/mobs: no transition overlay",
+        "pass": true
+      },
+      {
+        "name": "2/mobs: player health remains accessible",
+        "pass": true
+      },
+      {
+        "name": "2/boss: no prose during combat",
+        "pass": true
+      },
+      {
+        "name": "2/boss: no transition overlay",
+        "pass": true
+      },
+      {
+        "name": "2/boss: player health remains accessible",
+        "pass": true
+      },
+      {
+        "name": "2: floor title is limited to its transition",
+        "pass": true
+      },
+      {
+        "name": "2: boss warning does not duplicate the conversation",
+        "pass": true
+      },
+      {
+        "name": "boss state uses the idle indicator",
+        "pass": true
+      },
+      {
+        "name": "boss bar has its actual health range",
+        "pass": true
+      },
+      {
+        "name": "boss state uses the vulnerable indicator",
+        "pass": true
+      },
+      {
+        "name": "boss bar has its actual health range",
+        "pass": true
+      },
+      {
+        "name": "boss state uses the danger indicator",
+        "pass": true
+      },
+      {
+        "name": "boss bar has its actual health range",
+        "pass": true
+      },
+      {
+        "name": "boss state uses the shield indicator",
+        "pass": true
+      },
+      {
+        "name": "boss bar has its actual health range",
+        "pass": true
+      },
+      {
+        "name": "leftover projectiles are never covered by a title card",
+        "pass": true
+      },
+      {
+        "name": "leftover hazards are never covered by a title card",
+        "pass": true
+      },
+      {
+        "name": "pause retains the floor, boss hint, perks and commentary",
+        "pass": true
+      },
+      {
+        "name": "pause retains time and score",
+        "pass": true
+      },
+      {
+        "name": "resume comes before the detailed pause content",
+        "pass": true
+      },
+      {
+        "name": "menu titles use the pixel font",
+        "pass": true
+      },
+      {
+        "name": "long copy keeps the readable body font",
+        "pass": true
+      },
+      {
+        "name": "help explains the icon-only controls",
+        "pass": true
+      },
+      {
+        "name": "help entered from pause can return to play",
+        "pass": true
+      },
+      {
+        "name": "upgrade: narrative remains in the result screen",
+        "pass": true
+      },
+      {
+        "name": "upgrade: accidental input guard remains enabled",
+        "pass": true
+      },
+      {
+        "name": "dead: narrative remains in the result screen",
+        "pass": true
+      },
+      {
+        "name": "dead: accidental input guard remains enabled",
+        "pass": true
+      },
+      {
+        "name": "won: narrative remains in the result screen",
+        "pass": true
+      },
+      {
+        "name": "won: accidental input guard remains enabled",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "file": "mobile-regression.js",
+    "checks": [
+      {
+        "detail": {
+          "arena": 382,
+          "viewport": 390
+        },
+        "name": "portrait arena uses the viewport width",
+        "pass": true
+      },
+      {
+        "detail": {
+          "bottom": 535.5,
+          "height": 844
+        },
+        "name": "controls remain visible",
+        "pass": true
+      },
+      {
+        "name": "gameplay rejects native pinch gestures",
+        "pass": true
+      },
+      {
+        "name": "the whole game surface owns touch gestures",
+        "pass": true
+      },
+      {
+        "detail": {
+          "dialogueIndex": 0,
+          "elapsed": 0,
+          "enemies": [],
+          "floor": 0,
+          "hp": 100,
+          "keys": [],
+          "modal": "upgrade",
+          "mode": "upgrade",
+          "phase": "intro",
+          "touch": {
+            "attack": false,
+            "dash": false,
+            "x": 0,
+            "y": 0
+          }
+        },
+        "name": "upgrade ignores an immediate accidental click",
+        "pass": true
+      },
+      {
+        "detail": {
+          "dialogueIndex": 0,
+          "elapsed": 0,
+          "enemies": [],
+          "floor": 0,
+          "hp": 100,
+          "keys": [],
+          "modal": "dead",
+          "mode": "dead",
+          "phase": "intro",
+          "touch": {
+            "attack": false,
+            "dash": false,
+            "x": 0,
+            "y": 0
+          }
+        },
+        "name": "dead ignores an immediate accidental click",
+        "pass": true
+      },
+      {
+        "detail": {
+          "dialogueIndex": 0,
+          "elapsed": 0,
+          "enemies": [],
+          "floor": 0,
+          "hp": 100,
+          "keys": [],
+          "modal": "won",
+          "mode": "won",
+          "phase": "intro",
+          "touch": {
+            "attack": false,
+            "dash": false,
+            "x": 0,
+            "y": 0
+          }
+        },
+        "name": "won ignores an immediate accidental click",
+        "pass": true
+      },
+      {
+        "name": "lobby keeps normal browser zoom",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "file": "transition-regression.js",
+    "checks": [
+      {
+        "name": "upgrade: held attack cannot select even after delay",
+        "pass": true
+      },
+      {
+        "name": "upgrade: title receives focus instead of an action",
+        "pass": true
+      },
+      {
+        "name": "upgrade: release cannot activate a result action",
+        "pass": true
+      },
+      {
+        "name": "upgrade: actions unlock after release",
+        "pass": true
+      },
+      {
+        "name": "upgrade: repeated keyboard activation stays blocked",
+        "pass": true
+      },
+      {
+        "name": "upgrade: a fresh choice works",
+        "pass": true
+      },
+      {
+        "name": "dead: held attack cannot select even after delay",
+        "pass": true
+      },
+      {
+        "name": "dead: title receives focus instead of an action",
+        "pass": true
+      },
+      {
+        "name": "dead: release cannot activate a result action",
+        "pass": true
+      },
+      {
+        "name": "dead: actions unlock after release",
+        "pass": true
+      },
+      {
+        "name": "dead: repeated keyboard activation stays blocked",
+        "pass": true
+      },
+      {
+        "name": "dead: a fresh choice works",
+        "pass": true
+      },
+      {
+        "name": "won: held attack cannot select even after delay",
+        "pass": true
+      },
+      {
+        "name": "won: title receives focus instead of an action",
+        "pass": true
+      },
+      {
+        "name": "won: release cannot activate a result action",
+        "pass": true
+      },
+      {
+        "name": "won: actions unlock after release",
+        "pass": true
+      },
+      {
+        "name": "won: repeated keyboard activation stays blocked",
+        "pass": true
+      },
+      {
+        "name": "won: a fresh choice works",
+        "pass": true
+      },
+      {
+        "name": "two fingers: releasing attack alone cannot dismiss the result",
+        "pass": true
+      },
+      {
+        "name": "two fingers: cancellation releases the final held input",
+        "pass": true
+      },
+      {
+        "name": "idle result unlocks without extra interaction",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "file": "touch-regression.js",
+    "checks": [
+      {
+        "name": "joystick and attack work together",
+        "pass": true
+      },
+      {
+        "name": "multitouch fallback cancels viewport manipulation",
+        "pass": true
+      },
+      {
+        "name": "multitouch fallback does not clear combat input",
+        "pass": true
+      },
+      {
+        "name": "releasing attack keeps the joystick active",
+        "pass": true
+      },
+      {
+        "name": "joystick and dash work together",
+        "pass": true
+      },
+      {
+        "name": "result clears movement and combat actions",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "file": "boss-intro-regression.js",
+    "checks": [
+      {
+        "name": "0: the game pauses before creating the boss",
+        "pass": true
+      },
+      {
+        "name": "0: both full-body figures are present",
+        "pass": true
+      },
+      {
+        "name": "0: Manolo holds the new umbrella",
+        "pass": true
+      },
+      {
+        "name": "0: the boss speaks first",
+        "pass": true
+      },
+      {
+        "name": "0: leftover clicks cannot dismiss the opening line",
+        "pass": true
+      },
+      {
+        "name": "0: Escape cannot bypass the introduction",
+        "pass": true
+      },
+      {
+        "name": "0: reading does not advance the clock or reduce health",
+        "pass": true
+      },
+      {
+        "name": "0: tapping the speech advances one line",
+        "pass": true
+      },
+      {
+        "name": "0: Manolo lights up when speaking",
+        "pass": true
+      },
+      {
+        "name": "0: a double tap cannot skip the reply",
+        "pass": true
+      },
+      {
+        "name": "0: the final line is shown before combat",
+        "pass": true
+      },
+      {
+        "name": "0: the final action is explicit",
+        "pass": true
+      },
+      {
+        "name": "0: tapping the final speech never starts combat",
+        "pass": true
+      },
+      {
+        "name": "0: the explicit final button starts the boss",
+        "pass": true
+      },
+      {
+        "name": "0: the correct boss is spawned",
+        "pass": true
+      },
+      {
+        "name": "0: old attack input is cleared",
+        "pass": true
+      },
+      {
+        "name": "1: the game pauses before creating the boss",
+        "pass": true
+      },
+      {
+        "name": "1: both full-body figures are present",
+        "pass": true
+      },
+      {
+        "name": "1: Manolo holds the new umbrella",
+        "pass": true
+      },
+      {
+        "name": "1: the boss speaks first",
+        "pass": true
+      },
+      {
+        "name": "1: leftover clicks cannot dismiss the opening line",
+        "pass": true
+      },
+      {
+        "name": "1: Escape cannot bypass the introduction",
+        "pass": true
+      },
+      {
+        "name": "1: reading does not advance the clock or reduce health",
+        "pass": true
+      },
+      {
+        "name": "1: tapping the speech advances one line",
+        "pass": true
+      },
+      {
+        "name": "1: Manolo lights up when speaking",
+        "pass": true
+      },
+      {
+        "name": "1: a double tap cannot skip the reply",
+        "pass": true
+      },
+      {
+        "name": "1: the final line is shown before combat",
+        "pass": true
+      },
+      {
+        "name": "1: the final action is explicit",
+        "pass": true
+      },
+      {
+        "name": "1: tapping the final speech never starts combat",
+        "pass": true
+      },
+      {
+        "name": "1: the explicit final button starts the boss",
+        "pass": true
+      },
+      {
+        "name": "1: the correct boss is spawned",
+        "pass": true
+      },
+      {
+        "name": "1: old attack input is cleared",
+        "pass": true
+      },
+      {
+        "name": "2: the game pauses before creating the boss",
+        "pass": true
+      },
+      {
+        "name": "2: both full-body figures are present",
+        "pass": true
+      },
+      {
+        "name": "2: Manolo holds the new umbrella",
+        "pass": true
+      },
+      {
+        "name": "2: the boss speaks first",
+        "pass": true
+      },
+      {
+        "name": "2: leftover clicks cannot dismiss the opening line",
+        "pass": true
+      },
+      {
+        "name": "2: Escape cannot bypass the introduction",
+        "pass": true
+      },
+      {
+        "name": "2: reading does not advance the clock or reduce health",
+        "pass": true
+      },
+      {
+        "name": "2: tapping the speech advances one line",
+        "pass": true
+      },
+      {
+        "name": "2: Manolo lights up when speaking",
+        "pass": true
+      },
+      {
+        "name": "2: a double tap cannot skip the reply",
+        "pass": true
+      },
+      {
+        "name": "2: the final line is shown before combat",
+        "pass": true
+      },
+      {
+        "name": "2: the final action is explicit",
+        "pass": true
+      },
+      {
+        "name": "2: tapping the final speech never starts combat",
+        "pass": true
+      },
+      {
+        "name": "2: the explicit final button starts the boss",
+        "pass": true
+      },
+      {
+        "name": "2: the correct boss is spawned",
+        "pass": true
+      },
+      {
+        "name": "2: old attack input is cleared",
+        "pass": true
+      },
+      {
+        "name": "held attack cannot skip the first line even after the timer",
+        "pass": true
+      },
+      {
+        "name": "releasing attack still requires a quiet gap",
+        "pass": true
+      },
+      {
+        "name": "a new deliberate click can show the reply",
+        "pass": true
+      },
+      {
+        "name": "native key repeats never advance dialogue",
+        "pass": true
+      },
+      {
+        "name": "both joystick and attack fingers must be released",
+        "pass": true
+      },
+      {
+        "name": "pointer cancellation safely releases the final finger",
+        "pass": true
+      },
+      {
+        "name": "losing focus preserves the current dialogue instead of opening pause",
+        "pass": true
+      }
+    ]
+  },
+  {
+    "file": "entry-buttons-regression.js",
+    "checks": [
+      {
+        "viewport": [
+          320,
+          568
+        ],
+        "name": "continue visibility matches the checkpoint",
+        "pass": true
+      },
+      {
+        "viewport": [
+          320,
+          568
+        ],
+        "name": "new game retains its button class",
+        "pass": true
+      },
+      {
+        "viewport": [
+          320,
+          568
+        ],
+        "name": "new game has the correct visual priority",
+        "pass": true
+      },
+      {
+        "viewport": [
+          320,
+          568
+        ],
+        "name": "new game has a concise label",
+        "pass": true
+      },
+      {
+        "viewport": [
+          320,
+          568
+        ],
+        "name": "new game keeps its icon after save refresh",
+        "pass": true
+      },
+      {
+        "viewport": [
+          320,
+          568
+        ],
+        "name": "the expected actions are available",
+        "pass": true
+      },
+      {
+        "viewport": [
+          320,
+          568
+        ],
+        "name": "every action is a large tap target",
+        "pass": true
+      },
+      {
+        "viewport": [
+          320,
+          568
+        ],
+        "name": "all actions use the same full width",
+        "pass": true
+      },
+      {
+        "viewport": [
+          320,
+          568
+        ],
+        "name": "actions are clearly separated",
+        "pass": true
+      },
+      {
+        "viewport": [
+          320,
+          568
+        ],
+        "name": "all actions have visible borders",
+        "pass": true
+      },
+      {
+        "viewport": [
+          320,
+          568
+        ],
+        "name": "buttons do not overflow horizontally",
+        "pass": true
+      },
+      {
+        "viewport": [
+          320,
+          568
+        ],
+        "name": "button labels and icons fit their boxes",
+        "pass": true
+      },
+      {
+        "viewport": [
+          320,
+          568
+        ],
+        "name": "pixel typography is preserved",
+        "pass": true
+      },
+      {
+        "viewport": [
+          320,
+          568
+        ],
+        "name": "continue has a distinct fill",
+        "pass": true
+      },
+      {
+        "viewport": [
+          320,
+          568
+        ],
+        "name": "rules have their own border treatment",
+        "pass": true
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "name": "continue visibility matches the checkpoint",
+        "pass": true
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "name": "new game retains its button class",
+        "pass": true
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "name": "new game has the correct visual priority",
+        "pass": true
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "name": "new game has a concise label",
+        "pass": true
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "name": "new game keeps its icon after save refresh",
+        "pass": true
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "name": "the expected actions are available",
+        "pass": true
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "name": "every action is a large tap target",
+        "pass": true
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "name": "all actions use the same full width",
+        "pass": true
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "name": "actions are clearly separated",
+        "pass": true
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "name": "all actions have visible borders",
+        "pass": true
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "name": "buttons do not overflow horizontally",
+        "pass": true
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "name": "button labels and icons fit their boxes",
+        "pass": true
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "name": "pixel typography is preserved",
+        "pass": true
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "name": "continue has a distinct fill",
+        "pass": true
+      },
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "name": "rules have their own border treatment",
+        "pass": true
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "name": "continue visibility matches the checkpoint",
+        "pass": true
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "name": "new game retains its button class",
+        "pass": true
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "name": "new game has the correct visual priority",
+        "pass": true
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "name": "new game has a concise label",
+        "pass": true
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "name": "new game keeps its icon after save refresh",
+        "pass": true
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "name": "the expected actions are available",
+        "pass": true
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "name": "every action is a large tap target",
+        "pass": true
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "name": "all actions use the same full width",
+        "pass": true
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "name": "actions are clearly separated",
+        "pass": true
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "name": "all actions have visible borders",
+        "pass": true
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "name": "buttons do not overflow horizontally",
+        "pass": true
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "name": "button labels and icons fit their boxes",
+        "pass": true
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "name": "pixel typography is preserved",
+        "pass": true
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "name": "continue has a distinct fill",
+        "pass": true
+      },
+      {
+        "viewport": [
+          1280,
+          800
+        ],
+        "name": "rules have their own border treatment",
+        "pass": true
+      },
+      {
+        "name": "continue visibility matches the checkpoint",
+        "pass": true
+      },
+      {
+        "name": "new game retains its button class",
+        "pass": true
+      },
+      {
+        "name": "new game has the correct visual priority",
+        "pass": true
+      },
+      {
+        "name": "new game has a concise label",
+        "pass": true
+      },
+      {
+        "name": "new game keeps its icon after save refresh",
+        "pass": true
+      },
+      {
+        "name": "the expected actions are available",
+        "pass": true
+      },
+      {
+        "name": "every action is a large tap target",
+        "pass": true
+      },
+      {
+        "name": "all actions use the same full width",
+        "pass": true
+      },
+      {
+        "name": "actions are clearly separated",
+        "pass": true
+      },
+      {
+        "name": "all actions have visible borders",
+        "pass": true
+      },
+      {
+        "name": "buttons do not overflow horizontally",
+        "pass": true
+      },
+      {
+        "name": "button labels and icons fit their boxes",
+        "pass": true
+      },
+      {
+        "name": "pixel typography is preserved",
+        "pass": true
+      }
+    ]
+  }
+]

@@ -1,0 +1,84 @@
+
+> manolo-el-mazmorrero@0.1.0 check
+> node --check src/game.js && node --check src/render.js && node --check src/main.js && node --check server.mjs && node --check src/audio.js && node --check src/audio-config.js && node --check src/transition-guard.js && node --check src/boss-dialogues.js
+
+
+> manolo-el-mazmorrero@0.1.0 test
+> node --test tests/*.test.js
+
+✔ every shipped art asset is a PNG with usable dimensions (40.393667ms)
+✔ art loader waits for every required asset and reports complete progress (1.517958ms)
+✔ art loader rejects a missing enemy instead of silently rendering it invisible (0.431084ms)
+✔ every original has a delivery WebP asset (8.909958ms)
+✔ late image completions cannot overwrite the loading error message (26.080459ms)
+✔ all 31 manifest effects are mapped to real PCM WAVs and all six music files exist (28.900291ms)
+✔ audio defaults on, starts on a gesture, decodes effects once, and drops stale loading cues (2.1445ms)
+✔ each screen selects its supplied music and music/effect sliders control separate buses (1.372583ms)
+✔ pause, background, mute and scene changes stop active effects and preserve music pause position (0.400584ms)
+✔ impact overlap is capped, danger can interrupt weaker voices, and swing/hit variants rotate (0.628625ms)
+✔ event batches sequence floor entry, select terminal-only cues and cancel pending work on pause (0.743083ms)
+✔ failed media play is reported, and stale rejection cannot overwrite a newer scene (3.67825ms)
+✔ failed SFX fetches do not block gameplay or replay late sounds after muting (0.599291ms)
+✔ delayed floor and victory music never leak into another scene or after mute/background (0.409458ms)
+✔ a finished victory track stays finished until another scene or an explicit restart (0.298625ms)
+✔ explicit mute survives later gestures but a fresh visit defaults on again (1.277792ms)
+✔ each boss has exactly three approved dialogue lines and its own full-body artwork (3.768875ms)
+✔ every floor stops before spawning its boss and emits only one introduction (0.894417ms)
+✔ reading freezes clocks, movement, cooldowns, projectiles, hazards and damage (0.330875ms)
+✔ explicit acknowledgement spawns the correct boss exactly once (1.551334ms)
+✔ other game modes cannot bypass waves or start another boss (0.514583ms)
+✔ retrying a floor allows its introduction to play again without a new save format (0.227584ms)
+✔ the new umbrella original has alpha and the delivery sprite is present (3.600042ms)
+✔ each floor draws its own room and four matching obstacles without mutating simulation (1.810292ms)
+✔ the lobby preview uses the redesigned matadero (0.460958ms)
+✔ a missing floor or obstacle blocks play instead of showing incomplete scenery (0.44875ms)
+✔ new room originals preserve arena aspect ratio and obstacles preserve RGBA (11.056209ms)
+✔ KYV dedication is present before the main actions and repeated exactly in the footer (0.830208ms)
+✔ accepted attacks emit swing plus the actual impact outcome; cooldown input is silent (2.549083ms)
+✔ shield, generator destruction and recovery hits have distinct outcomes (0.472459ms)
+✔ terminal cues replace ordinary damage/death and floor entry is explicit (0.337625ms)
+✔ boss entry, butcher windup, charge and recovery sound once per transition (1.590583ms)
+✔ spore volleys share warning and activation cues without per-frame or per-projectile spam (0.826458ms)
+✔ host phase change and two-beam volley have one cue each; casters emit cast cues (0.595125ms)
+✔ a new run starts with full health and a floor announcement (0.777875ms)
+✔ input vectors are normalized and arena bounds contain the player (3.13075ms)
+✔ pause freezes every gameplay clock and health (0.284041ms)
+✔ attack auto-aims, respects range and awards one kill (0.932542ms)
+✔ holding attack respects its cooldown (0.238208ms)
+✔ dash avoids damage and cannot be retriggered before recharge (0.230334ms)
+✔ damage grants invulnerability and transitions to death only once (0.789125ms)
+✔ a floor has two waves, a warning and a boss (1.795209ms)
+✔ the butcher locks his charge and exposes a recovery window (1.64125ms)
+✔ the spore boss fires projectiles and telegraphs poison pools (1.274291ms)
+✔ a shielded host takes no damage until generators are destroyed (0.222458ms)
+✔ host restores generators once at half health (0.113458ms)
+✔ a vulnerable boss takes increased damage (0.060583ms)
+✔ floor victory opens upgrades and rejects invalid choices (0.093041ms)
+✔ all three floors can progress through to the final victory (2.396042ms)
+✔ retry preserves advantages but resets score and kills to the checkpoint (0.253875ms)
+✔ checkpoints reject corrupt, unsupported and inconsistent data (0.166541ms)
+✔ resume restores a checkpoint at the beginning of its floor (0.083458ms)
+✔ healing pickups cannot exceed maximum health (0.082333ms)
+✔ expired hazards cannot damage the player (0.048166ms)
+✔ time formatting is stable across minute boundaries (0.06975ms)
+✔ damage and healing numbers use the pixel font without changing their value (1.637583ms)
+✔ shield hits draw an icon rather than combat prose (0.183708ms)
+✔ local server delivers real WAV and Unicode/spaced MP3 assets with correct MIME (40.904375ms)
+✔ media supports bounded, open and suffix ranges, rejects unsatisfiable ranges and handles HEAD (14.116833ms)
+✔ asset serving does not expose project documents, traversal, malformed paths or symlink targets (6.829333ms)
+✔ result actions wait one second even when no input is held (0.666625ms)
+✔ holding attack across a transition never unlocks the result screen (0.119709ms)
+✔ both joystick and attack fingers must be released (0.13875ms)
+✔ rapid taps during the delay require a quiet gap before menus accept input (0.099083ms)
+✔ a fresh deliberate press after unlocking remains allowed (0.078625ms)
+✔ closing and reopening a result uses a new delay without forgetting held input (0.08525ms)
+✔ lost focus clears missing releases but does not skip the transition delay (0.078208ms)
+✔ dialogue steps can use a shorter delay without forgetting held keys or fingers (0.068ms)
+ℹ tests 68
+ℹ suites 0
+ℹ pass 68
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 210.763291
