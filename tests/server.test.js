@@ -39,3 +39,18 @@ test('asset serving does not expose project documents, traversal, malformed path
   }
   const post = await fetch(base + '/assets/audio/sfx/dash.wav', { method: 'POST' }); assert.equal(post.status, 405);
 });
+
+test('server starts when launched through a versioned-release symlink', { timeout: 5000 }, async t => {
+  const { mkdtemp, symlink, rm } = await import('node:fs/promises');
+  const { tmpdir } = await import('node:os');
+  const { spawn } = await import('node:child_process');
+  const { fileURLToPath } = await import('node:url');
+  const directory = await mkdtemp(`${tmpdir()}/manolo-launch-`);
+  const link = `${directory}/server.mjs`;
+  await symlink(fileURLToPath(new URL('../server.mjs', import.meta.url)), link);
+  const child = spawn(process.execPath, [link], { env: { ...process.env, HOST: '127.0.0.1', PORT: '0' } });
+  t.after(async () => { child.kill(); await rm(directory, { recursive: true, force: true }); });
+  const [output] = await once(child.stdout, 'data');
+  assert.match(output.toString(), /Manolo el Mazmorrero/);
+  assert.equal(child.exitCode, null);
+});

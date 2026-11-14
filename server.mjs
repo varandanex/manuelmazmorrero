@@ -44,7 +44,7 @@ return http.createServer(async (req, res) => {
 });
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) createStaticServer().listen(port, process.env.HOST || '0.0.0.0', () => {
+if (process.argv[1] && await realpath(process.argv[1]) === fileURLToPath(import.meta.url)) createStaticServer().listen(port, process.env.HOST || '0.0.0.0', () => {
   console.log(`Manolo el Mazmorrero → http://localhost:${port}`);
   for (const list of Object.values(os.networkInterfaces())) for (const address of list || []) {
     if (address.family === 'IPv4' && !address.internal) console.log(`Same Wi-Fi → http://${address.address}:${port}`);
