@@ -18,9 +18,9 @@ return http.createServer(async (req, res) => {
     if (!['GET', 'HEAD'].includes(req.method)) { res.writeHead(405); res.end(); return; }
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     const relative = pathname === '/' ? 'index.html' : pathname.slice(1);
-    const archiveFile = relative === 'assets/downloads/manolo-ilustraciones-png.zip';
+    const archiveFile = relative === 'assets/downloads/manolo-fichas-personajes.zip';
     const audioFile = /^assets\/audio\/(?:sfx\/[a-z0-9_]+\.(?:wav|json)|[\p{L}\p{N} _-]+\.mp3)$/u.test(relative);
-    if (!archiveFile && !audioFile && !['index.html', 'style.css'].includes(relative) && !/^(src|assets)\/[\w/-]+\.(js|png|svg|webp|ico|ttf)$/.test(relative)) {
+    if (!archiveFile && !audioFile && !['index.html', 'style.css', 'src/character-cards.css'].includes(relative) && !/^(src|assets)\/[\w/-]+\.(js|png|svg|webp|ico|ttf)$/.test(relative)) {
       res.writeHead(404); res.end('Not found'); return;
     }
     const file = path.resolve(root, relative);
@@ -29,7 +29,7 @@ return http.createServer(async (req, res) => {
     const data = archiveFile ? null : await readFile(file);
     const size = data ? data.length : (await stat(file)).size;
     const headers = { 'Content-Type': mime[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-cache', 'X-Content-Type-Options': 'nosniff', 'Content-Length': size, 'Accept-Ranges': 'bytes' };
-    const originalDownload = /^assets\/art\/[\w/-]+\.png$/.test(relative) && new URL(req.url, 'http://localhost').searchParams.get('download') === '1';
+    const originalDownload = /^assets\/(?:art|cards)\/[\w/-]+\.png$/.test(relative) && new URL(req.url, 'http://localhost').searchParams.get('download') === '1';
     if (archiveFile || originalDownload) headers['Content-Disposition'] = `attachment; filename="${path.basename(file)}"`;
     const send = (start = 0, end = size - 1) => {
       if (req.method === 'HEAD') { res.end(); return; }

@@ -82,9 +82,10 @@ export function chooseUpgrade(g, id) {
 export function pauseGame(g) { if (g.mode === 'playing') { g.mode = 'paused'; return true; } return false; }
 export function resumeGame(g) { if (g.mode === 'paused') g.mode = 'playing'; }
 
-function spawnEnemy(g, type, x, y, extra = {}) {
-  const stats = {
-    grunt: { r: 10, hp: 38 + g.floor * 5, speed: 34 + g.floor * 4, damage: 9 },
+// Shared by live spawning and the collectible character dossiers.
+export function enemyStats(type, floor = 0) {
+  return {
+    grunt: { r: 10, hp: 38 + floor * 5, speed: 34 + floor * 4, damage: 9 },
     bat: { r: 8, hp: 26, speed: 55, damage: 7 },
     caster: { r: 11, hp: 42, speed: 25, damage: 8 },
     drek: { r: 9, hp: 35, speed: 59, damage: 8 },
@@ -98,6 +99,10 @@ function spawnEnemy(g, type, x, y, extra = {}) {
     host: { r: 23, hp: 630, speed: 0, damage: 15 },
     generator: { r: 15, hp: 96, speed: 0, damage: 0 },
   }[type];
+}
+
+function spawnEnemy(g, type, x, y, extra = {}) {
+  const stats = enemyStats(type, g.floor);
   const enemy = { id: ++g.id, type, x, y, ...stats, maxHp: stats.hp, mode: 'idle', timer: 1.2 + random(g) * .6, flash: 0, boss: FLOORS.some(f => f.bossType === type), ...extra };
   g.enemies.push(enemy); return enemy;
 }

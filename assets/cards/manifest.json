@@ -1,0 +1,107 @@
+{
+  "size": {
+    "width": 1600,
+    "height": 2400
+  },
+  "sourceHashes": {
+    "style.css": "b075ba9cb332175ded3c99ca5f925c92ddef87e48d03898aba2ce75d09d5618f",
+    "src/character-cards.js": "57efd3b905efa08c12c2675112b155f601f4b481b96b6bfceaec64c8133acb78",
+    "src/character-cards.css": "2432dd9995b6f82072bf8ab17eefe61941cdd17d89d37e08358bb0f083338140",
+    "src/game.js": "668cabc93d8f48e0b3671ae6e58d7bc5a216b19d684e679bf212e53b91d7fff8",
+    "src/encounter-cards.js": "f5d847fd77d0e7ceb5e9a3ddbc6d3f574bd47f76ed1f912663b98367f671bf94",
+    "src/boss-dialogues.js": "c147170b13c74696020dec22b8a5fe09de800fbe2e04d047d3f3dfa23f71ddbc",
+    "scripts/build_character_cards.mjs": "65be6c5059700116dc43d6528c81d39164e84126d497c83db1c4933cd4099681",
+    "assets/fonts/barlow-condensed-700.ttf": "7dde307fa887fc65ff5830cfada77a7decc5dae8d3c816c9d39ba3f1af1c4ed7",
+    "assets/fonts/barlow-condensed-800.ttf": "73bc9e17231e9073780d3c81574c7253cecd5645c93544df1a935054b39a364f",
+    "assets/fonts/barlow-condensed-900.ttf": "0ec6b3cca2df54f108f8dc239597e0eab386343a230afad8a0f445c7d21c3e77",
+    "assets/fonts/ibm-plex-mono-400.ttf": "5cbc4288c3489acb668caf9bb59fcab8767f961575ad74c1366c40bc43a8cde3",
+    "assets/fonts/ibm-plex-mono-500.ttf": "249a8ba4a836742e86a7465dcfa30ea433a8c50b5d1ec7eaeecab28403409760",
+    "assets/fonts/ibm-plex-mono-600.ttf": "600ee36d62d930b6186ed561d233090aa5f0a3dc626e87973f9f2d72e7f68bd3",
+    "assets/fonts/inter-400.ttf": "1b08e7fc267a5c7e1d614100f604b83e7e8a0be241f0f288faa2b3ac93a683ba",
+    "assets/fonts/inter-500.ttf": "8c883f63b2c4157d997319f2c8bc6995ed4357ef371940d31ca159004a4aae63",
+    "assets/fonts/inter-600.ttf": "e7a1aaf7eda9f2fad4131725fa556265ec75ca7b2d756260173a040363e8d4f7",
+    "assets/fonts/inter-700.ttf": "b37284b5701b6b168dfc770aa1a4ac492106422fd3ba76bc7641e37434e8019c",
+    "assets/fonts/inter-800.ttf": "eec66af7f2337bd34fe6e801cf92ededcb57a20c0d7bc40a61d4eefcbe3dd40c",
+    "assets/fonts/pixelify-sans-variable.ttf": "9ba86cd010a4de309d263ceff8e8044092c9db7efda869620cb9ff1c4389e8a5",
+    "assets/art/hero-manu-umbrella.png": "4b50b6053bfb0a1b5873e119bf752af65e5a0b946fac5cd90b9fa1b3bf161c5e",
+    "assets/art/enemies/enemy-goblin.png": "2f747073479d0bd833c4a1a9c132a3ec89b6d0fc93ba44cc50acdeb857c2e99e",
+    "assets/art/enemies/enemy-scatterer.png": "3ff8fd83a7818621e4e4297cc6d08dafe067076d6b00c0f7be45c070bad7dbf7",
+    "assets/art/enemies/enemy-evil-llama.png": "aab5625b89cdfd27b027cb0dbfb4e7a56c937d3fd1f7c43088aa11d1dfe72ef7",
+    "assets/art/enemies/enemy-drek.png": "e64249e874e32f2f632a62d93650900d38551e5d0974ee11c1705c05fb4031e2",
+    "assets/art/enemies/enemy-jikininki.png": "6d74f2741860b458c4d3a8521538ef92b3a270f48aa662ea9da1e59b0f1c4785",
+    "assets/art/enemies/enemy-acid-crawler.png": "01468b204cfd18586cc6eeeda0cfeec9bbb230b26f938e9cf631becd46adfed5",
+    "assets/art/enemies/enemy-goblin-engineer.png": "68286d6747ffeb8f8be164493c095d325ad673478ca836d1bc29e980a5cde6a6",
+    "assets/art/enemies/boss-juicer.png": "28bb48a7892c897bbb655dfa2229457f2f36ab3b14eaa1946327bb587aba6c6a",
+    "assets/art/enemies/boss-hoarder.png": "01186715edcdc77ecf0b676d30c68a0be48a652fb4ca64377bc0641e7f77d865",
+    "assets/art/enemies/boss-mantaur.png": "126f6fed5deb87a148ac7dd8ca8372995a8c4f7c5f1c433017ed29489ee095ac",
+    "assets/art/enemies/boss-rage-elemental.png": "ef148ec3948f049c7ea052e5f3716c65e4876e3f8e28255cc6f1aef815101603",
+    "assets/art/enemies/boss-krakaren.png": "d2b27b66858e58b0d97e087f755a8af41cd4e9b3ab12d5f0783e18e368866374"
+  },
+  "cards": [
+    {
+      "id": "manolo",
+      "name": "Manolo",
+      "filename": "ficha-manolo.png"
+    },
+    {
+      "id": "grunt",
+      "name": "Goblin",
+      "filename": "ficha-grunt.png"
+    },
+    {
+      "id": "bat",
+      "name": "Desperdigador",
+      "filename": "ficha-bat.png"
+    },
+    {
+      "id": "caster",
+      "name": "Llama maligna",
+      "filename": "ficha-caster.png"
+    },
+    {
+      "id": "drek",
+      "name": "Drek",
+      "filename": "ficha-drek.png"
+    },
+    {
+      "id": "jikininki",
+      "name": "Jikininki",
+      "filename": "ficha-jikininki.png"
+    },
+    {
+      "id": "acid",
+      "name": "Empalador ácido rastrero",
+      "filename": "ficha-acid.png"
+    },
+    {
+      "id": "engineer",
+      "name": "Ingeniero goblin",
+      "filename": "ficha-engineer.png"
+    },
+    {
+      "id": "butcher",
+      "name": "El Juicer",
+      "filename": "ficha-butcher.png"
+    },
+    {
+      "id": "spore",
+      "name": "La Acaparadora",
+      "filename": "ficha-spore.png"
+    },
+    {
+      "id": "mantaur",
+      "name": "Humanotauro",
+      "filename": "ficha-mantaur.png"
+    },
+    {
+      "id": "elemental",
+      "name": "Elemental de furia",
+      "filename": "ficha-elemental.png"
+    },
+    {
+      "id": "host",
+      "name": "Clon de Krakaren",
+      "filename": "ficha-host.png"
+    }
+  ]
+}

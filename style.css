@@ -362,20 +362,21 @@ dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) #modal-actions {
   #encounter-next { min-height: 44px; padding-block: 8px; }
 }
 
-/* The art archive is independent of gameplay and loads one light preview at a time. */
-#art-gallery { width: min(900px, calc(100vw - 20px)); max-height: calc(100dvh - 20px); border-color: var(--pink); }
+/* Readable collectible dossiers; only the card region scrolls, controls stay available. */
+#art-gallery { width: min(1000px, calc(100vw - 20px)); max-width: calc(100vw - 20px); max-height: calc(100dvh - 20px); border-color: var(--pink); }
 .gallery-inner { height: min(800px, calc(100dvh - 24px)); display: grid; grid-template-rows: auto minmax(60px, 1fr) auto auto auto; gap: 12px; padding: 20px; }
 .gallery-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .gallery-header .eyebrow { font-size: 10px; color: var(--pink); letter-spacing: 1px; }
 .gallery-header h2 { margin: 4px 0 0; font: 600 clamp(23px, 4vw, 34px)/1 var(--display); color: var(--gold); }
 .gallery-header h2:focus { outline: none; }
 #gallery-close { flex-shrink: 0; min-width: 44px; height: 44px; font: 32px/1 var(--body); }
-.gallery-stage { position: relative; min-height: 0; overflow: hidden; border: 1px solid var(--line); touch-action: pan-y pinch-zoom; background-color: #151419; background-image: conic-gradient(#1d1b21 25%, transparent 0 50%, #1d1b21 0 75%, transparent 0); background-size: 24px 24px; }
-.gallery-image { width: 100%; height: 100%; padding: 8px; }
-.gallery-image img { width: 100%; height: 100%; object-fit: contain; user-select: none; -webkit-user-drag: none; }
+.gallery-stage { position: relative; min-height: 0; overflow: auto; overscroll-behavior: contain; border: 1px solid var(--line); touch-action: pan-y pinch-zoom; background: var(--panel); scrollbar-color: var(--pink) var(--panel); }
+.gallery-stage:focus-visible { outline: 2px solid var(--pink); outline-offset: -2px; }
+.gallery-portrait-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; }
+.gallery-portrait-actions a, .gallery-portrait-actions button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 10px; border: 1px solid #f4eddd; background: #0b0b0e; color: #f4eddd; font: 12px/1.3 var(--body); }
 .gallery-feedback { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; pointer-events: none; }
-.gallery-feedback p { max-width: 340px; margin: 0; padding: 10px; background: var(--bg); text-align: center; font: 13px/1.5 var(--body); }
-.gallery-feedback button { pointer-events: auto; background: var(--bg); }
+.gallery-feedback p { color: var(--ink); max-width: 340px; margin: 0; padding: 10px; background: var(--bg); text-align: center; font: 13px/1.5 var(--body); }
+.gallery-feedback button { color: var(--ink); pointer-events: auto; background: var(--bg); }
 .gallery-navigation { display: grid; grid-template-columns: 48px minmax(0, 1fr) 48px; align-items: center; gap: 12px; }
 .gallery-navigation button { width: 48px; height: 48px; font: 26px/1 var(--body); }
 .gallery-caption { min-width: 0; text-align: center; }
@@ -404,9 +405,9 @@ dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) #modal-actions {
   .gallery-download span { font-size: 10px; }
 }
 @media (max-height: 500px) and (orientation: landscape) {
-  .gallery-inner { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); grid-template-rows: auto 1fr auto auto; padding: 12px; gap: 10px 16px; }
+  .gallery-inner { grid-template-columns: minmax(0, 1fr) 230px; grid-template-rows: auto 1fr auto auto; padding: 10px; gap: 8px 12px; }
   .gallery-header { grid-column: 1 / -1; }
-  .gallery-header h2 { font-size: 24px; }
+  .gallery-header h2 { font-size: 23px; }
   .gallery-stage { grid-row: 2 / 5; }
   .gallery-navigation { grid-column: 2; grid-template-columns: 44px minmax(0, 1fr) 44px; gap: 6px; }
   .gallery-navigation button { min-width: 44px; width: 44px; height: 44px; }
@@ -416,6 +417,9 @@ dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) #modal-actions {
   .gallery-download { padding: 8px 4px; min-height: 52px; }
   .gallery-download strong { font-size: 18px; }
   .gallery-download span, .gallery-note { font-size: 10px; }
+  .gallery-stage .cc-body { display: block; }
+  .gallery-stage .cc-image { height: 220px; }
+  .gallery-stage .cc-portrait::before { width: 180px; }
 }
 
 /* A dedication on the cover, not a credit hidden below the fold. */

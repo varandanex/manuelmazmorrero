@@ -1,0 +1,74 @@
+/* A screenprinted contestant dossier, shared by the gallery and PNG exports. */
+.character-card { --card-accent: #ed147b; background: #f4eddd; color: #0b0b0e; border: 3px solid #0b0b0e; font: 14px/1.5 var(--body); text-align: left; }
+.cc-hero { --card-accent: #ffe000; }
+.cc-header { padding: 14px 18px; background: #0b0b0e; color: #f4eddd; border-top: 6px solid var(--card-accent); }
+.cc-overline { display: flex; justify-content: space-between; gap: 12px; color: #f4eddd; font: 10px/1.3 var(--mono); letter-spacing: 1px; }
+.cc-title { margin: 8px 0 6px; color: #ffe000; font: 700 32px/1.05 var(--display); overflow-wrap: anywhere; }
+.cc-class { margin: 0; font: 600 12px/1.4 var(--body); }
+.cc-location { margin: 4px 0 0; font: 11px/1.4 var(--body); color: #b9b4a8; }
+.cc-body { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); }
+.cc-portrait { position: relative; min-width: 0; overflow: hidden; display: grid; place-items: center; padding: 18px; background-image: radial-gradient(#0b0b0e20 1px, transparent 1px); background-size: 7px 7px; }
+.cc-portrait::before { content: ''; position: absolute; width: 82%; aspect-ratio: 1; background: #ffe000; border: 2px solid #0b0b0e; border-radius: 50%; box-shadow: 8px 8px 0 #ed147b; }
+.cc-image { position: relative; width: 100%; height: 330px; object-fit: contain; user-select: none; -webkit-user-drag: none; transform-origin: 50% 90%; }
+.cc-details { min-width: 0; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+.cc-quote { margin: 0; font: 600 14px/1.5 var(--body); }
+.cc-stats { margin: 0; display: grid; grid-template-columns: 1fr 1fr 1.15fr; background: #0b0b0e; color: #f4eddd; border: 2px solid #0b0b0e; }
+.cc-stats > div { min-width: 0; padding: 8px 5px; text-align: center; }
+.cc-stats > div + div { border-left: 1px solid #48453f; }
+.cc-stats dt { font: 10px/1.2 var(--mono); text-transform: uppercase; }
+.cc-stats dd { margin: 0; }
+.cc-stats strong { display: block; margin: 3px 0; font: 600 25px/1.1 var(--display); color: #ffe000; }
+.cc-stats > div:last-child strong { font-size: 20px; }
+.cc-stats span { display: block; font: 9px/1.3 var(--body); }
+.cc-label { margin: 0 0 6px; font: 600 10px/1.3 var(--mono); letter-spacing: .5px; }
+.cc-attack-name { margin: 7px 0 3px; font: 600 22px/1.15 var(--display); }
+.cc-description, .cc-tip p { margin: 0; font: 13px/1.5 var(--body); }
+.cc-tip { border-left: 4px solid #ed147b; padding-left: 12px; }
+.cc-note { margin: 0; font: 10px/1.5 var(--body); color: #49443f; }
+.cc-footer { display: flex; gap: 10px; align-items: center; justify-content: space-between; border-top: 2px solid #0b0b0e; padding: 12px 18px; }
+.cc-footer strong { font: 600 16px/1.2 var(--display); }
+.cc-footer span { max-width: 245px; font: 9px/1.4 var(--body); text-align: right; }
+.gallery-animated .cc-hero .cc-image { animation: dossier-idle 2.4s ease-in-out infinite; }
+@keyframes dossier-idle { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-5px) rotate(1deg); } }
+@media (prefers-reduced-motion: reduce) { .gallery-animated .cc-hero .cc-image { animation: none; } }
+@media (max-width: 600px) {
+  .cc-body { display: block; }
+  .cc-header { padding: 12px; }
+  .cc-overline { font-size: 9px; letter-spacing: 0; }
+  .cc-title { font-size: 29px; }
+  .cc-portrait { height: 240px; padding: 10px; }
+  .cc-portrait::before { width: 180px; }
+  .cc-image { height: 220px; }
+  .cc-details { padding: 14px; }
+  .cc-stats > div:last-child strong { font-size: 16px; }
+  .cc-footer { padding: 12px; flex-direction: column; align-items: flex-start; }
+  .cc-footer span { max-width: none; text-align: left; }
+}
+/* Print dimensions are deliberate: native art remains fully visible and below its source size. */
+.cc-print { width: 1600px; height: 2400px; border: 16px solid #0b0b0e; display: flex; flex-direction: column; }
+.cc-print .cc-header { flex: 0 0 auto; padding: 34px 56px; border-top-width: 18px; }
+.cc-print .cc-overline { font-size: 26px; letter-spacing: 3px; }
+.cc-print .cc-title { margin: 18px 0 14px; font-size: 106px; line-height: 1.05; }
+.cc-print .cc-class { font-size: 30px; }
+.cc-print .cc-location { font-size: 28px; margin-top: 10px; }
+.cc-print .cc-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.cc-print .cc-portrait { flex: 0 0 860px; padding: 30px; background-size: 14px 14px; }
+.cc-print .cc-portrait::before { width: 750px; border-width: 5px; box-shadow: 22px 22px 0 #ed147b; }
+.cc-print .cc-image { height: 800px; width: 100%; animation: none; }
+.cc-print .cc-details { flex: 1; padding: 28px 64px 36px; gap: 26px; justify-content: space-between; }
+.cc-print .cc-quote { font-size: 36px; line-height: 1.4; }
+.cc-print .cc-stats { border-width: 6px; }
+.cc-print .cc-stats > div { padding: 18px; }
+.cc-print .cc-stats > div + div { border-left-width: 3px; }
+.cc-print .cc-stats dt { font-size: 26px; }
+.cc-print .cc-stats strong { font-size: 76px; margin: 8px 0; }
+.cc-print .cc-stats > div:last-child strong { font-size: 76px; }
+.cc-print .cc-stats span { font-size: 24px; }
+.cc-print .cc-label { font-size: 25px; margin-bottom: 12px; letter-spacing: 2px; }
+.cc-print .cc-attack-name { font-size: 48px; margin: 14px 0 7px; }
+.cc-print .cc-description, .cc-print .cc-tip p { font-size: 30px; line-height: 1.45; }
+.cc-print .cc-tip { border-left-width: 10px; padding-left: 28px; }
+.cc-print .cc-note { font-size: 23px; line-height: 1.4; }
+.cc-print .cc-footer { flex-shrink: 0; padding: 24px 56px; border-top-width: 5px; }
+.cc-print .cc-footer strong { font-size: 38px; }
+.cc-print .cc-footer span { max-width: 600px; font-size: 23px; }

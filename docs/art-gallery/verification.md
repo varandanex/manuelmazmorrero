@@ -1,44 +1,51 @@
-# Original-art gallery verification
+# Collectible character dossiers
 
-## Delivered behavior
+## Current scope
 
-- The main menu opens a separate native modal dialog, outside gameplay and its transition guards.
-- 38 slides cover every PNG under `assets/art/`: five current bosses, seven regular enemies, three Manolo illustrations, five backgrounds, four props, the logo and thirteen previous designs.
-- One image per slide, uncropped, with name, category, source dimensions and source file size. Transparent art uses a checkerboard backdrop.
-- Next/previous buttons, left/right arrow keys and horizontal swipes wrap around the collection. Home/End select its endpoints. Close/Escape restore focus to the menu entry; reopening retains the current slide.
-- Each download is the original PNG, not the lighter preview. The complete ZIP preserves all 38 source files and their relative folders. No resizing, upscaling, flattening or image recompression occurs.
-- The gallery requests only its current WebP preview. Original PNGs and the ZIP are fetched on explicit download, not when the menu or gallery opens.
-- Preview errors offer a retry while leaving the original download available. Late responses cannot overwrite a newer slide.
+The former all-art gallery has been replaced with **13 character cards**: the current full-body umbrella Manolo, seven current regular enemies and five current bosses. Manolo's two portraits, environments, props, logo and earlier designs are not gallery entries or archive contents. Original art files remain untouched; only the superseded all-art ZIP is retired.
 
-## Implementation
+Every card has its name, class, floor availability, an in-character line, health, contact/umbrella damage, mobility, attack behavior and a survival tip. Manolo and boss lines reuse approved dialogue; seven regular-enemy lines are original game copy. The footer explicitly distinguishes game adaptation data from book statistics.
 
-- `scripts/build_art_gallery.py`: Python 3.9+ standard-library catalog/ZIP builder; Spanish labels, curated order and discovery of additional PNGs. Requires a matching WebP per source. Fixed timestamps and ordering make rebuilds deterministic.
-- `src/art-gallery-data.js`: generated source metadata, hashes, preview paths and archive metadata.
-- `src/art-gallery.js`: isolated gallery, focus handling, keyboard/pointer input and lazy previews.
-- `assets/downloads/manolo-ilustraciones-png.zip`: prebuilt ZIP; 69,038,862 bytes. All PNG entries use ZIP STORE and match their source SHA-256 hashes.
-- `index.html`, `src/main.js`, `style.css`: menu entry, initialization and responsive styles. No combat mechanics or checkpoint schema changes for the gallery.
-- `server.mjs`: exact archive allowlist, attachment headers, streaming ZIP delivery, HEAD and byte ranges. PNG attachment headers require the explicit `download=1` query. Other archives and project documents remain inaccessible.
+## Stats and gameplay boundary
 
-## Automated and browser verification
+- `enemyStats(type, floor)` in `src/game.js` is the same function used for actual enemy spawning and card values. Its extraction does not change balance or behavior.
+- Manolo's 100 HP / 24 damage / 116 units per second are read from an unupgraded new game.
+- Goblins show 38–58 HP and 34–50 base speed across their actual floors 1, 2 and 5. They are not presented as a single fixed-level opponent.
+- Enemy damage is labeled **Contacto**, not special-attack damage. Special abilities remain described separately.
+- La Acaparadora is stationary. Krakaren follows a scripted patrol, so its mobility label is **Patrulla**, rather than the misleading zero in its base-speed field.
+- No new character illustrations, combat abilities, music or checkpoint fields were introduced.
 
-- `npm run check`: passed.
-- `npm test`: 95/95 passed, including five gallery/catalog/archive/server tests.
-- Python ZIP CRC validation: 38 entries, no errors. Rebuilding produces identical ZIP and catalog hashes.
-- Chromium 151.0.7922.34, headless: **415 checks passed**, no uncaught browser errors.
-- All 38 slides checked at 320×568, 390×667, 1280×800 and 667×390. Full image containment, viewport/label fit and minimum 44 px gallery controls verified. Portrait and landscape screenshots visually inspected.
-- Menu actions checked with and without a saved checkpoint, after CSS transitions settle.
-- Trusted keyboard navigation, native Escape, focus restoration, wrapping and reopening checked.
-- Trusted touch input verified horizontal navigation, vertical-gesture cancellation and no advancement on canceled multitouch; pinch zoom remains permitted by CSS.
-- Actual browser PNG and full ZIP downloads completed; filenames and SHA-256 hashes matched the source catalog.
-- Network requests verified no eager original PNG or archive downloads.
-- Aborted-preview retry, delayed stale preview, exact checkpoint preservation and continuing the saved fourth floor verified.
-- Existing gameplay/presentation browser suite rerun: **394 checks passed**, no failures or browser errors (floor cards, boss dialogue, mobile layouts, environments, combat UI, transition guards, touch controls, five-floor progression, keyboard input and saved-game/retry briefings).
+## Viewing and downloading
 
-Local browser runner, results, downloaded verification copies and screenshots are under `output/playwright/art-gallery/` (ignored by Git). The runner uses the locally available Playwright installation; no runtime or project dependency was added. Unit/archive/HTTP tests are maintained in `tests/art-gallery.test.js`; menu layout checks are in `tests/browser/entry-buttons-regression.js`.
+- The same semantic DOM component renders the live dossiers and the downloadable posters. Names, stats and descriptions are real text, not unreadably scaled screenshot previews.
+- Horizontal swipe, arrow buttons or ←/→ change characters; Home/End choose endpoints. Vertical gestures or keyboard scrolling read a dossier. The controls stay outside the scrolling card region. Escape returns focus to the menu.
+- Manolo's sprite has a subtle CSS idle movement, with pause/resume and reduced-motion handling. This is a gallery preview, not an animated PNG export. All downloaded cards are static.
+- **Ficha PNG** downloads the complete 1600×2400 card, with source PNG artwork and local fonts. **Todas en ZIP** downloads precisely those 13 PNGs, not the old originals collection. **PNG sin ficha** separately preserves the original transparent illustration bytes.
+- Browsing loads one existing WebP illustration at a time. Neither full card PNGs nor the ZIP are downloaded eagerly. Late image responses cannot replace a newer card; preview errors retain readable card data and downloads.
+
+## Authoring and delivery
+
+- `src/character-cards.js`: profiles, real-stat integration and shared DOM renderer.
+- `src/character-cards.css`: responsive dossiers and fixed-size print composition.
+- `src/art-gallery.js`: carousel, original/card downloads, focus, swipe and optional idle movement.
+- `scripts/build_character_cards.mjs`: optional Playwright/Chromium authoring step, using a private loopback server, original PNGs and self-hosted fonts. It checks export bounds and writes each card PNG only after all 13 renders succeed.
+- `scripts/build_art_gallery.py`: validates source fingerprints and PNG dimensions, packages exactly the manifest's thirteen cards, and generates download metadata. ZIP entries have fixed timestamps and preserve PNG bytes.
+- `assets/cards/manifest.json`: fingerprints source copy, simulation, styles, fonts and current original art. Tests fail on stale exports.
+- `server.mjs`: exact ZIP and stylesheet allowlists, attachment headers for cards/originals, streaming ZIP delivery and byte ranges. The retired all-art ZIP URL and source manifest remain inaccessible.
+
+Run `npm run gallery:build` with Playwright/Chromium available and Python 3.9+. If using a separate authoring installation, provide its absolute ESM module location through `PLAYWRIGHT_MODULE`. Runtime serving/play and downloads require no new dependencies. Include the generated card PNGs, ZIP, stylesheet and metadata in any later deployment.
+
+## Verification
+
+- Syntax checks and **97 unit/HTTP/archive tests** pass. Card tests cover the exact 13-character scope, source-derived statistics, preserved approved boss lines, all card dimensions/hashes, stale-export detection, ZIP membership/integrity, individual source/card downloads and retired paths.
+- All 13 exported PNGs pass 1600×2400 layout-bound checks. Manolo and the longest-name enemy exports were visually inspected; no clipped character art or text.
+- Deterministic old/new simulation comparison: **10,800 identical frames** across three seeds and all five floors, including regular waves and boss states.
+- Browser coverage includes all 13 dossiers at 320×568, 390×667, 1280×800 and 667×390; scrollable content, stable 44 px controls, exact live stats/copy, full card/original/ZIP downloads, keyboard focus, native horizontal/vertical touch input, animation pause/reduced motion, failure/retry, delayed image responses and saved-game continuation.
+- A narrow-screen overflow in the patrol label was caught and corrected. Keyboard focus is retained when navigation removes a focused in-card action.
+- Isolated Chromium 151.0.7922.34: **320 gallery checks** passed and **394 existing gameplay/presentation checks** passed, with no uncaught browser errors.
+
+Local browser evidence and authoring checks are under `output/playwright/character-cards/` (ignored by Git); unit tests are in `tests/art-gallery.test.js`.
 
 ## Acceptance boundaries
 
-- This is a local implementation, not a public deployment. Include the generated ZIP and catalog when deploying.
-- Maximum quality means the existing source PNG resolution; no higher-resolution artwork was generated.
-- Physical iOS/Android download destinations, browser share/save dialogs, slow mobile networks and VoiceOver/TalkBack still need device acceptance. Browser automation does not replace this.
-- A native download may open the browser's download/save UI. The page does not claim that a file has been saved before the browser completes it.
+These checks validate the source and generated artifacts; production acceptance also requires a same-commit deployment and live smoke tests. Physical-device download destinations, iOS/Android browser dialogs, VoiceOver/TalkBack and comfort still need device acceptance. The new cards do not create extra detail beyond the original illustrations; original PNGs remain available separately at native resolution.

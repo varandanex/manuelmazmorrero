@@ -43,22 +43,29 @@ These are game adaptations, not claims about canonical abilities or encounter or
 
 The beginning of the current floor is stored locally in this browser. It is not a mid-combat save and it does not sync across devices. A new run replaces this checkpoint. Victory removes it. The game remains playable if browser storage is unavailable. Version-2 checkpoints support all five floors. Legacy version-1 saves retain their completed-floor count, upgrades and score; an old third-floor save enters La Maraña de Hierro rather than skipping the expansion. The legacy storage key is intentionally retained.
 
-## Art gallery and original downloads
+## Collectible character dossiers
 
-Open **Galería · Arte descargable** from the main menu. Browse with the on-screen arrows, a horizontal swipe or the keyboard (←/→, Home/End); Escape returns to the menu. The gallery remembers the current slide until the page reloads and does not modify the saved game.
+Open **Galería · Fichas de personaje** from the menu. The collection contains **13 current characters only**: Manolo's full-body umbrella sprite, seven regular enemies and five bosses. There are no portraits, scenarios, props, logos or previous designs in the gallery or ZIP. Their source files remain untouched for gameplay and provenance.
 
-The archive includes all **38 original PNGs** in `assets/art/`: five current bosses, seven regular enemies, Manolo illustrations, five floor backgrounds, props, the logo and previous designs. Each slide shows its name, category, original dimensions and file size. **PNG original** downloads that image; **Todo en ZIP** downloads the entire collection (about 66 MB), retaining its folders. Both downloads preserve the source bytes, resolution and transparency; they do not upscale or convert WebP previews.
+Each dossier shows its Spanish name, class, floors, an original character line, health, damage, mobility, attacks and survival advice. Stats come from the simulation: Manolo is shown without upgrades; the goblin shows its floor-dependent ranges. Enemy damage is explicitly contact damage, not a promise that every special attack does the same damage. Krakaren's movement is a scripted patrol, not its zero base-speed field. Quotes and combat data are game adaptations, not statistics from the novels.
 
-Previews load lazily, one WebP at a time. Original PNGs and the ZIP are fetched only when requested. The ZIP is prebuilt, works on static hosting and is streamed with byte-range support by the Node server; it is not assembled in the browser. Include `assets/downloads/` in deployments.
+Use the arrows, horizontal swipes or keyboard (←/→, Home/End) to change cards. Scroll vertically to read long dossiers; navigation and download controls stay available. Escape closes the gallery and restores focus. Manolo's preview has a subtle idle animation with a pause button and reduced-motion support; **downloaded PNGs are static**.
 
-After adding or changing original PNGs, regenerate their WebP previews with `./scripts/encode-art.sh`, then rebuild the catalog and archive (Python 3.9+):
+**Ficha PNG** downloads the complete 1600×2400 dossier, including the artwork and text. **Todas en ZIP** downloads exactly those thirteen PNGs (about 11 MB). **PNG sin ficha**, inside each dossier, still downloads the unchanged source illustration with its original transparency. Lightweight WebPs are used only for browsing; downloads are prebuilt and do not require browser-side canvas conversion or ZIP assembly.
+
+`src/character-cards.js` owns the shared content/DOM renderer and reads live base stats through `enemyStats` in `src/game.js`. `src/character-cards.css` provides responsive and print layouts. `assets/cards/manifest.json` records hashes of the source copy, stats, artwork, fonts and styling; tests fail if exported cards are stale.
+
+To regenerate cards after changing their inputs, use an authoring installation of Playwright with Chromium, plus Python 3.9+. Set `PLAYWRIGHT_MODULE` to the absolute ESM module path if Playwright is installed outside this project:
 
 ```sh
 npm run gallery:build
+npm run check
 npm test
 ```
 
-Curated Spanish labels and ordering live in `scripts/build_art_gallery.py`; new PNGs are also discovered automatically. Commit the generated `src/art-gallery-data.js` and `assets/downloads/manolo-ilustraciones-png.zip` together. Tests verify catalog coverage, image dimensions, SHA-256 hashes, exact ZIP contents and download responses. See `docs/art-gallery/verification.md` for browser checks and device limitations.
+The builder renders the same dossier component using original PNG artwork and local fonts, verifies layout, then packages the thirteen cards. Commit `assets/cards/`, `assets/downloads/manolo-fichas-personajes.zip` and `src/art-gallery-data.js` together. Normal play, serving and downloading need only Node.js 20+ and the committed assets; Playwright is an authoring tool, not a runtime dependency. The former 38-image ZIP is retired.
+
+See `docs/art-gallery/verification.md` for checks and device limitations.
 
 ## Checks
 
