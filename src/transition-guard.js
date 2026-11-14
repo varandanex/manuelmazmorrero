@@ -4,7 +4,7 @@ export function createTransitionGuard({ now = () => performance.now(), delayMs =
   const held = new Set();
   let active = false, armed = false, deadline = 0, quietUntil = 0;
   return {
-    begin() { active = true; armed = false; deadline = now() + delayMs; quietUntil = now() + settleMs; },
+    begin(delay = delayMs) { active = true; armed = false; deadline = now() + delay; quietUntil = now() + settleMs; },
     close() { active = false; armed = false; },
     hold(id) { held.add(id); },
     release(id) {

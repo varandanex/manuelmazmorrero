@@ -15,7 +15,7 @@
     q.scene('intro', floor);
     check(`${floor}: floor title is limited to its transition`, !$('floor-toast').hidden && $('room-name').textContent.length > 0);
     q.scene('warning', floor);
-    check(`${floor}: boss warning does not cover the arena`, $('floor-toast').hidden);
+    check(`${floor}: boss warning does not duplicate the conversation`, $('floor-toast').hidden);
   }
   for (const [floor, mode, expected] of [[0,'idle',''], [0,'recover','vulnerable'], [0,'windup','danger'], [2,'idle','shield']]) {
     q.scene('boss', floor, mode);
@@ -34,7 +34,7 @@
   check('menu titles use the pixel font', getComputedStyle($('modal-title')).fontFamily.includes('Pixelify Sans'));
   check('long copy keeps the readable body font', getComputedStyle($('modal-copy')).fontFamily.includes('Inter'));
   [...$('modal-actions').children].find(el => el.textContent === 'Consultar controles').click();
-  check('help explains the icon-only controls', $('modal-content').textContent.includes('llave inglesa') && $('modal-content').textContent.includes('dos flechas'));
+  check('help explains the icon-only controls', $('modal-content').textContent.includes('paraguas') && $('modal-content').textContent.includes('dos flechas'));
   $('modal-actions').querySelector('button').click();
   check('help entered from pause can return to play', q.state.mode === 'playing' && q.state.modal === '');
   for (const kind of ['upgrade', 'dead', 'won']) {

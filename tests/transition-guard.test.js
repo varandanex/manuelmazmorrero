@@ -52,3 +52,11 @@ test('lost focus clears missing releases but does not skip the transition delay'
   const { guard, at } = clock(); guard.begin(); guard.hold('pointer:1'); at(100); guard.resetHeld();
   at(999); assert.equal(guard.isLocked(), true); at(1000); assert.equal(guard.isLocked(), false);
 });
+
+test('dialogue steps can use a shorter delay without forgetting held keys or fingers', () => {
+  const { guard, at } = clock(); guard.begin(); at(1000); assert.equal(guard.isLocked(), false);
+  guard.hold('key:Enter'); guard.begin(250); at(2000); assert.equal(guard.isLocked(), true);
+  guard.release('key:Enter'); at(2199); assert.equal(guard.isLocked(), true); at(2200); assert.equal(guard.isLocked(), false);
+  guard.begin(250); at(2449); assert.equal(guard.isLocked(), true); at(2450); assert.equal(guard.isLocked(), false);
+  guard.begin(); at(3449); assert.equal(guard.isLocked(), true); at(3450); assert.equal(guard.isLocked(), false);
+});

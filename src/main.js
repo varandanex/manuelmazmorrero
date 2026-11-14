@@ -1,7 +1,8 @@
-import { createGame, updateGame, chooseUpgrade, retryFloor, pauseGame, resumeGame, parseCheckpoint, formatTime, FLOORS, UPGRADES } from './game.js';
+import { createGame, updateGame, chooseUpgrade, retryFloor, pauseGame, resumeGame, beginBossFight, parseCheckpoint, formatTime, FLOORS, UPGRADES } from './game.js';
 import { loadArt, renderGame, renderPreview } from './render.js';
 import { createAudio } from './audio.js';
 import { createTransitionGuard } from './transition-guard.js';
+import { BOSS_DIALOGUES } from './boss-dialogues.js';
 
 const $ = id => document.getElementById(id);
 const canvas = $('arena');
@@ -14,6 +15,7 @@ const transitionGuard = createTransitionGuard();
 const touch = { x: 0, y: 0, attack: false, dash: false };
 let game = null, saved = null, lastFrame = 0, accumulator = 0, hudAt = 0;
 let modalKind = '', helpWasPlaying = false, lastNarrator = '';
+let bossDialogueIndex = 0;
 let joystickPointer = null, attackPointer = null, dashPointer = null;
 let artReady = false;
 const audio = createAudio({ onChange: updateSoundLabel });
@@ -99,7 +101,7 @@ function clearInput() {
 
 function setModal(kind, eyebrow, title, copy) {
   clearInput(); modalKind = kind;
-  if (['upgrade', 'dead', 'won'].includes(kind)) transitionGuard.begin();
+  if (['upgrade', 'dead', 'won', 'boss-intro'].includes(kind)) transitionGuard.begin();
   else transitionGuard.close();
   $('modal-eyebrow').textContent = eyebrow; $('modal-title').textContent = title; $('modal-copy').textContent = copy;
   $('modal-content').replaceChildren(); $('modal-actions').replaceChildren();
@@ -107,6 +109,7 @@ function setModal(kind, eyebrow, title, copy) {
   $('modal').dataset.kind = kind;
   updateModalLock();
   if (!$('modal').open) $('modal').showModal();
+  $('modal').scrollTop = 0;
   $('modal-title').focus({ preventScroll: true });
   syncGestureMode();
 }
@@ -122,7 +125,8 @@ function closeModal() {
 
 function updateModalLock() {
   const locked = transitionGuard.isLocked();
-  $('modal-content').inert = locked; $('modal-actions').inert = locked;
+  // The illustrated conversation stays readable while only advancement is locked.
+  $('modal-content').inert = locked && modalKind !== 'boss-intro'; $('modal-actions').inert = locked;
   $('transition-status').hidden = !locked;
   $('modal').classList.toggle('transition-locked', locked);
 }
@@ -172,7 +176,7 @@ function showHelp() {
   const rows = document.createElement('div'); rows.className = 'help-rows';
   const rules = [
     ['Muévete', 'Móvil: arrastra el joystick izquierdo. Ordenador: WASD o flechas.'],
-    ['Ataca de cerca', 'Mantén pulsado el botón amarillo de la llave inglesa o espacio / J. Manolo apunta al enemigo cercano.'],
+    ['Ataca de cerca', 'Mantén pulsado el botón amarillo del paraguas o espacio / J. Manolo apunta al enemigo cercano.'],
     ['Esquiva el peligro', 'Pulsa el botón de las dos flechas o Mayús / K. Durante el impulso no recibes daño. El número indica cuánto falta para recargar.'],
     ['Lee al enemigo', 'Las marcas en el suelo y el triángulo avisan de un ataque. El rayo indica que el jefe es vulnerable; el escudo, que debes destruir sus emisores.'],
     ['No estás condenado', 'Los botiquines verdes recuperan vida. Si caes, puedes repetir el piso conservando tus mejoras.'],
@@ -189,13 +193,59 @@ function closeHelp() {
   closeModal(); if (helpWasPlaying && game) { resumeGame(game); audio.setPaused(false); } helpWasPlaying = false;
 }
 
+function showBossIntro() {
+  bossDialogueIndex = 0; audio.setPaused(true);
+  setModal('boss-intro', `PISO 0${game.floor + 1} · CARA A CARA`, FLOORS[game.floor].boss, '');
+  const stage = document.createElement('div'); stage.className = 'duel-stage';
+  for (const [speaker, name, src] of [
+    ['manolo', 'Manolo', '/assets/webp/hero-manu-umbrella.webp'],
+    ['boss', FLOORS[game.floor].boss, `/assets/webp/enemies/${BOSS_DIALOGUES[game.floor].art}.webp`],
+  ]) {
+    const figure = document.createElement('figure'); figure.className = 'duel-fighter'; figure.dataset.speaker = speaker;
+    const portrait = document.createElement('img'); portrait.src = src; portrait.alt = speaker === 'manolo' ? 'Manolo con su paraguas negro cerrado' : name;
+    const caption = document.createElement('figcaption'); caption.textContent = name;
+    figure.append(portrait, caption); stage.append(figure);
+  }
+  const speech = document.createElement('div'); speech.className = 'duel-speech'; speech.setAttribute('role', 'status'); speech.setAttribute('aria-atomic', 'true');
+  const speaker = document.createElement('strong'); speaker.id = 'duel-speaker';
+  const line = document.createElement('p'); line.id = 'duel-line';
+  speech.append(speaker, line);
+  const progress = document.createElement('p'); progress.id = 'duel-progress'; progress.className = 'quiet-note';
+  $('modal-content').append(stage, speech, progress);
+  const next = modalButton('Continuar', () => advanceBossIntro(true), false, false); next.id = 'duel-next';
+  updateBossDialogue();
+}
+
+function updateBossDialogue() {
+  const lines = BOSS_DIALOGUES[game.floor].lines, line = lines[bossDialogueIndex];
+  $('duel-speaker').textContent = line.speaker === 'manolo' ? 'Manolo' : FLOORS[game.floor].boss;
+  $('duel-line').textContent = line.text;
+  $('duel-progress').textContent = `${bossDialogueIndex + 1} / ${lines.length}`;
+  $('duel-next').textContent = bossDialogueIndex === lines.length - 1 ? '¡Al lío!' : 'Continuar';
+  for (const figure of document.querySelectorAll('.duel-fighter')) figure.classList.toggle('is-speaking', figure.dataset.speaker === line.speaker);
+}
+
+function advanceBossIntro(startFight = false) {
+  if (modalKind !== 'boss-intro' || game?.mode !== 'boss-intro' || transitionGuard.isLocked()) return;
+  if (bossDialogueIndex < BOSS_DIALOGUES[game.floor].lines.length - 1) {
+    bossDialogueIndex++; updateBossDialogue(); audio.play('ui_confirm');
+    // Ignore the second click of a double tap and native key repeat.
+    $('modal-title').focus({ preventScroll: true });
+    transitionGuard.begin(250); updateModalLock(); return;
+  }
+  if (startFight && beginBossFight(game)) {
+    closeModal(); accumulator = 0; lastFrame = performance.now();
+    audio.setPaused(false); consumeEvents(); updateHud(); canvas.focus({ preventScroll: true });
+  }
+}
+
 function showUpgrade() {
   setModal('upgrade', `PISO 0${game.floor + 1} COMPLETADO`, 'Sigues vivo. Qué incómodo.', `La audiencia exige una segunda temporada.
 Elige una ventaja. Recuperarás toda la vida.`);
   const list = document.createElement('div'); list.className = 'upgrade-list';
   for (const upgrade of UPGRADES) {
     const button = document.createElement('button'); button.className = 'upgrade-option';
-    const icon = document.createElement('img'); icon.className = 'icon'; icon.alt = ''; icon.src = `/assets/icons/${({ power: 'wrench', swift: 'lightning', heart: 'heart' })[upgrade.id]}.svg`;
+    const icon = document.createElement('img'); icon.className = 'icon'; icon.alt = ''; icon.src = `/assets/icons/${({ power: 'umbrella-closed', swift: 'lightning', heart: 'heart' })[upgrade.id]}.svg`;
     const text = document.createElement('div'), title = document.createElement('strong'), description = document.createElement('small');
     title.textContent = upgrade.name; description.textContent = upgrade.description; text.append(title, description); button.append(icon, text);
     button.addEventListener('click', () => {
@@ -241,6 +291,7 @@ function consumeEvents() {
   for (const event of events) {
     // Commentary belongs in the pause menu, never over active combat.
     if (event.type === 'narrator') lastNarrator = event.text;
+    if (event.type === 'boss-intro') showBossIntro();
     if (event.type === 'upgrade') showUpgrade();
     if (event.type === 'dead') showDeath();
     if (event.type === 'won') showVictory();
@@ -272,7 +323,7 @@ function updateHud() {
     $('boss-state').hidden = !state;
     $('boss-state').setAttribute('aria-label', { shield: 'Escudo activo', vulnerable: 'Vulnerable', danger: 'Ataque inminente' }[state] || '');
   }
-  // Show floor titles only before combat begins.
+  // Boss introductions have their own illustrated, player-paced conversation.
   const intro = game.phase === 'intro';
   const dangerRemains = game.enemies.length || game.projectiles.length || game.hazards.length;
   $('floor-toast').hidden = !intro || !!dangerRemains;
@@ -371,6 +422,13 @@ window.addEventListener('keyup', event => {
 $('modal').addEventListener('click', event => {
   if (transitionGuard.isLocked()) { event.preventDefault(); event.stopImmediatePropagation(); }
 }, true);
+$('modal-content').addEventListener('click', () => { if (modalKind === 'boss-intro') advanceBossIntro(); });
+$('modal').addEventListener('keydown', event => {
+  if (modalKind === 'boss-intro' && ['Enter', 'Space', 'ArrowRight'].includes(event.code)) {
+    event.preventDefault(); event.stopPropagation();
+    if (!event.repeat) advanceBossIntro(event.code !== 'ArrowRight' && document.activeElement === $('duel-next'));
+  }
+});
 // CSS owns standard pointer gestures; these also cover Safari's gesture events.
 for (const name of ['gesturestart', 'gesturechange', 'dblclick']) document.addEventListener(name, event => {
   if (isCombatActive()) event.preventDefault();

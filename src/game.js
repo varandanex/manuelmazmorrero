@@ -108,6 +108,13 @@ function spawnBoss(g) {
   g.events.push({ type: 'announcement', text: FLOORS[g.floor].hint }, { type: 'narrator', text: `«${FLOORS[g.floor].hint} De nada, por cierto.»` }, { type: 'sound', name: 'boss_intro' });
 }
 
+// The UI explicitly acknowledges the conversation; no simulation clock runs
+// while the player reads, switches apps or releases held combat controls.
+export function beginBossFight(g) {
+  if (g.mode !== 'boss-intro' || g.phase !== 'warning') return false;
+  g.mode = 'playing'; spawnBoss(g); return true;
+}
+
 function moveEntity(entity, dx, dy, pillars = true) {
   entity.x = clamp(entity.x + dx, BOUNDS.left + entity.r, BOUNDS.right - entity.r);
   entity.y = clamp(entity.y + dy, BOUNDS.top + entity.r, BOUNDS.bottom - entity.r);
@@ -318,7 +325,10 @@ export function updateGame(g, delta, input = {}) {
   }
   if (['intro', 'between', 'warning'].includes(g.phase)) {
     g.phaseTimer -= dt;
-    if (g.phaseTimer <= 0) g.phase === 'warning' ? spawnBoss(g) : spawnWave(g);
+    if (g.phaseTimer <= 0) {
+      if (g.phase === 'warning') { g.mode = 'boss-intro'; g.events.push({ type: 'boss-intro' }); }
+      else spawnWave(g);
+    }
   } else if (g.phase === 'mobs' && g.enemies.length === 0) {
     if (g.wave < 2) { g.phase = 'between'; g.phaseTimer = 1.4; }
     else {

@@ -22,8 +22,10 @@ This is a local preview, not a public deployment. The public website can be host
 - Pause: pause button, P or Escape. Losing window focus also pauses the game.
 - Audio: music and effects are enabled by default and start on the first click, tap or key press permitted by the browser. The sound toggle still mutes both. Adjust effects and music independently in Help or Pause. Volume preferences are saved locally; each new page load defaults to sound on. An explicit mute is respected for the current visit.
 - Mobile combat owns touch gestures to avoid accidental pinch/double-tap zoom. Normal zoom remains available in the lobby and dialogs. Portrait prioritizes arena width; combat omits the header and narrative copy, with audio still available in Pause.
-- Combat shows health bars, floor numbers and icon-only controls. Boss states use a shield, lightning or warning icon; advice, commentary, score and perks are available in Pause. Floor titles appear only before combat.
+- Combat shows health bars, floor numbers and icon-only controls. Boss states use a shield, lightning or warning icon; advice, commentary, score and perks are available in Pause. Floor titles appear only before combat; each boss has an illustrated three-line conversation with explicit advancement.
 - Automatic result screens wait at least one second and require all held keys/fingers to be released, followed by a 200 ms quiet interval. Repeated attack input cannot choose an upgrade or restart a run. Explicit pause/help menus remain immediate.
+
+Before each boss, simulation and music pause while Manolo and the boss trade three approved lines. Tap the illustration, speech panel or Continue to advance; the final line requires the explicit «¡Al lío!» button (Tab then Enter/Space on a keyboard). Held combat input cannot dismiss the opening line, and rapid double taps cannot skip replies. Escape or losing focus does not bypass the conversation. Retrying a floor replays its introduction.
 
 Each of three floors contains two enemy waves and one boss. El Juicer telegraphs charges, La Acaparadora uses projectile volleys and toxic pools, and the Clon de Krakaren uses destructible shield generators and warning beams. Goblins, Scatterers and malicious llamas replace the original regular enemies without changing their combat roles. These are game adaptations, not claims about canonical abilities. Choose one permanent advantage after each of the first two floors. Death restarts the current floor, not the entire run.
 
@@ -52,7 +54,7 @@ The approved visual system uses the first editorial-screenprint concept and the 
 
 Headings, buttons and combat numbers use locally hosted [Pixelify Sans](https://github.com/google/fonts/tree/main/ofl/pixelifysans) (SIL OFL 1.1; license in `assets/fonts/Pixelify-Sans-OFL.txt`). Long descriptions retain Inter for readability. The illustrated logo and screenprinted artwork are unchanged.
 
-The 480 × 420 simulation, collisions, timings, enemy statistics and save format remain unchanged. The legacy storage key is intentionally retained so existing checkpoints continue working. Artwork must finish loading before play starts; failures provide a reload action rather than starting with invisible enemies.
+The 480 × 420 simulation, collisions, enemy attack timings, statistics and save format remain unchanged; only the new player-paced pre-boss conversation pauses progression. The legacy storage key is intentionally retained so existing checkpoints continue working. Artwork must finish loading before play starts; failures provide a reload action rather than starting with invisible enemies.
 
 Generated PNG originals are kept for provenance. The browser loads the smaller WebP files. Regenerate delivery assets with `./scripts/encode-art.sh` if the originals change (requires `cwebp`). See `design-qa.md` for verification and remaining real-device checks.
 
@@ -62,7 +64,7 @@ Generated PNG originals are kept for provenance. The browser loads the smaller W
 
 ## Manu identity assets
 
-The original generic hero is preserved for provenance but is no longer loaded in gameplay. `assets/art/hero-manu.png` is the reference-guided replacement, used by the existing idle, attack, facing and dodge-trail rendering. The original two supplied face illustrations are preserved and encoded as WebP for the title/HUD and defeat panel. The title remains **Manolo el Mazmorrero**. See `docs/manu-identity/verification.md`.
+The original generic hero is preserved for provenance but is no longer loaded in gameplay. `assets/art/hero-manu-umbrella.png` is the current reference-guided hero, holding a closed black umbrella. Its WebP is used by the existing idle, attack, facing, dodge-trail and preview rendering, plus the boss introductions. `hero-manu.png` preserves the previous wrench version for provenance only. The attack button, power-up icon and help copy now match the umbrella. The original two supplied face illustrations are preserved and encoded as WebP for the title/HUD and defeat panel. The title remains **Manolo el Mazmorrero**. See `docs/manu-identity/verification.md` for the earlier identity work and `docs/boss-introductions/verification.md` for the umbrella and conversations.
 
 ## Enemy artwork
 

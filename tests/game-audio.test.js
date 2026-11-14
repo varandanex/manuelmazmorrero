@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createGame, updateGame, damagePlayer, chooseUpgrade, retryFloor } from '../src/game.js';
+import { createGame, updateGame, damagePlayer, chooseUpgrade, retryFloor, beginBossFight } from '../src/game.js';
 const sounds = g => g.events.splice(0).filter(e => e.type === 'sound').map(e => e.name);
 function arena() { const g = createGame(null, 42); g.phase = 'boss'; g.events = []; g.player.invulnerable = 0; return g; }
 function enemy(type, hp = 100, extra = {}) { return { id: 999, type, x: 240, y: 300, r: 10, hp, maxHp: hp, speed: 0, damage: 0, flash: 0, timer: 100, mode: 'idle', ...extra }; }
@@ -47,7 +47,8 @@ test('terminal cues replace ordinary damage/death and floor entry is explicit', 
 test('boss entry, butcher windup, charge and recovery sound once per transition', () => {
   const g = arena(); g.phase = 'mobs'; g.wave = 2;
   updateGame(g, 1 / 60); assert.deepEqual(sounds(g), []);
-  advance(g, 157); assert.deepEqual(sounds(g), ['boss_intro']);
+  advance(g, 157); assert.deepEqual(sounds(g), []);
+  assert.equal(beginBossFight(g), true); assert.deepEqual(sounds(g), ['boss_intro']);
   g.enemies[0].timer = 0; updateGame(g, 1 / 60); assert.deepEqual(sounds(g), ['butcher_windup']);
   advance(g, 10); assert.deepEqual(sounds(g), []);
   advance(g, 57); assert.deepEqual(sounds(g), ['butcher_charge']);

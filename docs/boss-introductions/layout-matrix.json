@@ -1,0 +1,623 @@
+[
+  {
+    "width": 320,
+    "height": 568,
+    "rows": [
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 2
+      }
+    ]
+  },
+  {
+    "width": 360,
+    "height": 640,
+    "rows": [
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 2
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "height": 667,
+    "rows": [
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 2
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "rows": [
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 2
+      }
+    ]
+  },
+  {
+    "width": 430,
+    "height": 740,
+    "rows": [
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 2
+      }
+    ]
+  },
+  {
+    "width": 430,
+    "height": 600,
+    "rows": [
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 2
+      }
+    ]
+  },
+  {
+    "width": 667,
+    "height": 375,
+    "rows": [
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 2
+      }
+    ]
+  },
+  {
+    "width": 844,
+    "height": 390,
+    "rows": [
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 2
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "rows": [
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 0,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 1,
+        "line": 2
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 0
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 1
+      },
+      {
+        "buttonVisible": true,
+        "fitHeight": true,
+        "fitWidth": true,
+        "floor": 2,
+        "line": 2
+      }
+    ]
+  }
+]

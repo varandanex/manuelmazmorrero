@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createGame, updateGame, damagePlayer, chooseUpgrade, retryFloor, pauseGame, resumeGame, checkpointOf, parseCheckpoint, BOUNDS, FLOORS, formatTime } from '../src/game.js';
+import { createGame, updateGame, damagePlayer, chooseUpgrade, retryFloor, pauseGame, resumeGame, beginBossFight, checkpointOf, parseCheckpoint, BOUNDS, FLOORS, formatTime } from '../src/game.js';
 
 function advance(g, seconds, input = {}) { for (let i = 0; i < Math.ceil(seconds * 60); i++) updateGame(g, 1 / 60, input); }
 function enemy(type, x, y, hp = 10, extra = {}) { return { id: 999, type, x, y, r: 10, hp, maxHp: hp, speed: 0, damage: 0, flash: 0, timer: 100, mode: 'idle', ...extra }; }
@@ -9,6 +9,8 @@ function reachBoss(g) {
   advance(g, 2.8);
   g.enemies = []; advance(g, 1.5);
   g.enemies = []; advance(g, 2.8);
+  assert.equal(g.mode, 'boss-intro');
+  assert.equal(beginBossFight(g), true);
   assert.equal(g.phase, 'boss');
   assert.equal(g.enemies.filter(e => e.boss).length, 1);
 }
@@ -49,7 +51,8 @@ test('damage grants invulnerability and transitions to death only once', () => {
 test('a floor has two waves, a warning and a boss', () => {
   const g = createGame(null, 42); advance(g, 2.8); assert.equal(g.wave, 1); assert.equal(g.enemies.length, 4);
   g.enemies = []; advance(g, 1.5); assert.equal(g.wave, 2); assert.equal(g.enemies.length, 5);
-  g.enemies = []; updateGame(g, 1 / 60); assert.equal(g.phase, 'warning'); advance(g, 2.7); assert.equal(g.enemies[0].type, 'butcher');
+  g.enemies = []; updateGame(g, 1 / 60); assert.equal(g.phase, 'warning'); advance(g, 2.7); assert.equal(g.mode, 'boss-intro'); assert.equal(g.enemies.length, 0);
+  beginBossFight(g); assert.equal(g.enemies[0].type, 'butcher');
 });
 test('the butcher locks his charge and exposes a recovery window', () => {
   const g = createGame(null, 42); reachBoss(g); g.player.invulnerable = 100;

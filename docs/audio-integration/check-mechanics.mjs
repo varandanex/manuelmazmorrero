@@ -14,6 +14,8 @@ for (const seed of [1, 42, 299, 91234]) for (let floor = 0; floor < 3; floor++) 
     }
     const input = { x: Math.sin(frame / 90), y: Math.cos(frame / 120), attack: frame % 3 === 0, dash: frame % 97 === 0 };
     before.updateGame(a, 1 / 60, input); after.updateGame(b, 1 / 60, input);
+    // Acknowledge presentation-only pauses when comparing active simulation frames.
+    if (b.mode === 'boss-intro') after.beginBossFight(b);
     assert.deepEqual(state(b), state(a), `seed ${seed}, floor ${floor}, frame ${frame}`);
     a.events = []; b.events = []; frames++;
   }

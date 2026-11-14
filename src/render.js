@@ -4,7 +4,7 @@ import { WIDTH, HEIGHT, BOUNDS, PILLARS } from './game.js';
 const ART_NAMES = ['room', 'room-spore', 'room-host', 'hero', 'grunt', 'bat', 'caster', 'butcher', 'spore', 'host', 'generator', 'pillar'];
 // Stable simulation roles map to the approved replacement artwork.
 const ART_FILES = {
-  hero: 'hero-manu', grunt: 'enemies/enemy-goblin', bat: 'enemies/enemy-scatterer',
+  hero: 'hero-manu-umbrella', grunt: 'enemies/enemy-goblin', bat: 'enemies/enemy-scatterer',
   caster: 'enemies/enemy-evil-llama', butcher: 'enemies/boss-juicer',
   spore: 'enemies/boss-hoarder', host: 'enemies/boss-krakaren',
 };
