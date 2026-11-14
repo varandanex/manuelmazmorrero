@@ -13,8 +13,8 @@ ARCHIVE = ROOT / 'assets/downloads/manolo-fichas-personajes.zip'
 
 def build():
     manifest = json.loads((CARDS / 'manifest.json').read_text())
-    if len(manifest['cards']) != 13:
-        raise ValueError('Expected Manolo, seven enemies and five bosses')
+    if len(manifest['cards']) != 21:
+        raise ValueError('Expected Manolo, fifteen enemies and five bosses')
     for relative, expected in manifest['sourceHashes'].items():
         if sha256((ROOT / relative).read_bytes()).hexdigest() != expected:
             raise ValueError(f'Stale card export; regenerate PNGs first: {relative}')

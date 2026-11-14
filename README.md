@@ -31,7 +31,7 @@ Before each boss, simulation and music pause while Manolo and the boss trade thr
 
 Narratives and card copy live in `src/encounter-cards.js`; their attack titles are original game-show jokes, not quotations or claims about book abilities. Existing illustrations and WAV effects are reused. See `docs/encounter-cards/verification.md` for state transitions, browser checks and remaining physical-device acceptance.
 
-Each of five floors contains two enemy waves and one boss:
+Each of five floors contains three increasingly demanding enemy waves and one boss:
 
 1. **El matadero:** El Juicer telegraphs charges.
 2. **El jardín podrido:** La Acaparadora uses projectile volleys and toxic pools.
@@ -39,19 +39,31 @@ Each of five floors contains two enemy waves and one boss:
 4. **El horno de la furia:** Empaladores ácidos rastreros spit from range; Ingenieros goblin charge in bulldozers. The Elemental de furia marks fire circles and launches a three-projectile volley before recovering.
 5. **El plató final:** the Clon de Krakaren retains destructible shield generators, warning beams and a second shield phase. Boss and generator health account for the two additional upgrades.
 
+Each floor owns three exclusive species. The first wave introduces two, the second adds the third, and the last uses a denser combined formation. Individual enemies do not gain hidden health or speed between waves.
+
+| Floor | Exclusive regular enemies | Enemy counts by wave |
+| --- | --- | --- |
+| El matadero | Goblin, Rata, Desperdigador | 4 → 5 → 6 |
+| El jardín podrido | Vigilante de pared, Llama maligna, Mono talador | 4 → 6 → 7 |
+| La Maraña de Hierro | Drek, Jikininki, Abrojo psicópata | 5 → 6 → 8 |
+| El horno de la furia | Empalador ácido rastrero, Ingeniero goblin, Motor de carbón | 5 → 7 → 8 |
+| El plató final | Comadreja nocturna exploradora, Campana funeraria, Hobgoblin | 6 → 7 → 8 |
+
+There are 15 unique regular species, 15 waves and 92 regular enemies per complete run. Bosses and shield emitters are counted separately. Authored formations own the counts; progression and announcements read their length instead of assuming two waves. Spawn candidates stay at least 100 world units from the player. See `docs/exclusive-rosters/verification.md` and `docs/exclusive-rosters/canon-research.md` for scope and evidence.
+
 These are game adaptations, not claims about canonical abilities or encounter order. Choose one permanent advantage after each of the first four floors. Death restarts the current floor, not the entire run.
 
 The beginning of the current floor is stored locally in this browser. It is not a mid-combat save and it does not sync across devices. A new run replaces this checkpoint. Victory removes it. The game remains playable if browser storage is unavailable. Version-2 checkpoints support all five floors. Legacy version-1 saves retain their completed-floor count, upgrades and score; an old third-floor save enters La Maraña de Hierro rather than skipping the expansion. The legacy storage key is intentionally retained.
 
 ## Collectible character dossiers
 
-Open **Galería · Fichas de personaje** from the menu. The collection contains **13 current characters only**: Manolo's full-body umbrella sprite, seven regular enemies and five bosses. There are no portraits, scenarios, props, logos or previous designs in the gallery or ZIP. Their source files remain untouched for gameplay and provenance.
+Open **Galería · Fichas de personaje** from the menu. The collection contains **21 current characters only**: Manolo's full-body umbrella sprite, fifteen regular enemies and five bosses. There are no portraits, scenarios, props, logos or previous designs in the gallery or ZIP. Their source files remain untouched for gameplay and provenance.
 
-Each dossier shows its Spanish name, class, floors, an original character line, health, damage, mobility, attacks and survival advice. Stats come from the simulation: Manolo is shown without upgrades; the goblin shows its floor-dependent ranges. Enemy damage is explicitly contact damage, not a promise that every special attack does the same damage. Krakaren's movement is a scripted patrol, not its zero base-speed field. Quotes and combat data are game adaptations, not statistics from the novels.
+Each dossier shows its Spanish name, class, floors, an original character line, health, damage, mobility, attacks and survival advice. Stats come from the simulation: Manolo is shown without upgrades; each regular enemy belongs to exactly one floor. Enemy damage is explicitly contact damage, not a promise that every special attack does the same damage. Krakaren's movement is a scripted patrol, not its zero base-speed field. Quotes and combat data are game adaptations, not statistics from the novels.
 
 Use the arrows, horizontal swipes or keyboard (←/→, Home/End) to change cards. Scroll vertically to read long dossiers; navigation and download controls stay available. Escape closes the gallery and restores focus. Manolo's preview has a subtle idle animation with a pause button and reduced-motion support; **downloaded PNGs are static**.
 
-**Ficha PNG** downloads the complete 1600×2400 dossier, including the artwork and text. **Todas en ZIP** downloads exactly those thirteen PNGs (about 11 MB). **PNG sin ficha**, inside each dossier, still downloads the unchanged source illustration with its original transparency. Lightweight WebPs are used only for browsing; downloads are prebuilt and do not require browser-side canvas conversion or ZIP assembly.
+**Ficha PNG** downloads the complete 1600×2400 dossier, including the artwork and text. **Todas en ZIP** downloads exactly those twenty-one PNGs (about 19 MB). **PNG sin ficha**, inside each dossier, still downloads the unchanged source illustration with its original transparency. Lightweight WebPs are used only for browsing; downloads are prebuilt and do not require browser-side canvas conversion or ZIP assembly.
 
 `src/character-cards.js` owns the shared content/DOM renderer and reads live base stats through `enemyStats` in `src/game.js`. `src/character-cards.css` provides responsive and print layouts. `assets/cards/manifest.json` records hashes of the source copy, stats, artwork, fonts and styling; tests fail if exported cards are stale.
 
@@ -63,7 +75,7 @@ npm run check
 npm test
 ```
 
-The builder renders the same dossier component using original PNG artwork and local fonts, verifies layout, then packages the thirteen cards. Commit `assets/cards/`, `assets/downloads/manolo-fichas-personajes.zip` and `src/art-gallery-data.js` together. Normal play, serving and downloading need only Node.js 20+ and the committed assets; Playwright is an authoring tool, not a runtime dependency. The former 38-image ZIP is retired.
+The builder renders the same dossier component using original PNG artwork and local fonts, verifies layout, then packages the twenty-one cards. Commit `assets/cards/`, `assets/downloads/manolo-fichas-personajes.zip` and `src/art-gallery-data.js` together. Normal play, serving and downloading need only Node.js 20+ and the committed assets; Playwright is an authoring tool, not a runtime dependency. The former 38-image ZIP is retired.
 
 See `docs/art-gallery/verification.md` for checks and device limitations.
 

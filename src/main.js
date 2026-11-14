@@ -178,7 +178,7 @@ function showPause() {
 function showHelp() {
   helpWasPlaying = game?.mode === 'playing' || modalKind === 'pause';
   if (helpWasPlaying) { pauseGame(game); audio.setPaused(true); }
-  setModal('help', 'MANUAL DE SUPERVIVENCIA', 'No mueras. Sobre todo eso.', `Elimina dos oleadas y derrota al jefe de cada uno de los ${FLOORS.length} pisos. Elige una mejora tras los primeros ${FLOORS.length - 1}.`);
+  setModal('help', 'MANUAL DE SUPERVIVENCIA', 'No mueras. Sobre todo eso.', `Elimina tres oleadas cada vez más peligrosas y derrota al jefe de cada uno de los ${FLOORS.length} pisos. Elige una mejora tras los primeros ${FLOORS.length - 1}.`);
   const rows = document.createElement('div'); rows.className = 'help-rows';
   const rules = [
     ['Muévete', 'Móvil: arrastra el joystick izquierdo. Ordenador: WASD o flechas.'],

@@ -1,7 +1,7 @@
-import { WIDTH, HEIGHT, BOUNDS, PILLARS } from './game.js';
+import { WIDTH, HEIGHT, BOUNDS, PILLARS, MOB_ABILITIES } from './game.js';
 
 // Artwork is separate from simulation. World coordinates and hitboxes stay unchanged.
-const ART_NAMES = ['room', 'room-spore', 'room-railway', 'room-furnace', 'room-host', 'hero', 'grunt', 'bat', 'caster', 'drek', 'jikininki', 'acid', 'engineer', 'butcher', 'spore', 'mantaur', 'elemental', 'host', 'generator', 'pillar', 'pillar-spore', 'pillar-host'];
+const ART_NAMES = ['room', 'room-spore', 'room-railway', 'room-furnace', 'room-host', 'hero', 'grunt', 'bat', 'caster', 'drek', 'jikininki', 'acid', 'engineer', 'rat', 'wallwatch', 'woodcutter', 'bramble', 'coal', 'nightweasel', 'funeral', 'hobgoblin', 'butcher', 'spore', 'mantaur', 'elemental', 'host', 'generator', 'pillar', 'pillar-spore', 'pillar-host'];
 // Stable simulation roles map to the approved replacement artwork.
 const ART_FILES = {
   room: 'environments/room-matadero', 'room-spore': 'environments/room-jardin', 'room-host': 'environments/room-plato',
@@ -12,6 +12,7 @@ const ART_FILES = {
   spore: 'enemies/boss-hoarder', host: 'enemies/boss-krakaren',
   drek: 'enemies/enemy-drek', jikininki: 'enemies/enemy-jikininki',
   acid: 'enemies/enemy-acid-crawler', engineer: 'enemies/enemy-goblin-engineer',
+  ...Object.fromEntries(['rat', 'wallwatch', 'woodcutter', 'bramble', 'coal', 'nightweasel', 'funeral', 'hobgoblin'].map(type => [type, `enemies/enemy-${type}`])),
   mantaur: 'enemies/boss-mantaur', elemental: 'enemies/boss-rage-elemental',
 };
 const FLOOR_ART = [
@@ -24,7 +25,7 @@ const FLOOR_ART = [
 const art = new Map();
 const ink = '#0b0b0e', paper = '#f4eddd', yellow = '#ffe000', magenta = '#ed147b';
 // Visual sizes only: foot anchors, collision radii and attack ranges are unchanged.
-const SPRITE_HEIGHTS = { hero: 78, grunt: 66, bat: 58, caster: 74, drek: 60, jikininki: 92, acid: 70, engineer: 80, butcher: 116, spore: 122, mantaur: 130, elemental: 134, host: 106, generator: 60 };
+const SPRITE_HEIGHTS = { hero: 78, grunt: 66, bat: 58, caster: 74, drek: 60, jikininki: 92, acid: 70, engineer: 80, rat: 52, wallwatch: 62, woodcutter: 76, bramble: 94, coal: 91, nightweasel: 67, funeral: 88, hobgoblin: 88, butcher: 116, spore: 122, mantaur: 130, elemental: 134, host: 106, generator: 60 };
 
 export async function loadArt(onProgress = () => {}) {
   let loaded = 0;
@@ -66,13 +67,16 @@ function dangerZone(ctx, path, waiting, color = magenta) {
 }
 
 function drawEnemy(ctx, e, time, game) {
-  if (['butcher', 'engineer'].includes(e.type) && e.mode === 'windup' && e.aim) {
+  const ability = MOB_ABILITIES[e.type];
+  if ((['butcher', 'engineer'].includes(e.type) || ['charge', 'volley'].includes(ability?.kind)) && e.mode === 'windup' && e.aim) {
     const half = e.r + game.player.r;
-    const length = e.type === 'engineer' ? 180 : 350;
+    const length = ability?.kind === 'charge' ? ability.chargeSpeed * ability.duration : e.type === 'butcher' ? 350 : 180;
+    const endHalf = half + Math.tan(Math.max(...(ability?.spread || [0]))) * length;
+    const ex = -e.aim.y * endHalf, ey = e.aim.x * endHalf;
     const nx = -e.aim.y * half, ny = e.aim.x * half;
     const path = new Path2D();
-    path.moveTo(e.x + nx, e.y + ny); path.lineTo(e.x + nx + e.aim.x * length, e.y + ny + e.aim.y * length);
-    path.lineTo(e.x - nx + e.aim.x * length, e.y - ny + e.aim.y * length); path.lineTo(e.x - nx, e.y - ny); path.closePath();
+    path.moveTo(e.x + nx, e.y + ny); path.lineTo(e.x + ex + e.aim.x * length, e.y + ey + e.aim.y * length);
+    path.lineTo(e.x - ex + e.aim.x * length, e.y - ey + e.aim.y * length); path.lineTo(e.x - nx, e.y - ny); path.closePath();
     ctx.save(); ctx.beginPath(); ctx.rect(BOUNDS.left, BOUNDS.top, BOUNDS.right - BOUNDS.left, BOUNDS.bottom - BOUNDS.top); ctx.clip();
     dangerZone(ctx, path, true); ctx.restore();
   }
@@ -80,8 +84,8 @@ function drawEnemy(ctx, e, time, game) {
     ctx.strokeStyle = yellow; ctx.lineWidth = 2; ctx.setLineDash([4, 4]);
     ctx.beginPath(); ctx.ellipse(e.x, e.y, e.r + 5, (e.r + 5) * .45, 0, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
   }
-  // Keep taller bosses fully visible when they approach the north edge.
-  const height = e.boss ? Math.min(SPRITE_HEIGHTS[e.type], e.y + 3) : SPRITE_HEIGHTS[e.type];
+  // Keep tall actors fully visible when they approach the north edge.
+  const height = Math.min(SPRITE_HEIGHTS[e.type], e.y + 3);
   const floating = e.type === 'host' || e.type === 'elemental';
   const bob = Math.sin(time * (floating ? 5 : 4) + e.id) * (floating ? 2 : .7);
   const flip = !['spore', 'host', 'generator'].includes(e.type) && game.player.x < e.x;

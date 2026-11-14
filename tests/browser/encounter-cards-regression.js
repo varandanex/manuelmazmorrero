@@ -4,7 +4,7 @@
   const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
   const check = (name, pass) => results.push({ name, pass: !!pass });
   const unlock = async () => { for (let i = 0; i < 120 && $('modal-actions').inert; i++) await wait(25); };
-  const names = [['Goblin', 'Desperdigador'], ['Llama maligna', 'Desperdigador', 'Goblin'], ['Drek', 'Jikininki'], ['Empalador ácido rastrero', 'Ingeniero goblin'], ['Llama maligna', 'Desperdigador', 'Goblin']];
+  const names = [['Goblin', 'Rata', 'Desperdigador'], ['Vigilante de pared', 'Llama maligna', 'Mono talador'], ['Drek', 'Jikininki', 'Abrojo psicópata'], ['Empalador ácido rastrero', 'Ingeniero goblin', 'Motor de carbón'], ['Comadreja nocturna exploradora', 'Campana funeraria', 'Hobgoblin']];
   for (let floor = 0; floor < 5; floor++) {
     q.floor(floor); const before = q.state;
     check(`${floor}: floor opens with original narrative`, $('modal').dataset.presentation === 'story' && document.querySelector('.encounter-story').textContent.length > 150);

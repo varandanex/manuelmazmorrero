@@ -38,7 +38,7 @@ test('all floor stories and enemy/boss posters reuse shipped art and consistent 
   for (const card of Object.values(ENCOUNTER_CARDS)) await access(new URL(`../assets/webp/enemies/${card.art}.webp`, import.meta.url));
 });
 
-test('floor briefings freeze every clock and require acknowledgement before either wave', () => {
+test('floor briefings freeze every clock and require acknowledgement before the first wave', () => {
   for (let floor = 0; floor < FLOORS.length; floor++) {
     const game = createGame(saved(floor), 42);
     assert.equal(game.mode, 'floor-intro'); assert.equal(game.enemies.length, 0);

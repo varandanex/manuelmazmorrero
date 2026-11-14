@@ -48,7 +48,7 @@ test('terminal cues replace ordinary damage/death and floor entry is explicit', 
 });
 
 test('battle does not repeat the reveal sting; butcher attacks sound once per transition', () => {
-  const g = arena(); g.phase = 'mobs'; g.wave = 2;
+  const g = arena(); g.phase = 'mobs'; g.wave = 3;
   updateGame(g, 1 / 60); assert.deepEqual(sounds(g), []);
   advance(g, 157); assert.deepEqual(sounds(g), []);
   assert.equal(beginBossReveal(g), true);

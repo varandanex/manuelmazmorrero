@@ -9,7 +9,7 @@ function isolated() { const g = createPlayingGame(null, 42); g.phase = 'boss'; g
 function reachBoss(g) {
   if (g.mode === 'floor-intro') beginFloorCombat(g);
   advance(g, 2.8);
-  g.enemies = []; advance(g, 1.5);
+  for (let wave = 1; wave < FLOORS[g.floor].waves.length; wave++) { g.enemies = []; advance(g, 1.5); }
   g.enemies = []; advance(g, 2.8);
   assert.equal(g.mode, 'boss-intro');
   assert.equal(beginBossReveal(g), true);
@@ -51,9 +51,10 @@ test('damage grants invulnerability and transitions to death only once', () => {
   advance(g, 1.1); damagePlayer(g, 70); assert.equal(g.mode, 'dead'); assert.equal(g.player.hp, 0);
   damagePlayer(g, 70); assert.equal(g.events.filter(e => e.type === 'dead').length, 1);
 });
-test('a floor has two waves, a warning and a boss', () => {
+test('a floor has three waves, a warning and a boss', () => {
   const g = createPlayingGame(null, 42); advance(g, 2.8); assert.equal(g.wave, 1); assert.equal(g.enemies.length, 4);
   g.enemies = []; advance(g, 1.5); assert.equal(g.wave, 2); assert.equal(g.enemies.length, 5);
+  g.enemies = []; advance(g, 1.5); assert.equal(g.wave, 3); assert.equal(g.enemies.length, 6);
   g.enemies = []; updateGame(g, 1 / 60); assert.equal(g.phase, 'warning'); advance(g, 2.7); assert.equal(g.mode, 'boss-intro'); assert.equal(g.enemies.length, 0);
   beginBossReveal(g); beginBossFight(g); assert.equal(g.enemies[0].type, 'butcher');
 });

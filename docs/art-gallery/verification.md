@@ -1,3 +1,5 @@
+> Historical verification of the 13-card release. The current 21-card collection and expanded roster are documented in [exclusive-rosters/verification.md](../exclusive-rosters/verification.md).
+
 # Collectible character dossiers
 
 ## Current scope

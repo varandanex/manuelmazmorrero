@@ -12,12 +12,12 @@ import { BOSS_DIALOGUES } from '../src/boss-dialogues.js';
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 const profiles = characterCards();
 
-test('gallery contains only the current full-body Manolo, seven enemies and five bosses', () => {
-  assert.deepEqual(profiles.map(c => c.id), ['manolo','grunt','bat','caster','drek','jikininki','acid','engineer','butcher','spore','mantaur','elemental','host']);
+test('gallery contains only the current full-body Manolo, fifteen enemies and five bosses', () => {
+  assert.deepEqual(profiles.map(c => c.id), ['manolo','grunt','rat','bat','wallwatch','caster','woodcutter','drek','jikininki','bramble','acid','engineer','coal','nightweasel','funeral','hobgoblin','butcher','spore','mantaur','elemental','host']);
   assert.deepEqual(CARD_DOWNLOADS.map(item => item.id), profiles.map(c => c.id));
-  assert.equal(ART_ARCHIVE.count, 13);
+  assert.equal(ART_ARCHIVE.count, 21);
   assert.equal(profiles.filter(p => p.kind === 'hero').length, 1);
-  assert.equal(profiles.filter(p => p.kind === 'enemy').length, 7);
+  assert.equal(profiles.filter(p => p.kind === 'enemy').length, 15);
   assert.equal(profiles.filter(p => p.kind === 'boss').length, 5);
   assert.equal(profiles[0].original, '/assets/art/hero-manu-umbrella.png');
   assert.ok(profiles.every(p => !/portrait|Manu-0|room|environments|generator/.test(p.original)));
@@ -29,8 +29,8 @@ test('card stats use simulation values, correct floor ranges and honest movement
   assert.equal(profiles[0].stats[1].value, String(hero.damage));
   assert.equal(profiles[0].stats[2].value, `${hero.speed} u/s`);
   const goblin = profiles.find(p => p.id === 'grunt');
-  assert.deepEqual(goblin.floors, [0, 1, 4]);
-  assert.equal(goblin.stats[0].value, '38–58'); assert.equal(goblin.stats[2].value, '34–50 u/s');
+  assert.deepEqual(goblin.floors, [0]);
+  assert.equal(goblin.stats[0].value, '38'); assert.equal(goblin.stats[2].value, '34 u/s');
   for (const profile of profiles.slice(1)) {
     const stats = enemyStats(profile.id, profile.floors[0]);
     assert.equal(profile.stats[1].value, String(stats.damage));
@@ -64,7 +64,7 @@ test('export manifest detects stale copy, stats, artwork, fonts and print stylin
   for (const [file, hash] of Object.entries(manifest.sourceHashes)) assert.equal(digest(await readFile(new URL(`../${file}`, import.meta.url))), hash, `Rebuild cards after changing ${file}`);
 });
 
-test('ZIP contains exactly the thirteen complete cards byte-for-byte, with no old art or scenarios', async () => {
+test('ZIP contains exactly the twenty-one complete cards byte-for-byte, with no old art or scenarios', async () => {
   const zip = await readFile(new URL(`..${ART_ARCHIVE.url}`, import.meta.url));
   assert.equal(zip.length, ART_ARCHIVE.bytes); assert.equal(digest(zip), ART_ARCHIVE.sha256);
   let offset = 0, count = 0;
@@ -78,15 +78,15 @@ test('ZIP contains exactly the thirteen complete cards byte-for-byte, with no ol
     assert.equal(digest(zip.subarray(start, start + size)), item.sha256);
     offset = start + size; count++;
   }
-  assert.equal(count, 13); assert.equal(zip.readUInt32LE(offset), 0x02014b50);
+  assert.equal(count, 21); assert.equal(zip.readUInt32LE(offset), 0x02014b50);
   const eocd = zip.length - 22;
   assert.equal(zip.readUInt32LE(eocd), 0x06054b50); assert.equal(zip.readUInt16LE(eocd + 10), count);
   assert.equal(zip.readUInt32LE(eocd + 16), offset);
 });
 
 test('character carousel wraps in both directions', () => {
-  assert.equal(galleryIndex(0, -1), 12); assert.equal(galleryIndex(12, 1), 0);
-  assert.equal(galleryIndex(0, 29), 3); assert.equal(formatArtSize(1048576), '1 MB');
+  assert.equal(galleryIndex(0, -1), 20); assert.equal(galleryIndex(20, 1), 0);
+  assert.equal(galleryIndex(0, 45), 3); assert.equal(formatArtSize(1048576), '1 MB');
 });
 
 test('server delivers card/original attachments and resumable ZIP; old all-art download is retired', async t => {

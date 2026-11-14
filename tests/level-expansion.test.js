@@ -29,11 +29,11 @@ test('five floors retain the original opening and reserve Krakaren for the final
 });
 
 test('new waves contain the approved species, with finite positions inside the arena', () => {
-  for (const [floor, types] of [[2, ['drek', 'jikininki']], [3, ['acid', 'engineer']], [4, ['caster', 'bat', 'grunt']]]) {
+  for (const floor of [0, 1, 2, 3, 4]) {
     const game = wave(floor);
-    for (let index = 0; index < 2; index++) {
+    for (let index = 0; index < 3; index++) {
       assert.equal(game.enemies.length, FLOORS[floor].waves[index]);
-      assert.deepEqual([...new Set(game.enemies.map(enemy => enemy.type))].sort(), types.sort());
+      assert.deepEqual([...new Set(game.enemies.map(enemy => enemy.type))].sort(), [...new Set(FLOORS[floor].formations[index].map(role => FLOORS[floor].mobs[role]))].sort());
       for (const enemy of game.enemies) {
         assert.ok(Number.isFinite(enemy.hp) && enemy.hp > 0);
         assert.ok(enemy.x >= BOUNDS.left && enemy.x <= BOUNDS.right);

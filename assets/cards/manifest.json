@@ -5,10 +5,10 @@
   },
   "sourceHashes": {
     "style.css": "b075ba9cb332175ded3c99ca5f925c92ddef87e48d03898aba2ce75d09d5618f",
-    "src/character-cards.js": "57efd3b905efa08c12c2675112b155f601f4b481b96b6bfceaec64c8133acb78",
+    "src/character-cards.js": "780686b3633a20df578a163c11b2a90ac645a9e4813604d07c8b3b39a331523b",
     "src/character-cards.css": "2432dd9995b6f82072bf8ab17eefe61941cdd17d89d37e08358bb0f083338140",
-    "src/game.js": "668cabc93d8f48e0b3671ae6e58d7bc5a216b19d684e679bf212e53b91d7fff8",
-    "src/encounter-cards.js": "f5d847fd77d0e7ceb5e9a3ddbc6d3f574bd47f76ed1f912663b98367f671bf94",
+    "src/game.js": "3e93a71f9326cc569c17eae1cff92a46a7689f781b2637336a38cf9dbef1bebc",
+    "src/encounter-cards.js": "6717b114af09036a91f9e123430657d83b47631b8b0db63bc79e345f971ed291",
     "src/boss-dialogues.js": "c147170b13c74696020dec22b8a5fe09de800fbe2e04d047d3f3dfa23f71ddbc",
     "scripts/build_character_cards.mjs": "65be6c5059700116dc43d6528c81d39164e84126d497c83db1c4933cd4099681",
     "assets/fonts/barlow-condensed-700.ttf": "7dde307fa887fc65ff5830cfada77a7decc5dae8d3c816c9d39ba3f1af1c4ed7",
@@ -25,12 +25,20 @@
     "assets/fonts/pixelify-sans-variable.ttf": "9ba86cd010a4de309d263ceff8e8044092c9db7efda869620cb9ff1c4389e8a5",
     "assets/art/hero-manu-umbrella.png": "4b50b6053bfb0a1b5873e119bf752af65e5a0b946fac5cd90b9fa1b3bf161c5e",
     "assets/art/enemies/enemy-goblin.png": "2f747073479d0bd833c4a1a9c132a3ec89b6d0fc93ba44cc50acdeb857c2e99e",
+    "assets/art/enemies/enemy-rat.png": "504fbe7ddc68f8c48324c495ede471edbf47bd824c48039d3ab69f3056b3b2b9",
     "assets/art/enemies/enemy-scatterer.png": "3ff8fd83a7818621e4e4297cc6d08dafe067076d6b00c0f7be45c070bad7dbf7",
+    "assets/art/enemies/enemy-wallwatch.png": "7ea467f7b11649933578488776908566da05be7e61f62b30b5b6efa6f1c71cf3",
     "assets/art/enemies/enemy-evil-llama.png": "aab5625b89cdfd27b027cb0dbfb4e7a56c937d3fd1f7c43088aa11d1dfe72ef7",
+    "assets/art/enemies/enemy-woodcutter.png": "31c66a9f32901c6e8cca29d85ae1b471ec2a1ba38c119385cbe01fe2ce9de39e",
     "assets/art/enemies/enemy-drek.png": "e64249e874e32f2f632a62d93650900d38551e5d0974ee11c1705c05fb4031e2",
     "assets/art/enemies/enemy-jikininki.png": "6d74f2741860b458c4d3a8521538ef92b3a270f48aa662ea9da1e59b0f1c4785",
+    "assets/art/enemies/enemy-bramble.png": "187bad13c6f04eeb0387879c46bc1246188f08ff55e8028f6a6d24343e070faf",
     "assets/art/enemies/enemy-acid-crawler.png": "01468b204cfd18586cc6eeeda0cfeec9bbb230b26f938e9cf631becd46adfed5",
     "assets/art/enemies/enemy-goblin-engineer.png": "68286d6747ffeb8f8be164493c095d325ad673478ca836d1bc29e980a5cde6a6",
+    "assets/art/enemies/enemy-coal.png": "0b572515bfac0150b530c9316554d9129c24ed4bea6628056dcdd1dbbf718e63",
+    "assets/art/enemies/enemy-nightweasel.png": "0605bf3c4ecb88d823447c5f9b1b93d8503ae90a7b955205f8edf156e2059edf",
+    "assets/art/enemies/enemy-funeral.png": "40ccb1b45ba6939bdb37dde9475b66ae9f58569ee6c83af645356fb1e1afb9ab",
+    "assets/art/enemies/enemy-hobgoblin.png": "f43465ece20df79a3449dbdcc0eceb3988c6eeeb2808682acacf80b3f50e8ca5",
     "assets/art/enemies/boss-juicer.png": "28bb48a7892c897bbb655dfa2229457f2f36ab3b14eaa1946327bb587aba6c6a",
     "assets/art/enemies/boss-hoarder.png": "01186715edcdc77ecf0b676d30c68a0be48a652fb4ca64377bc0641e7f77d865",
     "assets/art/enemies/boss-mantaur.png": "126f6fed5deb87a148ac7dd8ca8372995a8c4f7c5f1c433017ed29489ee095ac",
@@ -49,14 +57,29 @@
       "filename": "ficha-grunt.png"
     },
     {
+      "id": "rat",
+      "name": "Rata",
+      "filename": "ficha-rat.png"
+    },
+    {
       "id": "bat",
       "name": "Desperdigador",
       "filename": "ficha-bat.png"
     },
     {
+      "id": "wallwatch",
+      "name": "Vigilante de pared",
+      "filename": "ficha-wallwatch.png"
+    },
+    {
       "id": "caster",
       "name": "Llama maligna",
       "filename": "ficha-caster.png"
+    },
+    {
+      "id": "woodcutter",
+      "name": "Mono talador",
+      "filename": "ficha-woodcutter.png"
     },
     {
       "id": "drek",
@@ -69,6 +92,11 @@
       "filename": "ficha-jikininki.png"
     },
     {
+      "id": "bramble",
+      "name": "Abrojo psicópata",
+      "filename": "ficha-bramble.png"
+    },
+    {
       "id": "acid",
       "name": "Empalador ácido rastrero",
       "filename": "ficha-acid.png"
@@ -77,6 +105,26 @@
       "id": "engineer",
       "name": "Ingeniero goblin",
       "filename": "ficha-engineer.png"
+    },
+    {
+      "id": "coal",
+      "name": "Motor de carbón",
+      "filename": "ficha-coal.png"
+    },
+    {
+      "id": "nightweasel",
+      "name": "Comadreja nocturna exploradora",
+      "filename": "ficha-nightweasel.png"
+    },
+    {
+      "id": "funeral",
+      "name": "Campana funeraria",
+      "filename": "ficha-funeral.png"
+    },
+    {
+      "id": "hobgoblin",
+      "name": "Hobgoblin",
+      "filename": "ficha-hobgoblin.png"
     },
     {
       "id": "butcher",

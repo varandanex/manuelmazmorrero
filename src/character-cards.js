@@ -3,11 +3,14 @@ import { ENCOUNTER_CARDS } from './encounter-cards.js';
 import { BOSS_DIALOGUES } from './boss-dialogues.js';
 
 export const CARD_SIZE = { width: 1600, height: 2400 };
-const roles = ['manolo', 'grunt', 'bat', 'caster', 'drek', 'jikininki', 'acid', 'engineer', ...FLOORS.map(f => f.bossType)];
+const roles = ['manolo', ...FLOORS.flatMap(f => f.mobs), ...FLOORS.map(f => f.bossType)];
 const classes = {
   manolo: 'Concursante · cuerpo a cuerpo', grunt: 'Acosador · cuerpo a cuerpo', bat: 'Hostigador · veloz',
   caster: 'Artillería · a distancia', drek: 'Depredador · manada', jikininki: 'Bruto · golpe de área',
   acid: 'Artillería · corrosivo', engineer: 'Conductor · embestida', butcher: 'Jefe · embestida',
+  rat: 'Alimaña · salto corto', wallwatch: 'Acechador · flanqueo', woodcutter: 'Talador · golpe de área',
+  bramble: 'Bruto · abanico de púas', coal: 'Tanque · control de fuego', nightweasel: 'Depredador · embestida',
+  funeral: 'Guardia · estocada a distancia', hobgoblin: 'Zapador · bombas',
   spore: 'Jefa · control de zona', mantaur: 'Jefe · fuerza bruta', elemental: 'Jefe · fuego de área', host: 'Jefa · escudo y rayos',
 };
 // Original lines for these game adaptations, not quotations from the novels.
@@ -19,6 +22,14 @@ const quips = {
   jikininki: 'Levanta los pies. Voy a fregar contigo.',
   acid: 'Ese paraguas tiene dos lavados. Y uno es el tuyo.',
   engineer: '¿Licencia de obras? Tengo licencia para darte.',
+  rat: 'Ese paraguas sabe a pollo. O vas a saber tú.',
+  wallwatch: 'Tú mira al frente. Yo ya te miro el culo.',
+  woodcutter: 'Paraguas de madera. Leña del concursante caído.',
+  bramble: 'Yo también tengo varillas. Las mías no se pliegan.',
+  coal: 'Te seco el paraguas. Lo de las cejas va aparte.',
+  nightweasel: 'Seis patas y tú solo tapas dos con ese paraguas.',
+  funeral: 'No doblo por ti. Te doblo a ti.',
+  hobgoblin: 'Abre el paraguas: el pronóstico da metralla.',
 };
 const range = values => {
   const lo = Math.min(...values), hi = Math.max(...values);
@@ -50,7 +61,7 @@ export function characterCards() {
         { name: 'Evasión de responsabilidades', description: 'Esquiva en la dirección de movimiento con una breve invulnerabilidad. No vale para el cumpleaños.' },
       ] : [{ name: encounter.attack, description: encounter.description }],
       tip: isHero ? 'Muévete, golpea y esquiva. El paraguas no te hace inmortal.' : encounter.tip,
-      note: isHero ? 'Valores iniciales, sin mejoras.' : id === 'grunt' ? 'Vida y velocidad cambian según el piso. Daño indicado: contacto.' : 'Daño indicado: contacto. Los ataques especiales pueden variar.',
+      note: isHero ? 'Valores iniciales, sin mejoras.' : ['coal', 'hobgoblin'].includes(id) ? 'Especie de los libros adaptada como rival. Daño indicado: contacto.' : 'Daño indicado: contacto. Los ataques especiales pueden variar.',
     };
   });
 }

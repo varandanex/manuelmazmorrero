@@ -3,12 +3,12 @@ export const HEIGHT = 420;
 export const BOUNDS = { left: 31, right: 449, top: 65, bottom: 381 };
 export const PILLARS = [{ x: 105, y: 151, r: 15 }, { x: 375, y: 151, r: 15 }, { x: 105, y: 300, r: 15 }, { x: 375, y: 300, r: 15 }];
 export const FLOORS = [
-  { name: 'El matadero', boss: 'El Juicer', bossType: 'butcher', mobs: ['grunt', 'bat', 'grunt'], waves: [4, 5], color: '#ba769a', hint: 'Esquiva su embestida. Ataca cuando se quede agotado.', intro: '«Primer piso. Huele a derrota. Ah, no: eres tú.»' },
-  { name: 'El jardín podrido', boss: 'La Acaparadora', bossType: 'spore', mobs: ['caster', 'bat', 'grunt'], waves: [5, 6], color: '#9ac982', hint: 'Esquiva sus proyectiles. No pises las zonas verdes.', intro: '«Qué bonito jardín. Todo quiere matarte, pero qué bonito.»' },
-  { name: 'La Maraña de Hierro', boss: 'Humanotauro', bossType: 'mantaur', mobs: ['drek', 'jikininki', 'drek'], waves: [6, 7], color: '#75bdc9', hint: 'Sal de las vías señaladas y del círculo de sus puños. Ataca después del golpe.', intro: '«Próxima parada: traumatología. No olvides tus pertenencias ni tus extremidades.»' },
-  { name: 'El horno de la furia', boss: 'Elemental de furia', bossType: 'elemental', mobs: ['acid', 'engineer', 'acid'], waves: [5, 7], color: '#ef9b54', hint: 'Sal de los círculos de fuego. Acércate cuando el elemental se quede agotado.', intro: '«Secado rápido y cremación. El servicio de lavandería se nos ha ido de las manos.»' },
-  { name: 'El plató final', boss: 'Clon de Krakaren', bossType: 'host', mobs: ['caster', 'bat', 'grunt'], waves: [7, 8], color: '#b89be6', hint: 'Destruye los dos emisores para romper su escudo.', intro: '«La audiencia te adora. Esto no estaba en el contrato.»' },
-];
+  { name: 'El matadero', boss: 'El Juicer', bossType: 'butcher', mobs: ['grunt', 'rat', 'bat'], formations: [[0, 0, 1, 1], [0, 1, 2, 0, 2], [0, 1, 2, 0, 1, 2]], color: '#ba769a', hint: 'Esquiva su embestida. Ataca cuando se quede agotado.', intro: '«Primer piso. Huele a derrota. Ah, no: eres tú.»' },
+  { name: 'El jardín podrido', boss: 'La Acaparadora', bossType: 'spore', mobs: ['wallwatch', 'caster', 'woodcutter'], formations: [[0, 0, 1, 0], [0, 1, 0, 2, 0, 1], [0, 1, 2, 0, 1, 2, 1]], color: '#9ac982', hint: 'Esquiva sus proyectiles. No pises las zonas verdes.', intro: '«Qué bonito jardín. Todo quiere matarte, pero qué bonito.»' },
+  { name: 'La Maraña de Hierro', boss: 'Humanotauro', bossType: 'mantaur', mobs: ['drek', 'jikininki', 'bramble'], formations: [[0, 0, 1, 0, 0], [0, 1, 2, 0, 1, 0], [0, 1, 2, 0, 1, 2, 0, 1]], color: '#75bdc9', hint: 'Sal de las vías señaladas y del círculo de sus puños. Ataca después del golpe.', intro: '«Próxima parada: traumatología. No olvides tus pertenencias ni tus extremidades.»' },
+  { name: 'El horno de la furia', boss: 'Elemental de furia', bossType: 'elemental', mobs: ['acid', 'engineer', 'coal'], formations: [[0, 0, 1, 0, 0], [0, 1, 0, 2, 0, 1, 0], [0, 1, 2, 0, 1, 2, 0, 1]], color: '#ef9b54', hint: 'Sal de los círculos de fuego. Acércate cuando el elemental se quede agotado.', intro: '«Secado rápido y cremación. El servicio de lavandería se nos ha ido de las manos.»' },
+  { name: 'El plató final', boss: 'Clon de Krakaren', bossType: 'host', mobs: ['nightweasel', 'funeral', 'hobgoblin'], formations: [[0, 0, 1, 0, 1, 0], [0, 1, 0, 2, 1, 0, 1], [0, 1, 2, 0, 1, 2, 0, 1]], color: '#b89be6', hint: 'Destruye los dos emisores para romper su escudo.', intro: '«La audiencia te adora. Esto no estaba en el contrato.»' },
+].map(floor => ({ ...floor, waves: floor.formations.map(formation => formation.length) }));
 export const UPGRADES = [
   { id: 'power', name: 'Violencia administrativa', description: '+35 % de daño. Reclamaciones, por escrito.', icon: '✦' },
   { id: 'swift', name: 'Pies, para qué os quiero', description: 'Esquiva un 30 % más a menudo y corre un 12 % más.', icon: '»' },
@@ -92,6 +92,14 @@ export function enemyStats(type, floor = 0) {
     jikininki: { r: 12, hp: 78, speed: 24, damage: 10 },
     acid: { r: 12, hp: 60, speed: 29, damage: 9 },
     engineer: { r: 16, hp: 100, speed: 20, damage: 12 },
+    rat: { r: 8, hp: 26, speed: 40, damage: 6 },
+    wallwatch: { r: 10, hp: 44, speed: 43, damage: 8 },
+    woodcutter: { r: 11, hp: 64, speed: 32, damage: 10 },
+    bramble: { r: 15, hp: 110, speed: 21, damage: 12 },
+    coal: { r: 15, hp: 120, speed: 18, damage: 12 },
+    nightweasel: { r: 10, hp: 58, speed: 44, damage: 10 },
+    funeral: { r: 12, hp: 90, speed: 25, damage: 11 },
+    hobgoblin: { r: 13, hp: 90, speed: 27, damage: 12 },
     butcher: { r: 24, hp: 340, speed: 26, damage: 18 },
     spore: { r: 24, hp: 380, speed: 0, damage: 13 },
     mantaur: { r: 27, hp: 450, speed: 29, damage: 18 },
@@ -109,13 +117,15 @@ function spawnEnemy(g, type, x, y, extra = {}) {
 
 function spawnWave(g) {
   g.wave += 1; g.phase = 'mobs';
-  const positions = [{ x: 65, y: 90 }, { x: 240, y: 86 }, { x: 415, y: 90 }, { x: 65, y: 235 }, { x: 415, y: 235 }, { x: 180, y: 90 }, { x: 300, y: 90 }, { x: 240, y: 195 }];
-  const floor = FLOORS[g.floor], count = floor.waves[g.wave - 1];
+  const positions = [{ x: 65, y: 90 }, { x: 240, y: 86 }, { x: 415, y: 90 }, { x: 65, y: 235 }, { x: 415, y: 235 }, { x: 180, y: 90 }, { x: 300, y: 90 }, { x: 240, y: 195 },
+    ...[65, 135, 205, 275, 345, 415].map(x => ({ x, y: 365 })), { x: 180, y: 235 }, { x: 300, y: 235 }]
+    .filter(position => distance(position, g.player) >= 100);
+  const floor = FLOORS[g.floor], formation = floor.formations[g.wave - 1], count = formation.length;
   for (let i = 0; i < count; i++) {
-    const type = floor.mobs[i % floor.mobs.length];
+    const type = floor.mobs[formation[i]];
     spawnEnemy(g, type, positions[i].x, positions[i].y);
   }
-  g.events.push({ type: 'announcement', text: `OLEADA ${g.wave} / 2 · ${count} malas decisiones` });
+  g.events.push({ type: 'announcement', text: `OLEADA ${g.wave} / ${floor.waves.length} · ${['Toma de contacto', 'Se complica', 'Sin respiro'][g.wave - 1]} · ${count} enemigos` });
 }
 
 function spawnGenerators(g) {
@@ -219,8 +229,8 @@ function dash(g, mx, my) {
   if (!g.firstDodge) { g.firstDodge = true; g.events.push({ type: 'narrator', text: '«Logro: evasión de responsabilidades. Se nota la práctica.»' }); }
 }
 
-function shoot(g, e, angle, speed = 91, damage = 9) {
-  g.projectiles.push({ x: e.x + Math.cos(angle) * (e.r + 5), y: e.y + Math.sin(angle) * (e.r + 5), vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, r: 4, damage, life: 6, color: ['spore', 'acid'].includes(e.type) ? '#a4d17b' : e.type === 'elemental' ? '#ff963f' : '#ed147b' });
+function shoot(g, e, angle, speed = 91, damage = 9, color = null) {
+  g.projectiles.push({ x: e.x + Math.cos(angle) * (e.r + 5), y: e.y + Math.sin(angle) * (e.r + 5), vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, r: 4, damage, life: 6, color: color || (['spore', 'acid'].includes(e.type) ? '#a4d17b' : e.type === 'elemental' ? '#ff963f' : '#ed147b') });
 }
 
 function tickBoss(g, e, dt) {
@@ -295,6 +305,59 @@ function tickBoss(g, e, dt) {
   }
 }
 
+// Game adaptations: every powerful attack has a fixed warning and recovery.
+export const MOB_ABILITIES = {
+  rat: { kind: 'charge', warning: .7, duration: .45, chargeSpeed: 120, recovery: 1, cooldown: 2.1 },
+  wallwatch: { kind: 'flank' },
+  woodcutter: { kind: 'slam', warning: .85, radius: 34, damage: 12, recovery: 1.3, cooldown: 1.8 },
+  bramble: { kind: 'volley', warning: 1.1, spread: [-.3, 0, .3], speed: 85, damage: 10, recovery: 1.5, cooldown: 2.6 },
+  coal: { kind: 'zone', warning: 1.1, radius: 28, damage: 12, hazard: 'fire', duration: 1.3, recovery: 1.5, cooldown: 3 },
+  nightweasel: { kind: 'charge', warning: .85, duration: .6, chargeSpeed: 175, recovery: 1.2, cooldown: 2 },
+  funeral: { kind: 'volley', ranged: true, warning: .9, spread: [0], speed: 145, damage: 12, recovery: 1.1, cooldown: 2.1 },
+  hobgoblin: { kind: 'zone', ranged: true, warning: 1.25, radius: 36, damage: 14, hazard: 'strike', duration: .3, recovery: 1.3, cooldown: 2.7 },
+};
+
+function tickSpecialEnemy(g, e, dt, toward, gap) {
+  const ability = MOB_ABILITIES[e.type];
+  if (ability.kind === 'flank') {
+    const side = e.id % 2 ? .65 : -.65;
+    const direction = unit(toward.x - toward.y * side, toward.y + toward.x * side);
+    moveEntity(e, direction.x * e.speed * dt, direction.y * e.speed * dt);
+  } else if (e.mode === 'idle') {
+    const movement = ability.ranged ? gap < 100 ? -.5 : gap > 155 ? 1 : 0 : 1;
+    moveEntity(e, toward.x * e.speed * dt * movement, toward.y * e.speed * dt * movement);
+    if (e.timer <= 0 && (ability.kind !== 'slam' || gap < 70)) {
+      e.mode = 'windup'; e.timer = ability.warning; e.aim = toward;
+      if (ability.kind === 'zone' || ability.kind === 'slam') {
+        const target = ability.kind === 'slam' ? e : g.player;
+        g.hazards.push({ type: ability.hazard || 'strike', x: target.x, y: target.y, r: ability.radius,
+          delay: ability.warning, life: ability.warning + (ability.duration || .3), damage: ability.damage, audioLead: true });
+      }
+      g.events.push({ type: 'sound', name: 'butcher_windup' });
+    }
+  } else if (e.mode === 'windup' && e.timer <= 0) {
+    if (ability.kind === 'charge') {
+      e.mode = 'charge'; e.timer = ability.duration;
+      g.events.push({ type: 'sound', name: 'butcher_charge' });
+    } else {
+      if (ability.kind === 'volley') {
+        const angle = Math.atan2(e.aim.y, e.aim.x);
+        for (const offset of ability.spread) shoot(g, e, angle + offset, ability.speed, ability.damage, '#ffe000');
+        g.events.push({ type: 'sound', name: 'projectile_cast' });
+      }
+      e.mode = 'recover'; e.timer = ability.recovery;
+    }
+  } else if (e.mode === 'charge') {
+    const before = { x: e.x, y: e.y };
+    moveEntity(e, e.aim.x * ability.chargeSpeed * dt, e.aim.y * ability.chargeSpeed * dt);
+    if (e.timer <= 0 || distance(before, e) < ability.chargeSpeed * dt * .35) {
+      e.mode = 'recover'; e.timer = ability.recovery;
+    }
+  } else if (e.mode === 'recover' && e.timer <= 0) {
+    e.mode = 'idle'; e.timer = ability.cooldown;
+  }
+}
+
 function tickEnemy(g, e, dt) {
   if (e.hp <= 0) return;
   e.flash = Math.max(0, e.flash - dt);
@@ -303,7 +366,9 @@ function tickEnemy(g, e, dt) {
     e.timer -= dt;
     const toward = unit(g.player.x - e.x, g.player.y - e.y);
     const gap = distance(e, g.player);
-    if (e.type === 'caster' || e.type === 'acid') {
+    if (MOB_ABILITIES[e.type]) {
+      tickSpecialEnemy(g, e, dt, toward, gap);
+    } else if (e.type === 'caster' || e.type === 'acid') {
       const multiplier = gap < 100 ? -.6 : gap > 155 ? 1 : 0;
       moveEntity(e, toward.x * e.speed * dt * multiplier, toward.y * e.speed * dt * multiplier);
       if (e.timer <= 0) { shoot(g, e, Math.atan2(toward.y, toward.x), e.type === 'acid' ? 95 : 78, e.type === 'acid' ? 10 : 8); e.timer = e.type === 'acid' ? 2.5 : 2.2; g.events.push({ type: 'sound', name: 'projectile_cast' }); }
@@ -406,7 +471,7 @@ export function updateGame(g, delta, input = {}) {
       else spawnWave(g);
     }
   } else if (g.phase === 'mobs' && g.enemies.length === 0) {
-    if (g.wave < 2) { g.phase = 'between'; g.phaseTimer = 1.4; }
+    if (g.wave < FLOORS[g.floor].waves.length) { g.phase = 'between'; g.phaseTimer = 1.4; }
     else {
       g.phase = 'warning'; g.phaseTimer = 2.6;
       const healed = Math.min(25, p.maxHp - p.hp); p.hp += healed;
