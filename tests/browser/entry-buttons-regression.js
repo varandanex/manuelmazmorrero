@@ -1,6 +1,10 @@
 // Evaluate this function in the local page once artwork has loaded.
 async function checkEntryButtons(expectedSaved) {
   await document.fonts.ready;
+  // Check settled colors, not the initial primary-to-secondary CSS transition.
+  await new Promise(requestAnimationFrame);
+  await Promise.all([...document.querySelectorAll('.entry-actions button')]
+    .flatMap(button => button.getAnimations().map(animation => animation.finished.catch(() => {}))));
   const $ = id => document.getElementById(id), results = [];
   const check = (name, pass) => results.push({ name, pass: !!pass });
   check('continue visibility matches the checkpoint', $('continue').hidden === !expectedSaved);
@@ -9,7 +13,7 @@ async function checkEntryButtons(expectedSaved) {
   check('new game has a concise label', $('start-label').textContent === (expectedSaved ? 'Nueva partida' : 'Entrar en la mazmorra'));
   check('new game keeps its icon after save refresh', !!$('start').querySelector('svg'));
   const buttons = [...document.querySelectorAll('.entry-actions button')].filter(button => !button.hidden);
-  check('the expected actions are available', buttons.length === (expectedSaved ? 3 : 2));
+  check('the expected actions are available', buttons.length === (expectedSaved ? 5 : 4));
   const rects = buttons.map(button => button.getBoundingClientRect());
   check('every action is a large tap target', rects.every(rect => rect.height >= 56));
   check('all actions use the same full width', rects.every(rect => Math.abs(rect.width - rects[0].width) < 1));

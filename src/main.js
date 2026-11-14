@@ -1,4 +1,5 @@
 import { addLeaderboard } from './leaderboard.js';
+import { initArtGallery } from './art-gallery.js';
 import { createGame, updateGame, chooseUpgrade, retryFloor, pauseGame, resumeGame, beginFloorCombat, beginBossReveal, beginBossFight, parseCheckpoint, formatTime, FLOORS, UPGRADES } from './game.js';
 import { loadArt, renderGame, renderPreview } from './render.js';
 import { createAudio } from './audio.js';
@@ -535,6 +536,7 @@ $('modal').addEventListener('cancel', event => {
   else if (modalKind === 'pause') { closeModal(); resumeGame(game); audio.setPaused(false); unlockAudio(); }
 });
 $('sound').addEventListener('click', toggleSound);
+initArtGallery($('gallery'), () => { unlockAudio(); audio.play('ui_confirm'); });
 $('leaderboard').addEventListener('click', () => {
   setModal('leaderboard', 'MARCAS COMPARTIDAS', 'Los diez del desastre.', 'Las mejores puntuaciones de todos los jugadores.');
   addLeaderboard($('modal-content'));

@@ -43,6 +43,23 @@ These are game adaptations, not claims about canonical abilities or encounter or
 
 The beginning of the current floor is stored locally in this browser. It is not a mid-combat save and it does not sync across devices. A new run replaces this checkpoint. Victory removes it. The game remains playable if browser storage is unavailable. Version-2 checkpoints support all five floors. Legacy version-1 saves retain their completed-floor count, upgrades and score; an old third-floor save enters La Maraña de Hierro rather than skipping the expansion. The legacy storage key is intentionally retained.
 
+## Art gallery and original downloads
+
+Open **Galería · Arte descargable** from the main menu. Browse with the on-screen arrows, a horizontal swipe or the keyboard (←/→, Home/End); Escape returns to the menu. The gallery remembers the current slide until the page reloads and does not modify the saved game.
+
+The archive includes all **38 original PNGs** in `assets/art/`: five current bosses, seven regular enemies, Manolo illustrations, five floor backgrounds, props, the logo and previous designs. Each slide shows its name, category, original dimensions and file size. **PNG original** downloads that image; **Todo en ZIP** downloads the entire collection (about 66 MB), retaining its folders. Both downloads preserve the source bytes, resolution and transparency; they do not upscale or convert WebP previews.
+
+Previews load lazily, one WebP at a time. Original PNGs and the ZIP are fetched only when requested. The ZIP is prebuilt, works on static hosting and is streamed with byte-range support by the Node server; it is not assembled in the browser. Include `assets/downloads/` in deployments.
+
+After adding or changing original PNGs, regenerate their WebP previews with `./scripts/encode-art.sh`, then rebuild the catalog and archive (Python 3.9+):
+
+```sh
+npm run gallery:build
+npm test
+```
+
+Curated Spanish labels and ordering live in `scripts/build_art_gallery.py`; new PNGs are also discovered automatically. Commit the generated `src/art-gallery-data.js` and `assets/downloads/manolo-ilustraciones-png.zip` together. Tests verify catalog coverage, image dimensions, SHA-256 hashes, exact ZIP contents and download responses. See `docs/art-gallery/verification.md` for browser checks and device limitations.
+
 ## Checks
 
 ```sh

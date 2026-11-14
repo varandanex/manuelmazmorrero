@@ -8,7 +8,8 @@
     "dev": "node server.mjs",
     "start": "node server.mjs",
     "test": "node --test tests/*.test.js",
-    "check": "node --check src/game.js && node --check src/render.js && node --check src/main.js && node --check server.mjs && node --check src/audio.js && node --check src/audio-config.js && node --check src/transition-guard.js && node --check src/boss-dialogues.js && node --check src/encounter-cards.js && node --check src/leaderboard.js && node --check server/leaderboard.mjs"
+    "check": "node --check src/game.js && node --check src/render.js && node --check src/main.js && node --check server.mjs && node --check src/audio.js && node --check src/audio-config.js && node --check src/transition-guard.js && node --check src/boss-dialogues.js && node --check src/encounter-cards.js && node --check src/leaderboard.js && node --check server/leaderboard.mjs && node --check src/art-gallery.js && node --check src/art-gallery-data.js",
+    "gallery:build": "python3 scripts/build_art_gallery.py"
   },
   "engines": {
     "node": ">=20"
