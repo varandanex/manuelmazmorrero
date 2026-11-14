@@ -1,3 +1,4 @@
+import { addLeaderboard } from './leaderboard.js';
 import { createGame, updateGame, chooseUpgrade, retryFloor, pauseGame, resumeGame, beginBossFight, parseCheckpoint, formatTime, FLOORS, UPGRADES } from './game.js';
 import { loadArt, renderGame, renderPreview } from './render.js';
 import { createAudio } from './audio.js';
@@ -261,6 +262,7 @@ function showDeath() {
 Repite este piso con toda la vida y tus mejoras.`);
   const portrait = document.createElement('img'); portrait.className = 'result-portrait'; portrait.src = '/assets/webp/Manu-02-caos-absoluto.webp'; portrait.alt = 'Manu, sorprendido por el resultado'; $('modal-content').append(portrait);
   addResults();
+  addLeaderboard($('modal-content'), game.score);
   modalButton('Otra oportunidad', () => { closeModal(); retryFloor(game); saveCheckpoint(); consumeEvents(); updateHud(); }, false, false);
   modalButton('Salir al menú', backToMenu, true);
 }
@@ -279,6 +281,7 @@ function showVictory() {
   setModal('won', 'LOGRO DESBLOQUEADO · LEYENDA DE LA MAZMORRA', 'Feliz cumpleaños, mazmorrero.', `Tres pisos. Tres jefes. Cero respeto por el reglamento.
 «Has sobrevivido, Manolo. Ahora intenta sobrevivir a otro año.»`);
   addResults();
+  addLeaderboard($('modal-content'), game.score);
   const note = document.createElement('p'); note.className = 'quiet-note'; note.textContent = `Criaturas derrotadas: ${game.kills} · Reintentos: ${game.deaths}. La organización niega toda responsabilidad.`; $('modal-content').append(note);
   modalButton('Otra ronda de malas decisiones', () => start(), false, false);
   modalButton('Volver al menú', backToMenu, true);
@@ -455,10 +458,16 @@ document.addEventListener('visibilitychange', () => {
 });
 $('modal').addEventListener('cancel', event => {
   event.preventDefault();
-  if (modalKind === 'help') closeHelp();
+  if (modalKind === 'leaderboard') closeModal();
+  else if (modalKind === 'help') closeHelp();
   else if (modalKind === 'pause') { closeModal(); resumeGame(game); audio.setPaused(false); unlockAudio(); }
 });
 $('sound').addEventListener('click', toggleSound);
+$('leaderboard').addEventListener('click', () => {
+  setModal('leaderboard', 'MARCAS COMPARTIDAS', 'Los diez del desastre.', 'Las mejores puntuaciones de todos los jugadores.');
+  addLeaderboard($('modal-content'));
+  modalButton('Volver al menú', closeModal, true);
+});
 for (const id of ['help', 'lobby-help']) $(id).addEventListener('click', () => { unlockAudio(); showHelp(); audio.play('ui_confirm'); });
 $('pause').addEventListener('click', () => { showPause(); audio.play('ui_confirm'); });
 $('continue').addEventListener('click', () => start(saved));

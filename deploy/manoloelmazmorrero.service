@@ -1,0 +1,24 @@
+[Unit]
+Description=Manolo el Mazmorrero game and shared ranking
+After=network.target
+
+[Service]
+Type=simple
+DynamicUser=yes
+WorkingDirectory=/opt/manoloelmazmorrero/current
+ExecStart=/usr/bin/node /opt/manoloelmazmorrero/current/server.mjs
+Environment=NODE_ENV=production
+Environment=HOST=127.0.0.1
+Environment=PORT=4180
+Environment=LEADERBOARD_FILE=/var/lib/manoloelmazmorrero/leaderboard.json
+StateDirectory=manoloelmazmorrero
+StateDirectoryMode=0700
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+
+[Install]
+WantedBy=multi-user.target

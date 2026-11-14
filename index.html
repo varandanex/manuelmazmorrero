@@ -27,6 +27,7 @@
         <div class="entry-actions">
           <button id="continue" class="entry-button entry-primary" hidden disabled><span>Continuar descenso</span><img src="/assets/icons/arrow-down-right.svg" alt=""></button>
           <button id="start" class="entry-button entry-primary" disabled><span id="start-label">Preparando el espectáculo…</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg></button>
+          <button id="leaderboard" class="entry-button entry-rules"><span>Top 10 · Salón de la fama</span><span aria-hidden="true">★</span></button>
           <button id="lobby-help" class="entry-button entry-rules"><span>Primero, las reglas</span><img class="icon" src="/assets/icons/question.svg" alt=""></button>
         </div>
         <p id="asset-status" class="asset-status" role="status">Cargando la mazmorra…</p>
@@ -60,6 +61,11 @@
             <svg class="state-danger" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 10 18H2Z"/><path d="M12 9v5m0 3v1"/></svg>
           </span>
         </div>
+        <p class="keyboard-controls" aria-label="Controles de ordenador">
+          <span><kbd>WASD</kbd> / <kbd>↑ ↓ ← →</kbd> Mover</span>
+          <span><kbd>ESPACIO</kbd> / <kbd>J</kbd> Atacar</span>
+          <span><kbd>MAYÚS</kbd> / <kbd>K</kbd> Esquivar</span>
+        </p>
         <div class="touch-controls">
           <div id="joystick" class="joystick" role="group" aria-label="Joystick táctil para mover a Manolo"><span id="joystick-knob"></span></div>
           <div class="combat-buttons"><button id="dash" class="dash-button" aria-label="Esquivar"><img class="icon" src="/assets/icons/caret-double-right.svg" alt=""><span id="dash-label" aria-hidden="true"></span></button><button id="attack" class="attack-button" aria-label="Atacar"><img src="/assets/icons/umbrella-closed.svg" alt=""></button></div>

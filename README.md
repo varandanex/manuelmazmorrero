@@ -12,7 +12,7 @@ npm run dev
 
 Open `http://localhost:4173`. To test on a phone, connect it to the same Wi-Fi as the computer and open the LAN URL printed by the server. The computer must stay awake and the server must keep running. VPNs and client-isolated Wi-Fi may prevent access.
 
-This is a local preview, not a public deployment. The public website can be hosted as static files (`index.html`, `style.css`, `src/`, `assets/webp/`, `assets/icons/`, `assets/fonts/`, `assets/audio/`). No build step, backend, accounts, analytics or API keys are required. Fonts are self-hosted and their OFL licenses are in `assets/fonts/`. Phosphor Bold icons are vendored with the MIT license in `assets/icons/`. Gameplay makes no external requests. Generate the gift QR only after choosing and verifying the final HTTPS address.
+This is a local preview, not a public deployment. Run `npm start` on a single Node.js 20+ server to share the arcade top 10 across players. Keep `data/leaderboard.json` on persistent storage (or configure `LEADERBOARD_FILE`). Static-only hosting runs the game but cannot save the shared ranking. See [leaderboard hosting and trust boundary](docs/leaderboard.md). No build step, accounts, analytics or API keys are required. Fonts are self-hosted and their OFL licenses are in `assets/fonts/`. Phosphor Bold icons are vendored with the MIT license in `assets/icons/`. Gameplay makes no third-party requests; the shared ranking uses the same-origin `/api/leaderboard` endpoint. Generate the gift QR only after choosing and verifying the final HTTPS address.
 
 ## Play
 
@@ -38,7 +38,7 @@ npm run check
 npm test
 ```
 
-`src/game.js` contains the deterministic simulation and can be tested without a browser. `src/render.js` owns high-density canvas rendering with generated raster sprites. `src/main.js` handles UI, pointer/keyboard input and local checkpoints. `src/audio.js` owns Web Audio effects, streamed music, volume and lifecycle; `src/audio-config.js` maps the supplied files. `server.mjs` is a small development-only static server.
+`src/game.js` contains the deterministic simulation and can be tested without a browser. `src/render.js` owns high-density canvas rendering with generated raster sprites. `src/main.js` handles UI, pointer/keyboard input and local checkpoints. `src/audio.js` owns Web Audio effects, streamed music, volume and lifecycle; `src/audio-config.js` maps the supplied files. `src/leaderboard.js` displays the shared ranking and initials form. `server.mjs` serves the game and ranking API; `server/leaderboard.mjs` serializes and persists the top 10.
 
 ## Current limitations
 

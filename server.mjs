@@ -3,14 +3,17 @@ import { readFile, realpath } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import os from 'node:os';
+import { createLeaderboard, handleLeaderboard } from './server/leaderboard.mjs';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 const port = Number(process.env.PORT || 4173);
 const mime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.png': 'image/png', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.ico': 'image/x-icon', '.ttf': 'font/ttf', '.wav': 'audio/wav', '.mp3': 'audio/mpeg', '.json': 'application/json' };
 
-export function createStaticServer() {
+export function createStaticServer({ leaderboardFile = process.env.LEADERBOARD_FILE || path.join(root, 'data/leaderboard.json') } = {}) {
+const leaderboard = createLeaderboard(leaderboardFile);
 return http.createServer(async (req, res) => {
   try {
+    if (new URL(req.url, 'http://localhost').pathname === '/api/leaderboard') return await handleLeaderboard(req, res, leaderboard);
     if (!['GET', 'HEAD'].includes(req.method)) { res.writeHead(405); res.end(); return; }
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     const relative = pathname === '/' ? 'index.html' : pathname.slice(1);
@@ -41,7 +44,7 @@ return http.createServer(async (req, res) => {
 });
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) createStaticServer().listen(port, '0.0.0.0', () => {
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) createStaticServer().listen(port, process.env.HOST || '0.0.0.0', () => {
   console.log(`Manolo el Mazmorrero → http://localhost:${port}`);
   for (const list of Object.values(os.networkInterfaces())) for (const address of list || []) {
     if (address.family === 'IPv4' && !address.internal) console.log(`Same Wi-Fi → http://${address.address}:${port}`);

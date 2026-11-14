@@ -148,7 +148,8 @@ html.in-combat { touch-action: none; overscroll-behavior: none; }
   .dash-button { width: 72px; height: 72px; }
 }
 /* Desktop keeps a centered arena and uses the keyboard. */
-@media(min-width:741px) and (min-height:501px) and (pointer:fine){.game-mode .masthead{height:60px}.game-screen{margin:12px auto}.play-column{width:100%;max-width:min(600px,calc((100dvh - 120px)*480/420));justify-self:center}.touch-controls{display:none}}
+.keyboard-controls{display:none}
+@media(min-width:741px) and (min-height:501px) and (pointer:fine){.game-mode .masthead{height:60px}.game-screen{margin:12px auto}.play-column{width:100%;max-width:min(600px,calc((100dvh - 120px)*480/420));justify-self:center}.touch-controls{display:none}.keyboard-controls{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 20px;margin:14px 0 0;color:var(--muted);font:10px var(--mono)}.keyboard-controls span{white-space:nowrap}.keyboard-controls kbd{color:var(--ink);font-size:10px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.broadcast-preview{transform:none}}
 
 /* Sound desk: uses the existing broadcast palette and dialog rhythm. */
@@ -304,3 +305,17 @@ dialog[data-kind="boss-intro"] #modal-actions { margin-top: 12px; }
   .creator-credit { padding: 8px 18px; margin-bottom: 18px; }
   .creator-credit > strong { font-size: 27px; }
 }
+
+/* Shared arcade leaderboard, also usable on narrow touch screens. */
+.leaderboard { margin-top: 24px; border-top: 1px solid var(--line); padding-top: 16px; }
+.leaderboard h3 { font: 600 22px/1.2 var(--display); color: var(--gold); text-align: center; }
+.leaderboard-list { padding-left: 30px; font-family: var(--mono); }
+.leaderboard-list li { padding: 9px 8px; border-bottom: 1px solid var(--line); }
+.leaderboard-list li::marker { color: var(--muted); }
+.leaderboard-list li span { float: right; }
+.leaderboard-current { color: var(--gold); background: var(--panel); }
+.leaderboard-form { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
+.leaderboard-form label { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 12px; }
+.leaderboard-form input { width: 5em; min-height: 48px; padding: 8px; background: var(--panel); color: var(--gold); border: 1px solid var(--gold); font: 24px var(--mono); text-transform: uppercase; }
+.leaderboard-form button { justify-content: center; width: 100%; }
+.leaderboard-form button:disabled { opacity: .6; cursor: wait; }
