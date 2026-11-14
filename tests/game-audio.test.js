@@ -1,8 +1,9 @@
 import test from 'node:test';
+import { createPlayingGame } from './helpers/game-fixture.js';
 import assert from 'node:assert/strict';
-import { createGame, updateGame, damagePlayer, chooseUpgrade, retryFloor, beginBossFight } from '../src/game.js';
+import { updateGame, damagePlayer, chooseUpgrade, retryFloor, beginFloorCombat, beginBossReveal, beginBossFight } from '../src/game.js';
 const sounds = g => g.events.splice(0).filter(e => e.type === 'sound').map(e => e.name);
-function arena() { const g = createGame(null, 42); g.phase = 'boss'; g.events = []; g.player.invulnerable = 0; return g; }
+function arena() { const g = createPlayingGame(null, 42); g.phase = 'boss'; g.events = []; g.player.invulnerable = 0; return g; }
 function enemy(type, hp = 100, extra = {}) { return { id: 999, type, x: 240, y: 300, r: 10, hp, maxHp: hp, speed: 0, damage: 0, flash: 0, timer: 100, mode: 'idle', ...extra }; }
 function advance(g, frames) { for (let i = 0; i < frames; i++) updateGame(g, 1 / 60); }
 
@@ -35,20 +36,23 @@ test('terminal cues replace ordinary damage/death and floor entry is explicit', 
   const g = arena(); damagePlayer(g, 10); assert.deepEqual(sounds(g), ['player_hurt']);
   assert.equal(damagePlayer(g, 10), false); assert.deepEqual(sounds(g), []);
   g.player.invulnerable = 0; damagePlayer(g, 100); assert.deepEqual(sounds(g), ['player_death']);
-  retryFloor(g); assert.deepEqual(sounds(g), ['retry', 'floor_start']);
+  retryFloor(g); assert.deepEqual(sounds(g), ['retry']);
+  beginFloorCombat(g); assert.deepEqual(sounds(g), ['floor_start']);
   g.enemies = [enemy('butcher', 1, { boss: true })];
   updateGame(g, 1 / 60, { attack: true }); assert.deepEqual(sounds(g), ['attack_swing', 'boss_defeat']);
-  chooseUpgrade(g, 'power'); assert.deepEqual(sounds(g), ['upgrade_select', 'floor_start']);
-  const final = arena(); final.floor = 2; final.enemies = [enemy('host', 1, { boss: true })];
+  chooseUpgrade(g, 'power'); assert.deepEqual(sounds(g), ['upgrade_select']);
+  beginFloorCombat(g); assert.deepEqual(sounds(g), ['floor_start']);
+  const final = arena(); final.floor = 4; final.enemies = [enemy('host', 1, { boss: true })];
   updateGame(final, 1 / 60, { attack: true }); assert.deepEqual(sounds(final), ['attack_swing', 'victory']);
-  assert.deepEqual(sounds(createGame(null, 42)), ['floor_start']);
+  assert.deepEqual(sounds(createPlayingGame(null, 42)), ['floor_start']);
 });
 
-test('boss entry, butcher windup, charge and recovery sound once per transition', () => {
+test('battle does not repeat the reveal sting; butcher attacks sound once per transition', () => {
   const g = arena(); g.phase = 'mobs'; g.wave = 2;
   updateGame(g, 1 / 60); assert.deepEqual(sounds(g), []);
   advance(g, 157); assert.deepEqual(sounds(g), []);
-  assert.equal(beginBossFight(g), true); assert.deepEqual(sounds(g), ['boss_intro']);
+  assert.equal(beginBossReveal(g), true);
+  assert.equal(beginBossFight(g), true); assert.deepEqual(sounds(g), []);
   g.enemies[0].timer = 0; updateGame(g, 1 / 60); assert.deepEqual(sounds(g), ['butcher_windup']);
   advance(g, 10); assert.deepEqual(sounds(g), []);
   advance(g, 57); assert.deepEqual(sounds(g), ['butcher_charge']);

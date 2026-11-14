@@ -5,7 +5,7 @@
   const check = (name, pass) => results.push({ name, pass: !!pass });
   await document.fonts.load('600 24px "Pixelify Sans"', 'Ññ Áé ¡Música!');
   check('local pixel font loads with Spanish text', document.fonts.check('600 24px "Pixelify Sans"'));
-  for (const floor of [0, 1, 2]) {
+  for (const floor of [0, 1, 2, 3, 4]) {
     for (const phase of ['mobs', 'boss']) {
       q.scene(phase, floor);
       check(`${floor}/${phase}: no prose during combat`, !/[a-záéíóúñ]/i.test($('game-screen').innerText));
@@ -17,7 +17,7 @@
     q.scene('warning', floor);
     check(`${floor}: boss warning does not duplicate the conversation`, $('floor-toast').hidden);
   }
-  for (const [floor, mode, expected] of [[0,'idle',''], [0,'recover','vulnerable'], [0,'windup','danger'], [2,'idle','shield']]) {
+  for (const [floor, mode, expected] of [[0,'idle',''], [0,'recover','vulnerable'], [0,'windup','danger'], [4,'idle','shield'], [2,'windup','danger'], [3,'recover','vulnerable']]) {
     q.scene('boss', floor, mode);
     check(`boss state uses the ${expected || 'idle'} indicator`, $('boss-state').dataset.state === expected);
     check('boss bar has its actual health range', Number($('boss-bar').getAttribute('aria-valuemax')) >= 340);

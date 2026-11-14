@@ -1,24 +1,30 @@
 import { WIDTH, HEIGHT, BOUNDS, PILLARS } from './game.js';
 
 // Artwork is separate from simulation. World coordinates and hitboxes stay unchanged.
-const ART_NAMES = ['room', 'room-spore', 'room-host', 'hero', 'grunt', 'bat', 'caster', 'butcher', 'spore', 'host', 'generator', 'pillar', 'pillar-spore', 'pillar-host'];
+const ART_NAMES = ['room', 'room-spore', 'room-railway', 'room-furnace', 'room-host', 'hero', 'grunt', 'bat', 'caster', 'drek', 'jikininki', 'acid', 'engineer', 'butcher', 'spore', 'mantaur', 'elemental', 'host', 'generator', 'pillar', 'pillar-spore', 'pillar-host'];
 // Stable simulation roles map to the approved replacement artwork.
 const ART_FILES = {
   room: 'environments/room-matadero', 'room-spore': 'environments/room-jardin', 'room-host': 'environments/room-plato',
+  'room-railway': 'environments/room-railway', 'room-furnace': 'environments/room-furnace',
   pillar: 'environments/pillar-matadero', 'pillar-spore': 'environments/pillar-jardin', 'pillar-host': 'environments/pillar-plato',
   hero: 'hero-manu-umbrella', grunt: 'enemies/enemy-goblin', bat: 'enemies/enemy-scatterer',
   caster: 'enemies/enemy-evil-llama', butcher: 'enemies/boss-juicer',
   spore: 'enemies/boss-hoarder', host: 'enemies/boss-krakaren',
+  drek: 'enemies/enemy-drek', jikininki: 'enemies/enemy-jikininki',
+  acid: 'enemies/enemy-acid-crawler', engineer: 'enemies/enemy-goblin-engineer',
+  mantaur: 'enemies/boss-mantaur', elemental: 'enemies/boss-rage-elemental',
 };
 const FLOOR_ART = [
   { room: 'room', pillar: 'pillar' },
   { room: 'room-spore', pillar: 'pillar-spore' },
+  { room: 'room-railway', pillar: 'pillar' },
+  { room: 'room-furnace', pillar: 'pillar' },
   { room: 'room-host', pillar: 'pillar-host' },
 ];
 const art = new Map();
 const ink = '#0b0b0e', paper = '#f4eddd', yellow = '#ffe000', magenta = '#ed147b';
 // Visual sizes only: foot anchors, collision radii and attack ranges are unchanged.
-const SPRITE_HEIGHTS = { hero: 78, grunt: 66, bat: 58, caster: 74, butcher: 116, spore: 122, host: 106, generator: 60 };
+const SPRITE_HEIGHTS = { hero: 78, grunt: 66, bat: 58, caster: 74, drek: 60, jikininki: 92, acid: 70, engineer: 80, butcher: 116, spore: 122, mantaur: 130, elemental: 134, host: 106, generator: 60 };
 
 export async function loadArt(onProgress = () => {}) {
   let loaded = 0;
@@ -60,12 +66,13 @@ function dangerZone(ctx, path, waiting, color = magenta) {
 }
 
 function drawEnemy(ctx, e, time, game) {
-  if (e.type === 'butcher' && e.mode === 'windup' && e.aim) {
+  if (['butcher', 'engineer'].includes(e.type) && e.mode === 'windup' && e.aim) {
     const half = e.r + game.player.r;
+    const length = e.type === 'engineer' ? 180 : 350;
     const nx = -e.aim.y * half, ny = e.aim.x * half;
     const path = new Path2D();
-    path.moveTo(e.x + nx, e.y + ny); path.lineTo(e.x + nx + e.aim.x * 350, e.y + ny + e.aim.y * 350);
-    path.lineTo(e.x - nx + e.aim.x * 350, e.y - ny + e.aim.y * 350); path.lineTo(e.x - nx, e.y - ny); path.closePath();
+    path.moveTo(e.x + nx, e.y + ny); path.lineTo(e.x + nx + e.aim.x * length, e.y + ny + e.aim.y * length);
+    path.lineTo(e.x - nx + e.aim.x * length, e.y - ny + e.aim.y * length); path.lineTo(e.x - nx, e.y - ny); path.closePath();
     ctx.save(); ctx.beginPath(); ctx.rect(BOUNDS.left, BOUNDS.top, BOUNDS.right - BOUNDS.left, BOUNDS.bottom - BOUNDS.top); ctx.clip();
     dangerZone(ctx, path, true); ctx.restore();
   }
@@ -75,7 +82,7 @@ function drawEnemy(ctx, e, time, game) {
   }
   // Keep taller bosses fully visible when they approach the north edge.
   const height = e.boss ? Math.min(SPRITE_HEIGHTS[e.type], e.y + 3) : SPRITE_HEIGHTS[e.type];
-  const floating = e.type === 'host';
+  const floating = e.type === 'host' || e.type === 'elemental';
   const bob = Math.sin(time * (floating ? 5 : 4) + e.id) * (floating ? 2 : .7);
   const flip = !['spore', 'host', 'generator'].includes(e.type) && game.player.x < e.x;
   sprite(ctx, e.type, e.x, e.y + bob, height, { flip, flash: e.flash > 0, tilt: e.mode === 'charge' ? (e.aim?.x || 0) * .12 : 0 });
@@ -122,9 +129,9 @@ export function renderGame(ctx, game, time, reducedMotion = false) {
   if (room) ctx.drawImage(room, 0, 0, WIDTH, HEIGHT);
   for (const hazard of game.hazards) {
     const path = new Path2D();
-    if (hazard.type === 'pool') path.arc(hazard.x, hazard.y, hazard.r, 0, Math.PI * 2);
+    if (Number.isFinite(hazard.r)) path.arc(hazard.x, hazard.y, hazard.r, 0, Math.PI * 2);
     else path.rect(hazard.x - hazard.w / 2, hazard.y - hazard.h / 2, hazard.w, hazard.h);
-    dangerZone(ctx, path, hazard.delay > 0, hazard.type === 'pool' ? '#a4d65e' : magenta);
+    dangerZone(ctx, path, hazard.delay > 0, ({ pool: '#a4d65e', fire: '#ff963f', rail: '#71d8e5', strike: yellow })[hazard.type] || magenta);
   }
   if (!reducedMotion) for (const fx of game.effects) if (fx.type === 'trail') {
     ctx.globalAlpha = fx.life / fx.maxLife * .2; sprite(ctx, 'hero', fx.x, fx.y, SPRITE_HEIGHTS.hero); ctx.globalAlpha = 1;
@@ -142,7 +149,7 @@ export function renderGame(ctx, game, time, reducedMotion = false) {
     else drawPlayer(ctx, actor, animationTime);
   }
   for (const shot of game.projectiles) {
-    ctx.fillStyle = game.floor === 1 ? '#a4d65e' : magenta;
+    ctx.fillStyle = shot.color || magenta;
     ctx.strokeStyle = paper; ctx.lineWidth = 1.5;
     ctx.beginPath(); ctx.arc(shot.x, shot.y, shot.r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
   }

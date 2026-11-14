@@ -1,9 +1,10 @@
 import { addLeaderboard } from './leaderboard.js';
-import { createGame, updateGame, chooseUpgrade, retryFloor, pauseGame, resumeGame, beginBossFight, parseCheckpoint, formatTime, FLOORS, UPGRADES } from './game.js';
+import { createGame, updateGame, chooseUpgrade, retryFloor, pauseGame, resumeGame, beginFloorCombat, beginBossReveal, beginBossFight, parseCheckpoint, formatTime, FLOORS, UPGRADES } from './game.js';
 import { loadArt, renderGame, renderPreview } from './render.js';
 import { createAudio } from './audio.js';
 import { createTransitionGuard } from './transition-guard.js';
 import { BOSS_DIALOGUES } from './boss-dialogues.js';
+import { ENCOUNTER_CARDS, FLOOR_BRIEFINGS, floorEnemyCards } from './encounter-cards.js';
 
 const $ = id => document.getElementById(id);
 const canvas = $('arena');
@@ -17,6 +18,7 @@ const touch = { x: 0, y: 0, attack: false, dash: false };
 let game = null, saved = null, lastFrame = 0, accumulator = 0, hudAt = 0;
 let modalKind = '', helpWasPlaying = false, lastNarrator = '';
 let bossDialogueIndex = 0;
+let encounterIndex = -1;
 let joystickPointer = null, attackPointer = null, dashPointer = null;
 let artReady = false;
 const audio = createAudio({ onChange: updateSoundLabel });
@@ -26,6 +28,7 @@ updateSoundLabel();
 function readSave() {
   try { saved = parseCheckpoint(localStorage.getItem(storageKey)); } catch { saved = null; }
   $('continue').hidden = !saved;
+  if (saved) $('continue').querySelector('span').textContent = `Continuar · Piso ${saved.floor + 1}`;
   $('start').classList.toggle('entry-primary', !saved);
   $('start').classList.toggle('entry-secondary', !!saved);
   $('start-label').textContent = saved ? 'Nueva partida' : 'Entrar en la mazmorra';
@@ -102,12 +105,13 @@ function clearInput() {
 
 function setModal(kind, eyebrow, title, copy) {
   clearInput(); modalKind = kind;
-  if (['upgrade', 'dead', 'won', 'boss-intro'].includes(kind)) transitionGuard.begin();
+  if (['upgrade', 'dead', 'won', 'boss-intro', 'floor-intro', 'boss-reveal'].includes(kind)) transitionGuard.begin();
   else transitionGuard.close();
   $('modal-eyebrow').textContent = eyebrow; $('modal-title').textContent = title; $('modal-copy').textContent = copy;
   $('modal-content').replaceChildren(); $('modal-actions').replaceChildren();
   $('modal-content').after($('modal-actions'));
   $('modal').dataset.kind = kind;
+  delete $('modal').dataset.presentation;
   updateModalLock();
   if (!$('modal').open) $('modal').showModal();
   $('modal').scrollTop = 0;
@@ -127,7 +131,7 @@ function closeModal() {
 function updateModalLock() {
   const locked = transitionGuard.isLocked();
   // The illustrated conversation stays readable while only advancement is locked.
-  $('modal-content').inert = locked && modalKind !== 'boss-intro'; $('modal-actions').inert = locked;
+  $('modal-content').inert = locked && !['boss-intro', 'floor-intro', 'boss-reveal'].includes(modalKind); $('modal-actions').inert = locked;
   $('transition-status').hidden = !locked;
   $('modal').classList.toggle('transition-locked', locked);
 }
@@ -173,7 +177,7 @@ function showPause() {
 function showHelp() {
   helpWasPlaying = game?.mode === 'playing' || modalKind === 'pause';
   if (helpWasPlaying) { pauseGame(game); audio.setPaused(true); }
-  setModal('help', 'MANUAL DE SUPERVIVENCIA', 'No mueras. Sobre todo eso.', 'Elimina dos oleadas y derrota al jefe de cada piso. Después, elige una mejora.');
+  setModal('help', 'MANUAL DE SUPERVIVENCIA', 'No mueras. Sobre todo eso.', `Elimina dos oleadas y derrota al jefe de cada uno de los ${FLOORS.length} pisos. Elige una mejora tras los primeros ${FLOORS.length - 1}.`);
   const rows = document.createElement('div'); rows.className = 'help-rows';
   const rules = [
     ['Muévete', 'Móvil: arrastra el joystick izquierdo. Ordenador: WASD o flechas.'],
@@ -192,6 +196,68 @@ function showHelp() {
 
 function closeHelp() {
   closeModal(); if (helpWasPlaying && game) { resumeGame(game); audio.setPaused(false); } helpWasPlaying = false;
+}
+
+function showFloorIntro() {
+  encounterIndex = -1;
+  showEncounterCard();
+}
+
+function showEncounterCard(step = false) {
+  const boss = game.mode === 'boss-reveal', story = !boss && encounterIndex === -1;
+  const floor = FLOORS[game.floor], deck = floorEnemyCards(floor);
+  const data = story ? FLOOR_BRIEFINGS[game.floor] : boss ? ENCOUNTER_CARDS[floor.bossType] : deck[encounterIndex];
+  const kind = boss ? 'boss-reveal' : 'floor-intro';
+  if (!audio.status().paused) audio.setPaused(true);
+  const label = story ? 'ENTRANDO EN LA MAZMORRA' : boss ? 'JEFE DE PISO' : `ENEMIGO ${encounterIndex + 1} / ${deck.length}`;
+  setModal(kind, `PISO 0${game.floor + 1} · ${label}`, story ? floor.name : data.name, '');
+  $('modal').dataset.presentation = story ? 'story' : boss ? 'boss' : 'enemy';
+  const card = document.createElement('article'); card.className = 'encounter-card';
+  const art = document.createElement('div'); art.className = 'encounter-art';
+  const image = document.createElement('img'); image.className = 'encounter-figure';
+  image.src = `/assets/webp/${story ? 'environments' : 'enemies'}/${data.art}.webp`;
+  image.alt = story ? `Escenario de ${floor.name}` : data.name;
+  const stamp = document.createElement('span'); stamp.className = 'encounter-stamp'; stamp.textContent = story ? data.stamp : boss ? 'COMBATE ESTELAR' : 'AMENAZA DETECTADA';
+  art.append(image, stamp);
+  const copy = document.createElement('div'); copy.className = 'encounter-copy';
+  if (story) {
+    const narrative = document.createElement('p'); narrative.className = 'encounter-story'; narrative.textContent = data.text;
+    copy.append(narrative);
+  } else {
+    const tagline = document.createElement('p'); tagline.className = 'encounter-tagline'; tagline.textContent = data.tagline;
+    const attack = document.createElement('section'); attack.className = 'encounter-attack';
+    const label = document.createElement('span'); label.className = 'encounter-label'; label.textContent = 'ATAQUE ESPECIAL';
+    const title = document.createElement('h3'); title.textContent = data.attack;
+    const description = document.createElement('p'); description.textContent = data.description;
+    attack.append(label, title, description);
+    const tip = document.createElement('p'); tip.className = 'encounter-tip';
+    const tipLabel = document.createElement('strong'); tipLabel.textContent = 'CÓMO NO PALMARLA';
+    tip.append(tipLabel, document.createTextNode(data.tip));
+    copy.append(tagline, attack, tip);
+  }
+  card.append(art, copy); $('modal-content').append(card);
+  const last = encounterIndex === deck.length - 1;
+  const next = modalButton(boss ? '¡Al lío!' : story ? 'Ver enemigos' : last ? 'Entrar en el piso' : 'Siguiente enemigo', () => advanceEncounter(true), false, false);
+  next.id = 'encounter-next';
+  if (step) { transitionGuard.begin(350); updateModalLock(); }
+  // Decoding may finish after a fast navigation or a mute. Never play a stale sting.
+  void audio.unlock().then(() => {
+    if (card.isConnected && modalKind === kind && !document.hidden) audio.playPresentation(story ? 'floor' : boss ? 'boss' : 'enemy');
+  });
+}
+
+function advanceEncounter(explicit = false) {
+  if (transitionGuard.isLocked()) return;
+  if (modalKind === 'floor-intro' && game?.mode === 'floor-intro') {
+    if (encounterIndex < floorEnemyCards(FLOORS[game.floor]).length - 1) {
+      encounterIndex++; showEncounterCard(true); return;
+    }
+    if (!explicit || !beginFloorCombat(game)) return;
+  } else if (modalKind === 'boss-reveal' && game?.mode === 'boss-reveal') {
+    if (!explicit || !beginBossFight(game)) return;
+  } else return;
+  closeModal(); accumulator = 0; lastFrame = performance.now();
+  audio.setPaused(false); consumeEvents(); updateHud(); canvas.focus({ preventScroll: true });
 }
 
 function showBossIntro() {
@@ -222,11 +288,11 @@ function updateBossDialogue() {
   $('duel-speaker').textContent = line.speaker === 'manolo' ? 'Manolo' : FLOORS[game.floor].boss;
   $('duel-line').textContent = line.text;
   $('duel-progress').textContent = `${bossDialogueIndex + 1} / ${lines.length}`;
-  $('duel-next').textContent = bossDialogueIndex === lines.length - 1 ? '¡Al lío!' : 'Continuar';
+  $('duel-next').textContent = bossDialogueIndex === lines.length - 1 ? 'Ver presentación' : 'Continuar';
   for (const figure of document.querySelectorAll('.duel-fighter')) figure.classList.toggle('is-speaking', figure.dataset.speaker === line.speaker);
 }
 
-function advanceBossIntro(startFight = false) {
+function advanceBossIntro(revealBoss = false) {
   if (modalKind !== 'boss-intro' || game?.mode !== 'boss-intro' || transitionGuard.isLocked()) return;
   if (bossDialogueIndex < BOSS_DIALOGUES[game.floor].lines.length - 1) {
     bossDialogueIndex++; updateBossDialogue(); audio.play('ui_confirm');
@@ -234,10 +300,7 @@ function advanceBossIntro(startFight = false) {
     $('modal-title').focus({ preventScroll: true });
     transitionGuard.begin(250); updateModalLock(); return;
   }
-  if (startFight && beginBossFight(game)) {
-    closeModal(); accumulator = 0; lastFrame = performance.now();
-    audio.setPaused(false); consumeEvents(); updateHud(); canvas.focus({ preventScroll: true });
-  }
+  if (revealBoss && beginBossReveal(game)) consumeEvents();
 }
 
 function showUpgrade() {
@@ -258,7 +321,7 @@ Elige una ventaja. Recuperarás toda la vida.`);
 }
 
 function showDeath() {
-  setModal('dead', 'SEÑAL INTERRUMPIDA', 'Técnicamente, has muerto.', `«Pero has firmado tres temporadas. Levántate.»
+  setModal('dead', 'SEÑAL INTERRUMPIDA', 'Técnicamente, has muerto.', `«Pero has firmado cinco temporadas. Levántate.»
 Repite este piso con toda la vida y tus mejoras.`);
   const portrait = document.createElement('img'); portrait.className = 'result-portrait'; portrait.src = '/assets/webp/Manu-02-caos-absoluto.webp'; portrait.alt = 'Manu, sorprendido por el resultado'; $('modal-content').append(portrait);
   addResults();
@@ -278,7 +341,7 @@ function addResults() {
 
 function showVictory() {
   clearSave();
-  setModal('won', 'LOGRO DESBLOQUEADO · LEYENDA DE LA MAZMORRA', 'Feliz cumpleaños, mazmorrero.', `Tres pisos. Tres jefes. Cero respeto por el reglamento.
+  setModal('won', 'LOGRO DESBLOQUEADO · LEYENDA DE LA MAZMORRA', 'Feliz cumpleaños, mazmorrero.', `Cinco pisos. Cinco jefes. Cero respeto por el reglamento.
 «Has sobrevivido, Manolo. Ahora intenta sobrevivir a otro año.»`);
   addResults();
   addLeaderboard($('modal-content'), game.score);
@@ -294,7 +357,9 @@ function consumeEvents() {
   for (const event of events) {
     // Commentary belongs in the pause menu, never over active combat.
     if (event.type === 'narrator') lastNarrator = event.text;
+    if (event.type === 'floor-intro') showFloorIntro();
     if (event.type === 'boss-intro') showBossIntro();
+    if (event.type === 'boss-reveal') showEncounterCard();
     if (event.type === 'upgrade') showUpgrade();
     if (event.type === 'dead') showDeath();
     if (event.type === 'won') showVictory();
@@ -310,8 +375,8 @@ function updateHud() {
   $('health-fill').style.background = p.hp < p.maxHp * .3 ? 'var(--danger)' : 'var(--mint)';
   $('health-bar').setAttribute('aria-valuenow', Math.ceil(p.hp));
   $('health-bar').setAttribute('aria-valuemax', p.maxHp);
-  $('floor-label').textContent = `0${game.floor + 1} / 03`;
-  $('floor-label').setAttribute('aria-label', `Piso ${game.floor + 1} de 3`);
+  $('floor-label').textContent = `0${game.floor + 1} / 0${FLOORS.length}`;
+  $('floor-label').setAttribute('aria-label', `Piso ${game.floor + 1} de ${FLOORS.length}`);
   $('dash').classList.toggle('cooldown', p.dashCooldown > 0);
   $('dash-label').textContent = p.dashCooldown > 0 ? p.dashCooldown.toFixed(1) : '';
   const boss = game.enemies.find(e => e.boss);
@@ -425,11 +490,18 @@ window.addEventListener('keyup', event => {
 $('modal').addEventListener('click', event => {
   if (transitionGuard.isLocked()) { event.preventDefault(); event.stopImmediatePropagation(); }
 }, true);
-$('modal-content').addEventListener('click', () => { if (modalKind === 'boss-intro') advanceBossIntro(); });
+$('modal-content').addEventListener('click', () => {
+  if (modalKind === 'boss-intro') advanceBossIntro();
+  else if (modalKind === 'floor-intro') advanceEncounter();
+});
 $('modal').addEventListener('keydown', event => {
   if (modalKind === 'boss-intro' && ['Enter', 'Space', 'ArrowRight'].includes(event.code)) {
     event.preventDefault(); event.stopPropagation();
     if (!event.repeat) advanceBossIntro(event.code !== 'ArrowRight' && document.activeElement === $('duel-next'));
+  }
+  if (['floor-intro', 'boss-reveal'].includes(modalKind) && ['Enter', 'Space', 'ArrowRight'].includes(event.code)) {
+    event.preventDefault(); event.stopPropagation();
+    if (!event.repeat) advanceEncounter(event.code !== 'ArrowRight' && document.activeElement === $('encounter-next'));
   }
 });
 // CSS owns standard pointer gestures; these also cover Safari's gesture events.

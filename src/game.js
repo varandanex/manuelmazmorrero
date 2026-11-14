@@ -3,9 +3,11 @@ export const HEIGHT = 420;
 export const BOUNDS = { left: 31, right: 449, top: 65, bottom: 381 };
 export const PILLARS = [{ x: 105, y: 151, r: 15 }, { x: 375, y: 151, r: 15 }, { x: 105, y: 300, r: 15 }, { x: 375, y: 300, r: 15 }];
 export const FLOORS = [
-  { name: 'El matadero', boss: 'El Juicer', color: '#ba769a', hint: 'Esquiva su embestida. Ataca cuando se quede agotado.', intro: '«Primer piso. Huele a derrota. Ah, no: eres tú.»' },
-  { name: 'El jardín podrido', boss: 'La Acaparadora', color: '#9ac982', hint: 'Esquiva sus proyectiles. No pises las zonas verdes.', intro: '«Qué bonito jardín. Todo quiere matarte, pero qué bonito.»' },
-  { name: 'El plató final', boss: 'Clon de Krakaren', color: '#b89be6', hint: 'Destruye los dos emisores para romper su escudo.', intro: '«La audiencia te adora. Esto no estaba en el contrato.»' },
+  { name: 'El matadero', boss: 'El Juicer', bossType: 'butcher', mobs: ['grunt', 'bat', 'grunt'], waves: [4, 5], color: '#ba769a', hint: 'Esquiva su embestida. Ataca cuando se quede agotado.', intro: '«Primer piso. Huele a derrota. Ah, no: eres tú.»' },
+  { name: 'El jardín podrido', boss: 'La Acaparadora', bossType: 'spore', mobs: ['caster', 'bat', 'grunt'], waves: [5, 6], color: '#9ac982', hint: 'Esquiva sus proyectiles. No pises las zonas verdes.', intro: '«Qué bonito jardín. Todo quiere matarte, pero qué bonito.»' },
+  { name: 'La Maraña de Hierro', boss: 'Humanotauro', bossType: 'mantaur', mobs: ['drek', 'jikininki', 'drek'], waves: [6, 7], color: '#75bdc9', hint: 'Sal de las vías señaladas y del círculo de sus puños. Ataca después del golpe.', intro: '«Próxima parada: traumatología. No olvides tus pertenencias ni tus extremidades.»' },
+  { name: 'El horno de la furia', boss: 'Elemental de furia', bossType: 'elemental', mobs: ['acid', 'engineer', 'acid'], waves: [5, 7], color: '#ef9b54', hint: 'Sal de los círculos de fuego. Acércate cuando el elemental se quede agotado.', intro: '«Secado rápido y cremación. El servicio de lavandería se nos ha ido de las manos.»' },
+  { name: 'El plató final', boss: 'Clon de Krakaren', bossType: 'host', mobs: ['caster', 'bat', 'grunt'], waves: [7, 8], color: '#b89be6', hint: 'Destruye los dos emisores para romper su escudo.', intro: '«La audiencia te adora. Esto no estaba en el contrato.»' },
 ];
 export const UPGRADES = [
   { id: 'power', name: 'Violencia administrativa', description: '+35 % de daño. Reclamaciones, por escrito.', icon: '✦' },
@@ -21,10 +23,12 @@ const random = (g) => { g.seed = (g.seed * 1664525 + 1013904223) >>> 0; return g
 export function parseCheckpoint(value) {
   try {
     const data = typeof value === 'string' ? JSON.parse(value) : value;
-    if (!data || data.version !== 1 || !Number.isInteger(data.floor) || data.floor < 0 || data.floor > 2) return null;
+    if (!data || ![1, 2].includes(data.version) || !Number.isInteger(data.floor) || data.floor < 0 || data.floor >= (data.version === 1 ? 3 : FLOORS.length)) return null;
     if (!Array.isArray(data.perks) || data.perks.length !== data.floor || !data.perks.every(id => UPGRADES.some(u => u.id === id))) return null;
     for (const key of ['score', 'elapsed', 'kills', 'deaths']) if (!Number.isFinite(data[key]) || data[key] < 0 || data[key] > 1e8) return null;
-    return { version: 1, floor: data.floor, perks: [...data.perks], score: data.score, elapsed: data.elapsed, kills: data.kills, deaths: data.deaths };
+    // Legacy saves retain completed floors and earned perks. An old floor-3
+    // checkpoint enters the new third floor, so the expansion is never skipped.
+    return { version: 2, floor: data.floor, perks: [...data.perks], score: data.score, elapsed: data.elapsed, kills: data.kills, deaths: data.deaths };
   } catch { return null; }
 }
 
@@ -41,7 +45,7 @@ export function createGame(checkpoint = null, seed = Date.now()) {
 }
 
 export function checkpointOf(game) {
-  return { version: 1, floor: game.floor, perks: [...game.perks], score: game.score, elapsed: game.elapsed, kills: game.kills, deaths: game.deaths };
+  return { version: 2, floor: game.floor, perks: [...game.perks], score: game.score, elapsed: game.elapsed, kills: game.kills, deaths: game.deaths };
 }
 
 export function startFloor(g) {
@@ -49,9 +53,16 @@ export function startFloor(g) {
   const maxHp = 100 + 35 * count('heart');
   g.player = { x: 240, y: 336, r: 9, hp: maxHp, maxHp, speed: 116 * (1 + .12 * count('swift')), damage: 24 * (1 + .35 * count('power')), attackCooldown: 0, dashCooldown: 0, dashDuration: 0, dashTime: 1.8 * .7 ** count('swift'), invulnerable: 1.5, facing: -Math.PI / 2, dashX: 0, dashY: -1, swing: 0 };
   g.enemies = []; g.projectiles = []; g.hazards = []; g.effects = []; g.pickups = [];
-  g.mode = 'playing'; g.phase = 'intro'; g.phaseTimer = 2.7; g.wave = 0; g.shake = 0;
-  g.events.push({ type: 'floor', floor: g.floor }, { type: 'narrator', text: FLOORS[g.floor].intro }, { type: 'sound', name: 'floor_start' });
+  g.mode = 'floor-intro'; g.phase = 'intro'; g.phaseTimer = 2.7; g.wave = 0; g.shake = 0;
+  g.events.push({ type: 'floor', floor: g.floor }, { type: 'narrator', text: FLOORS[g.floor].intro }, { type: 'floor-intro' });
   g.stageCheckpoint = checkpointOf(g);
+}
+
+export function beginFloorCombat(g) {
+  if (g.mode !== 'floor-intro' || g.phase !== 'intro') return false;
+  g.mode = 'playing';
+  g.events.push({ type: 'sound', name: 'floor_start' });
+  return true;
 }
 
 export function retryFloor(g) {
@@ -63,7 +74,7 @@ export function retryFloor(g) {
 }
 
 export function chooseUpgrade(g, id) {
-  if (g.mode !== 'upgrade' || !UPGRADES.some(u => u.id === id)) return false;
+  if (g.mode !== 'upgrade' || g.floor >= FLOORS.length - 1 || !UPGRADES.some(u => u.id === id)) return false;
   g.events.push({ type: 'sound', name: 'upgrade_select' });
   g.perks.push(id); g.floor += 1; startFloor(g); return true;
 }
@@ -76,21 +87,27 @@ function spawnEnemy(g, type, x, y, extra = {}) {
     grunt: { r: 10, hp: 38 + g.floor * 5, speed: 34 + g.floor * 4, damage: 9 },
     bat: { r: 8, hp: 26, speed: 55, damage: 7 },
     caster: { r: 11, hp: 42, speed: 25, damage: 8 },
+    drek: { r: 9, hp: 35, speed: 59, damage: 8 },
+    jikininki: { r: 12, hp: 78, speed: 24, damage: 10 },
+    acid: { r: 12, hp: 60, speed: 29, damage: 9 },
+    engineer: { r: 16, hp: 100, speed: 20, damage: 12 },
     butcher: { r: 24, hp: 340, speed: 26, damage: 18 },
     spore: { r: 24, hp: 380, speed: 0, damage: 13 },
-    host: { r: 23, hp: 450, speed: 0, damage: 15 },
-    generator: { r: 15, hp: 72, speed: 0, damage: 0 },
+    mantaur: { r: 27, hp: 450, speed: 29, damage: 18 },
+    elemental: { r: 26, hp: 520, speed: 22, damage: 16 },
+    host: { r: 23, hp: 630, speed: 0, damage: 15 },
+    generator: { r: 15, hp: 96, speed: 0, damage: 0 },
   }[type];
-  const enemy = { id: ++g.id, type, x, y, ...stats, maxHp: stats.hp, mode: 'idle', timer: 1.2 + random(g) * .6, flash: 0, boss: ['butcher', 'spore', 'host'].includes(type), ...extra };
+  const enemy = { id: ++g.id, type, x, y, ...stats, maxHp: stats.hp, mode: 'idle', timer: 1.2 + random(g) * .6, flash: 0, boss: FLOORS.some(f => f.bossType === type), ...extra };
   g.enemies.push(enemy); return enemy;
 }
 
 function spawnWave(g) {
   g.wave += 1; g.phase = 'mobs';
-  const positions = [{ x: 65, y: 90 }, { x: 240, y: 86 }, { x: 415, y: 90 }, { x: 65, y: 235 }, { x: 415, y: 235 }, { x: 180, y: 90 }, { x: 300, y: 90 }];
-  const count = 3 + g.floor + g.wave;
+  const positions = [{ x: 65, y: 90 }, { x: 240, y: 86 }, { x: 415, y: 90 }, { x: 65, y: 235 }, { x: 415, y: 235 }, { x: 180, y: 90 }, { x: 300, y: 90 }, { x: 240, y: 195 }];
+  const floor = FLOORS[g.floor], count = floor.waves[g.wave - 1];
   for (let i = 0; i < count; i++) {
-    const type = g.floor > 0 && i % 3 === 0 ? 'caster' : i % 3 === 1 ? 'bat' : 'grunt';
+    const type = floor.mobs[i % floor.mobs.length];
     spawnEnemy(g, type, positions[i].x, positions[i].y);
   }
   g.events.push({ type: 'announcement', text: `OLEADA ${g.wave} / 2 · ${count} malas decisiones` });
@@ -102,16 +119,22 @@ function spawnGenerators(g) {
 
 function spawnBoss(g) {
   g.phase = 'boss';
-  const type = ['butcher', 'spore', 'host'][g.floor];
-  spawnEnemy(g, type, 240, 125);
+  const type = FLOORS[g.floor].bossType;
+  spawnEnemy(g, type, 240, type === 'mantaur' || type === 'elemental' ? 155 : 125);
   if (type === 'host') spawnGenerators(g);
-  g.events.push({ type: 'announcement', text: FLOORS[g.floor].hint }, { type: 'narrator', text: `«${FLOORS[g.floor].hint} De nada, por cierto.»` }, { type: 'sound', name: 'boss_intro' });
+  // The boss-intro sting belongs to the reveal screen, not a second playback here.
+  g.events.push({ type: 'announcement', text: FLOORS[g.floor].hint }, { type: 'narrator', text: `«${FLOORS[g.floor].hint} De nada, por cierto.»` });
 }
 
-// The UI explicitly acknowledges the conversation; no simulation clock runs
-// while the player reads, switches apps or releases held combat controls.
-export function beginBossFight(g) {
+// Conversation -> boss reveal -> battle are separate, explicitly acknowledged
+// states. No simulation clock runs while the player reads either presentation.
+export function beginBossReveal(g) {
   if (g.mode !== 'boss-intro' || g.phase !== 'warning') return false;
+  g.mode = 'boss-reveal'; g.events.push({ type: 'boss-reveal' }); return true;
+}
+
+export function beginBossFight(g) {
+  if (g.mode !== 'boss-reveal' || g.phase !== 'warning') return false;
   g.mode = 'playing'; spawnBoss(g); return true;
 }
 
@@ -192,7 +215,7 @@ function dash(g, mx, my) {
 }
 
 function shoot(g, e, angle, speed = 91, damage = 9) {
-  g.projectiles.push({ x: e.x + Math.cos(angle) * (e.r + 5), y: e.y + Math.sin(angle) * (e.r + 5), vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, r: 4, damage, life: 6, color: e.type === 'spore' ? '#a4d17b' : '#d7a2e8' });
+  g.projectiles.push({ x: e.x + Math.cos(angle) * (e.r + 5), y: e.y + Math.sin(angle) * (e.r + 5), vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, r: 4, damage, life: 6, color: ['spore', 'acid'].includes(e.type) ? '#a4d17b' : e.type === 'elemental' ? '#ff963f' : '#ed147b' });
 }
 
 function tickBoss(g, e, dt) {
@@ -218,6 +241,35 @@ function tickBoss(g, e, dt) {
       for (const [index, s] of spots.entries()) g.hazards.push({ type: 'pool', ...s, r: 29, delay: 1.25, life: 4.3, damage: 11, audioLead: index === 0 });
       e.mode = 'recover'; e.timer = 1.7;
     } else if (e.mode === 'recover' && e.timer <= 0) { e.mode = 'idle'; e.timer = .8; }
+  }
+  if (e.type === 'mantaur' || e.type === 'elemental') {
+    if (e.mode === 'idle') {
+      const direction = unit(p.x - e.x, p.y - e.y);
+      moveEntity(e, direction.x * e.speed * dt, direction.y * e.speed * dt);
+      if (e.timer <= 0) {
+        e.mode = 'windup'; e.timer = e.type === 'mantaur' ? 1.1 : 1.3;
+        if (e.type === 'mantaur') {
+          // Environmental live rail and a local smash, both locked at warning time.
+          g.hazards.push({ type: 'rail', x: p.x, y: 223, w: 30, h: 316, delay: 1.1, life: 1.8, damage: 16, audioLead: true });
+          g.hazards.push({ type: 'strike', x: e.x, y: e.y, r: 54, delay: 1.1, life: 1.45, damage: 20 });
+          g.events.push({ type: 'sound', name: 'beam_warning' });
+        } else {
+          const side = (e.castCount || 0) % 2;
+          const spots = [{ x: p.x, y: p.y }, { x: 125, y: side ? 325 : 220 }, { x: 355, y: side ? 220 : 325 }];
+          for (const [index, spot] of spots.entries()) g.hazards.push({ type: 'fire', ...spot, r: 32, delay: 1.3, life: 3.1, damage: 14, audioLead: index === 0 });
+          e.castCount = (e.castCount || 0) + 1;
+          g.events.push({ type: 'sound', name: 'poison_warning' });
+        }
+      }
+    } else if (e.mode === 'windup' && e.timer <= 0) {
+      if (e.type === 'elemental') {
+        const aim = Math.atan2(p.y - e.y, p.x - e.x);
+        for (let i = -1; i <= 1; i++) shoot(g, e, aim + i * .45, 84, 10);
+        g.events.push({ type: 'sound', name: 'projectile_cast' });
+      }
+      e.mode = 'recover'; e.timer = 2.2;
+      g.events.push({ type: 'sound', name: 'boss_recover' });
+    } else if (e.mode === 'recover' && e.timer <= 0) { e.mode = 'idle'; e.timer = 1; }
   }
   if (e.type === 'host') {
     e.x = 240 + Math.sin(g.elapsed * .8) * 76;
@@ -246,12 +298,31 @@ function tickEnemy(g, e, dt) {
     e.timer -= dt;
     const toward = unit(g.player.x - e.x, g.player.y - e.y);
     const gap = distance(e, g.player);
-    if (e.type === 'caster') {
+    if (e.type === 'caster' || e.type === 'acid') {
       const multiplier = gap < 100 ? -.6 : gap > 155 ? 1 : 0;
       moveEntity(e, toward.x * e.speed * dt * multiplier, toward.y * e.speed * dt * multiplier);
-      if (e.timer <= 0) { shoot(g, e, Math.atan2(toward.y, toward.x), 78, 8); e.timer = 2.2; g.events.push({ type: 'sound', name: 'projectile_cast' }); }
+      if (e.timer <= 0) { shoot(g, e, Math.atan2(toward.y, toward.x), e.type === 'acid' ? 95 : 78, e.type === 'acid' ? 10 : 8); e.timer = e.type === 'acid' ? 2.5 : 2.2; g.events.push({ type: 'sound', name: 'projectile_cast' }); }
+    } else if (e.type === 'jikininki') {
+      if (e.mode === 'idle') {
+        moveEntity(e, toward.x * e.speed * dt, toward.y * e.speed * dt);
+        if (gap < 75 && e.timer <= 0) {
+          e.mode = 'windup'; e.timer = .75;
+          g.hazards.push({ type: 'strike', x: e.x, y: e.y, r: 40, delay: .75, life: 1, damage: 13, audioLead: true });
+          g.events.push({ type: 'sound', name: 'butcher_windup' });
+        }
+      } else if (e.mode === 'windup' && e.timer <= 0) { e.mode = 'recover'; e.timer = 1.1; }
+      else if (e.mode === 'recover' && e.timer <= 0) { e.mode = 'idle'; e.timer = 1.3; }
+    } else if (e.type === 'engineer') {
+      if (e.mode === 'idle') {
+        moveEntity(e, toward.x * e.speed * dt, toward.y * e.speed * dt);
+        if (e.timer <= 0) { e.mode = 'windup'; e.timer = 1; e.aim = toward; g.events.push({ type: 'sound', name: 'butcher_windup' }); }
+      } else if (e.mode === 'windup' && e.timer <= 0) { e.mode = 'charge'; e.timer = 1; g.events.push({ type: 'sound', name: 'butcher_charge' }); }
+      else if (e.mode === 'charge') {
+        const before = { x: e.x, y: e.y }; moveEntity(e, e.aim.x * 155 * dt, e.aim.y * 155 * dt);
+        if (e.timer <= 0 || distance(before, e) < 155 * dt * .35) { e.mode = 'recover'; e.timer = 1.6; }
+      } else if (e.mode === 'recover' && e.timer <= 0) { e.mode = 'idle'; e.timer = 1.7; }
     } else {
-      const wobble = e.type === 'bat' ? Math.sin(g.elapsed * 5 + e.id) * .5 : 0;
+      const wobble = ['bat', 'drek'].includes(e.type) ? Math.sin(g.elapsed * 5 + e.id) * .5 : 0;
       moveEntity(e, (toward.x - toward.y * wobble) * e.speed * dt, (toward.y + toward.x * wobble) * e.speed * dt);
     }
     for (const other of g.enemies) {
@@ -298,8 +369,8 @@ export function updateGame(g, delta, input = {}) {
     const wasWarning = hazard.delay > 0;
     hazard.life -= dt; hazard.delay -= dt;
     if (hazard.life <= 0 || hazard.delay > 0) continue;
-    if (wasWarning && hazard.audioLead) g.events.push({ type: 'sound', name: hazard.type === 'pool' ? 'poison_activate' : 'beam_fire' });
-    const collides = hazard.type === 'pool' ? distance(hazard, p) < hazard.r + p.r * .5 : Math.abs(p.x - hazard.x) < hazard.w / 2 + p.r * .5 && Math.abs(p.y - hazard.y) < hazard.h / 2 + p.r * .5;
+    if (wasWarning && hazard.audioLead) g.events.push({ type: 'sound', name: hazard.type === 'pool' ? 'poison_activate' : hazard.type === 'strike' ? 'hit_heavy' : 'beam_fire' });
+    const collides = Number.isFinite(hazard.r) ? distance(hazard, p) < hazard.r + p.r * .5 : Math.abs(p.x - hazard.x) < hazard.w / 2 + p.r * .5 && Math.abs(p.y - hazard.y) < hazard.h / 2 + p.r * .5;
     if (collides) damagePlayer(g, hazard.damage);
   }
   for (const pickup of g.pickups) {
@@ -320,7 +391,7 @@ export function updateGame(g, delta, input = {}) {
   if (g.mode !== 'playing') return;
   if (deadBoss) {
     g.enemies = []; g.projectiles = []; g.hazards = [];
-    g.mode = g.floor === 2 ? 'won' : 'upgrade';
+    g.mode = g.floor === FLOORS.length - 1 ? 'won' : 'upgrade';
     g.events.push({ type: g.mode }, { type: 'sound', name: g.mode === 'won' ? 'victory' : 'boss_defeat' }); return;
   }
   if (['intro', 'between', 'warning'].includes(g.phase)) {

@@ -28,7 +28,7 @@ test('each screen selects its supplied music and music/effect sliders control se
   audio.play('dash'); const effectBus = browser.sources.at(-1).target;
   assert.equal(effectBus.gain.value, .2);
   const before = effectBus.gain.value; audio.setVolumes({ music: .3 }); assert.equal(effectBus.gain.value, before);
-  for (const [scene, file] of [['lobby', 'Welcome to the Dungeon.mp3'], ['floor0', 'Dungeon Showdown.mp3'], ['floor2', 'Dungeon Game-Show Finale.mp3'], ['upgrade', 'Dungeon Upgrade.mp3'], ['won', 'Victory Fanfare.mp3']]) {
+  for (const [scene, file] of [['lobby', 'Welcome to the Dungeon.mp3'], ['floor0', 'Dungeon Showdown.mp3'], ['floor2', 'Dungeon Showdown.mp3'], ['floor3', '毒花迷宫.mp3'], ['floor4', 'Dungeon Game-Show Finale.mp3'], ['upgrade', 'Dungeon Upgrade.mp3'], ['won', 'Victory Fanfare.mp3']]) {
     audio.setScene(scene); assert.equal(decodeURI(browser.media.src), `/assets/audio/${file}`);
   }
   assert.equal(browser.media.loop, false);

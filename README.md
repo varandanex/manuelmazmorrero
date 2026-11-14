@@ -25,11 +25,23 @@ This is a local preview, not a public deployment. Run `npm start` on a single No
 - Combat shows health bars, floor numbers and icon-only controls. Boss states use a shield, lightning or warning icon; advice, commentary, score and perks are available in Pause. Floor titles appear only before combat; each boss has an illustrated three-line conversation with explicit advancement.
 - Automatic result screens wait at least one second and require all held keys/fingers to be released, followed by a 200 ms quiet interval. Repeated attack input cannot choose an upgrade or restart a run. Explicit pause/help menus remain immediate.
 
-Before each boss, simulation and music pause while Manolo and the boss trade three approved lines. Tap the illustration, speech panel or Continue to advance; the final line requires the explicit «¡Al lío!» button (Tab then Enter/Space on a keyboard). Held combat input cannot dismiss the opening line, and rapid double taps cannot skip replies. Escape or losing focus does not bypass the conversation. Retrying a floor replays its introduction.
+At the beginning of every floor, a short original narrative introduces the setting. The next screens present each possible regular enemy once, with its illustration, Spanish name, exaggerated attack title, actual attack behavior and a survival tip. Repeated species within a wave are not repeated within the briefing. Tap the card or use the button to advance; the last card requires the explicit «Entrar en el piso» action.
 
-Each of three floors contains two enemy waves and one boss. El Juicer telegraphs charges, La Acaparadora uses projectile volleys and toxic pools, and the Clon de Krakaren uses destructible shield generators and warning beams. Goblins, Scatterers and malicious llamas replace the original regular enemies without changing their combat roles. These are game adaptations, not claims about canonical abilities. Choose one permanent advantage after each of the first two floors. Death restarts the current floor, not the entire run.
+Before each boss, simulation and music pause while Manolo and the boss trade three approved lines. Tap the illustration, speech panel or Continue to advance. After the third line, «Ver presentación» opens a separate illustrated boss poster with an entrance sting, signature attack and survival advice. Only its «¡Al lío!» button starts the fight (Tab then Enter/Space on a keyboard). Held combat input cannot dismiss the opening screens, and rapid double taps cannot skip replies or cards. Escape or losing focus does not bypass any presentation. Starting, continuing and retrying a floor replay its narrative and enemy briefing; retrying also replays the later boss introduction. Reduced-motion settings disable entrance animations.
 
-The beginning of the current floor is stored locally in this browser. It is not a mid-combat save and it does not sync across devices. A new run replaces this checkpoint. Victory removes it. The game remains playable if browser storage is unavailable.
+Narratives and card copy live in `src/encounter-cards.js`; their attack titles are original game-show jokes, not quotations or claims about book abilities. Existing illustrations and WAV effects are reused. See `docs/encounter-cards/verification.md` for state transitions, browser checks and remaining physical-device acceptance.
+
+Each of five floors contains two enemy waves and one boss:
+
+1. **El matadero:** El Juicer telegraphs charges.
+2. **El jardín podrido:** La Acaparadora uses projectile volleys and toxic pools.
+3. **La Maraña de Hierro:** Drek pursue in packs; Jikininki telegraph close-range strikes. The Humanotauro marks live rails and ground smashes, then becomes vulnerable.
+4. **El horno de la furia:** Empaladores ácidos rastreros spit from range; Ingenieros goblin charge in bulldozers. The Elemental de furia marks fire circles and launches a three-projectile volley before recovering.
+5. **El plató final:** the Clon de Krakaren retains destructible shield generators, warning beams and a second shield phase. Boss and generator health account for the two additional upgrades.
+
+These are game adaptations, not claims about canonical abilities or encounter order. Choose one permanent advantage after each of the first four floors. Death restarts the current floor, not the entire run.
+
+The beginning of the current floor is stored locally in this browser. It is not a mid-combat save and it does not sync across devices. A new run replaces this checkpoint. Victory removes it. The game remains playable if browser storage is unavailable. Version-2 checkpoints support all five floors. Legacy version-1 saves retain their completed-floor count, upgrades and score; an old third-floor save enters La Maraña de Hierro rather than skipping the expansion. The legacy storage key is intentionally retained.
 
 ## Checks
 
@@ -42,7 +54,7 @@ npm test
 
 ## Current limitations
 
-- No multiplayer, online leaderboard or dynamic AI service; the audience and narrator are scripted fiction.
+- No multiplayer or dynamic AI service; the audience and narrator are scripted fiction.
 - The player sprite is a stylized likeness based on the two supplied Manu illustrations. His confident portrait appears beside the unchanged title and in the HUD; the surprised portrait appears on defeat.
 - Bosses, waves and upgrades are implemented; difficulty and pacing still need feedback from real mobile play.
 - Touch and responsive behavior can be browser-tested, but final acceptance should include the intended physical phone and its browser.
@@ -54,19 +66,21 @@ The approved visual system uses the first editorial-screenprint concept and the 
 
 Headings, buttons and combat numbers use locally hosted [Pixelify Sans](https://github.com/google/fonts/tree/main/ofl/pixelifysans) (SIL OFL 1.1; license in `assets/fonts/Pixelify-Sans-OFL.txt`). Long descriptions retain Inter for readability. The illustrated logo and characters retain the approved screenprinted identity.
 
-The 480 × 420 simulation, collisions, enemy attack timings, statistics and save format remain unchanged; only the new player-paced pre-boss conversation pauses progression. The legacy storage key is intentionally retained so existing checkpoints continue working. Artwork must finish loading before play starts; failures provide a reload action rather than starting with invisible enemies.
+The 480 × 420 arena, collision geometry and controls remain unchanged. New enemy behaviors, progression and checkpoint migration are covered by deterministic tests. Artwork must finish loading before play starts; failures provide a reload action rather than starting with invisible enemies.
 
 Generated PNG originals are kept for provenance. The browser loads the smaller WebP files. Regenerate delivery assets with `./scripts/encode-art.sh` if the originals change (requires `cwebp`). See `design-qa.md` for verification and remaining real-device checks.
 
 ### Distinct environments and cover dedication
 
-Each floor now has its own background and obstacle artwork in `assets/art/environments/`, with delivery files in `assets/webp/environments/`:
+Each floor has its own background in `assets/art/environments/`, with delivery files in `assets/webp/environments/`. The two new floors reuse the industrial pillar sprite:
 
 - **El matadero:** tiled industrial walls, iron doors, pipes, hooks and steel bollards.
 - **El jardín podrido:** an overgrown greenhouse, muted moss-earth, roots, fungi and tree stumps.
+- **La Maraña de Hierro:** a derelict underground station, steel floor, train doors and industrial bollards.
+- **El horno de la furia:** brick furnaces, hot pipes, a dark stone floor and industrial bollards.
 - **El plató final:** a television soundstage, cameras, screens, modular flooring and studio-light pedestals.
 
-Only artwork selection changes. Arena bounds, all four pillar positions/radii, sprite foot anchors, boss mechanics and save data are untouched. Decoration stays at the perimeter; quiet floor textures keep attack indicators readable. The lobby preview uses the new matadero. Previous environment originals remain for provenance and are not loaded.
+Arena bounds, all four pillar positions/radii and sprite foot anchors are preserved. Decoration stays at the perimeter; quiet floor textures keep attack indicators readable. The lobby preview uses the matadero. Previous environment originals remain for provenance and are not loaded.
 
 The exact dedication **UNA AVENTURA HECHA CON ❤️ POR KYV** appears on a contrasting cover panel directly under the logo, before the game buttons, and is repeated in the footer. It never appears during combat.
 
@@ -74,7 +88,7 @@ See `docs/environments/verification.md` for visual checks and `docs/environments
 
 ## Audio verification
 
-31 WAV effects are decoded on the first enabled user interaction; six MP3 tracks are streamed by screen/floor. Combat cues follow simulation outcomes, impacts are capped, danger is prioritized, and pause/background/transitions cancel old sounds. The development server supports encoded filenames, MIME and byte ranges. See `docs/audio-integration/verification.md` for checks and remaining physical-phone listening acceptance.
+31 WAV effects are decoded on the first enabled user interaction; six MP3 tracks are streamed across eight screen/floor scenes. Floors 1–4 alternate `Dungeon Showdown` and `毒花迷宫`; `Dungeon Game-Show Finale` is reserved for floor 5. Lobby, upgrade and victory retain their tracks. No new songs were generated. Combat cues follow simulation outcomes, impacts are capped, danger is prioritized, and pause/background/transitions cancel old sounds. The development server supports encoded filenames, MIME and byte ranges. See `docs/audio-integration/verification.md` for earlier checks and remaining physical-phone listening acceptance.
 
 ## Manu identity assets
 
@@ -83,6 +97,8 @@ The original generic hero is preserved for provenance but is no longer loaded in
 ## Enemy artwork
 
 The approved six-role replacement set is stored as individual transparent PNGs under `assets/art/enemies/`, with WebP delivery copies under `assets/webp/enemies/`. Prompts and the mapping manifest are stored beside the PNGs. Technical role IDs and audio event names remain stable. The generators, increased sprite sizes and Manu player art are preserved. See `docs/enemy-redesign/verification.md`.
+
+The expansion adds six separately generated transparent character sprites and two arena backgrounds in the same screenprinted palette. The Humanotauro is entirely human-shaped, not a bull/minotaur; the Elemental de furia is a smoky, horned, six-limbed creature rather than a generic fire humanoid. Spanish names follow the verified edition labels. See `docs/level-expansion/manifest.json` for asset mappings, `art-prompts.json` for the exact generation prompts, `canon-research.md` for sources and `verification.md` for checks and remaining limitations.
 
 ## Mobile interaction regressions
 

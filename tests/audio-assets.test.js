@@ -13,6 +13,6 @@ test('all 31 manifest effects are mapped to real PCM WAVs and all six music file
     assert.equal(wav.toString('ascii', 0, 4), 'RIFF'); assert.equal(wav.toString('ascii', 8, 12), 'WAVE');
     assert.equal(wav.readUInt32LE(24), 44100); assert.equal(wav.readUInt16LE(34), 16);
   }
-  assert.equal(Object.keys(MUSIC).length, 6);
+  assert.equal(Object.keys(MUSIC).length, 8);
   for (const track of Object.values(MUSIC)) assert.ok((await readFile(new URL(track.file, root))).length > 100000);
 });

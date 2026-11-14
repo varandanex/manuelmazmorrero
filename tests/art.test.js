@@ -4,6 +4,8 @@ import { readFile, access } from 'node:fs/promises';
 import { loadArt } from '../src/render.js';
 
 const sprites = ['room', 'room-spore', 'room-host', 'hero', 'grunt', 'bat', 'caster', 'butcher', 'spore', 'host', 'generator', 'pillar', 'portrait', 'logo', 'hero-manu', 'hero-manu-umbrella', 'Manu-01-confianza-temeraria', 'Manu-02-caos-absoluto', 'enemies/enemy-goblin', 'enemies/enemy-scatterer', 'enemies/enemy-evil-llama', 'enemies/boss-juicer', 'enemies/boss-hoarder', 'enemies/boss-krakaren'];
+const expansion = ['enemy-drek', 'enemy-jikininki', 'enemy-acid-crawler', 'enemy-goblin-engineer', 'boss-mantaur', 'boss-rage-elemental'];
+sprites.push(...expansion.map(name => `enemies/${name}`), 'environments/room-railway', 'environments/room-furnace');
 for (const theme of ['matadero', 'jardin', 'plato']) {
   sprites.push(`environments/room-${theme}`, `environments/pillar-${theme}`);
 }
@@ -26,11 +28,12 @@ test('art loader waits for every required asset and reports complete progress', 
   };
   try {
     await loadArt((loaded, total) => progress.push([loaded, total]));
-    assert.equal(sources.length, 15);
+    assert.equal(sources.length, 23);
     assert.ok(sources.includes('/assets/webp/hero-manu-umbrella.webp'));
     assert.ok(!sources.includes('/assets/webp/hero-manu.webp'));
     assert.ok(!sources.includes('/assets/webp/hero.webp'));
     for (const file of ['enemy-goblin', 'enemy-scatterer', 'enemy-evil-llama', 'boss-juicer', 'boss-hoarder', 'boss-krakaren']) assert.ok(sources.includes(`/assets/webp/enemies/${file}.webp`), file);
+    for (const file of expansion) assert.ok(sources.includes(`/assets/webp/enemies/${file}.webp`), file);
     assert.ok(sources.includes('/assets/webp/generator.webp'));
     for (const theme of ['matadero', 'jardin', 'plato']) {
       assert.ok(sources.includes(`/assets/webp/environments/room-${theme}.webp`));
@@ -39,7 +42,7 @@ test('art loader waits for every required asset and reports complete progress', 
     for (const previousRoom of ['room', 'room-spore', 'room-host', 'pillar']) {
       assert.ok(!sources.includes(`/assets/webp/${previousRoom}.webp`));
     }
-    assert.deepEqual(progress.at(-1), [15, 15]);
+    assert.deepEqual(progress.at(-1), [23, 23]);
     for (const source of sources) await access(new URL(`..${source}`, import.meta.url));
   } finally { globalThis.Image = previous; }
 });

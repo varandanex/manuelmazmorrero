@@ -13,7 +13,7 @@
     },
     {
       "role": "bat",
-      "name": "Scatterer",
+      "name": "Desperdigador",
       "png": "assets/art/enemies/enemy-scatterer.png",
       "webp": "assets/webp/enemies/enemy-scatterer.webp",
       "prompt": "assets/art/enemies/enemy-scatterer-prompt.txt"
@@ -51,6 +51,7 @@
     "Scatterer uses the small agile insect from the sheet, not a two-creature sprite.",
     "Llama's detached fireball is removed because the game renders projectiles separately.",
     "Proper names follow the user-approved labels; surrounding interface text is Spanish.",
-    "Concept and original old assets are preserved."
+    "Concept and original old assets are preserved.",
+    "The Spanish introduction uses Desperdigador, verified in the publisher excerpt; the existing enemy-scatterer filename and bat simulation role are retained."
   ]
 }

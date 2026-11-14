@@ -113,6 +113,12 @@ export function createAudio({
       play(terminal); return;
     }
     if (events.some(e => e.type === 'floor')) {
+      if (state.mode === 'floor-intro') {
+        setPaused(true); setScene(`floor${state.floor}`, { restart: true });
+        const prefix = names.includes('retry') ? 'retry' : names.includes('upgrade_select') ? 'upgrade_select' : null;
+        if (prefix) play(prefix, true);
+        return;
+      }
       setScene(`floor${state.floor}`, { restart: true }); setPaused(false);
       const prefix = names.includes('retry') ? 'retry' : names.includes('upgrade_select') ? 'upgrade_select' : null;
       if (prefix && play(prefix)) later(() => play('floor_start'), CUES[prefix].duration + .05);
@@ -131,9 +137,9 @@ export function createAudio({
     if (background) { stopEffects(); media?.pause(); } else syncMusic();
     notify();
   }
-  function play(name) {
+  function play(name, presentation = false) {
     const cue = CUES[name];
-    if (!enabled || background || (paused && name !== 'ui_confirm') || context?.state !== 'running' || !cue || !volumes.effects) return false;
+    if (!enabled || background || (paused && name !== 'ui_confirm' && !presentation) || context?.state !== 'running' || !cue || !volumes.effects) return false;
     const index = variants.get(name) || 0, buffer = buffers.get(cue.files[index % cue.files.length]);
     if (!buffer || context.currentTime - (lastPlayed.get(name) ?? -Infinity) < (IMPACTS.has(name) ? .065 : .04)) return false;
     const group = IMPACTS.has(name) ? 'impact' : DANGERS.has(name) ? 'danger' : 'other';
@@ -151,5 +157,10 @@ export function createAudio({
     voices.set(source, { group, priority }); variants.set(name, index + 1); lastPlayed.set(name, context.currentTime);
     source.start(context.currentTime); return true;
   }
-  return { setEnabled, unlock, play, status, setScene, setVolumes, setPaused, setBackground, handleEvents };
+  // Only these UI stings may play over the deliberately silent briefing screens.
+  function playPresentation(kind) {
+    const name = { floor: 'ui_confirm', enemy: 'hit_heavy', boss: 'boss_intro' }[kind];
+    return name ? play(name, true) : false;
+  }
+  return { setEnabled, unlock, play: name => play(name), playPresentation, status, setScene, setVolumes, setPaused, setBackground, handleEvents };
 }

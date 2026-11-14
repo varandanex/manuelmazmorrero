@@ -35,7 +35,9 @@ export const MUSIC = {
   lobby: { file: 'Welcome to the Dungeon.mp3', trim: .822, loop: true },
   floor0: { file: 'Dungeon Showdown.mp3', trim: .785, loop: true },
   floor1: { file: '毒花迷宫.mp3', trim: .851, loop: true },
-  floor2: { file: 'Dungeon Game-Show Finale.mp3', trim: .871, loop: true },
+  floor2: { file: 'Dungeon Showdown.mp3', trim: .785, loop: true },
+  floor3: { file: '毒花迷宫.mp3', trim: .851, loop: true },
+  floor4: { file: 'Dungeon Game-Show Finale.mp3', trim: .871, loop: true },
   upgrade: { file: 'Dungeon Upgrade.mp3', trim: .724, loop: true },
   won: { file: 'Victory Fanfare.mp3', trim: 1, loop: false },
 };

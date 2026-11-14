@@ -216,7 +216,7 @@ html.in-combat { touch-action: none; overscroll-behavior: none; }
 }
 dialog[data-kind="pause"] #modal-actions { margin: 0 0 24px; }
 
-/* All three entry actions are complete tap targets, not text links. */
+/* Entry actions are complete tap targets, not text links. */
 .entry-actions { align-items: stretch; gap: 12px; width: 100%; max-width: 360px; }
 .entry-button {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -279,7 +279,87 @@ dialog[data-kind="boss-intro"] #modal-actions { margin-top: 12px; }
 }
 @media (max-height: 620px) and (orientation: portrait) {
   dialog[data-kind="boss-intro"] .modal-inner { padding: 12px; }
+  dialog[data-kind="boss-intro"] h2 { font-size: 24px; margin: 4px 0; }
   .duel-stage { padding-bottom: 8px; }
+  .duel-fighter img { height: clamp(96px, 21dvh, 126px); }
+  #duel-line { line-height: 1.4; }
+  #duel-progress { margin-top: 6px; }
+  dialog[data-kind="boss-intro"] #modal-actions { margin-top: 8px; }
+}
+
+/* Printed threat dossiers: one creature per screen, with a fight-poster reveal. */
+dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) {
+  width: min(800px, calc(100vw - 20px)); max-height: calc(100dvh - 20px); border-color: var(--pink);
+}
+dialog[data-kind="boss-reveal"] { border-color: var(--gold); }
+dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) .modal-inner { padding: 18px 22px; }
+dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) h2 { font-size: clamp(26px, 4.5vw, 40px); margin: 8px 0; }
+dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) #modal-copy:empty { display: none; }
+dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) #transition-status { min-height: 18px; margin: 0 0 4px; line-height: 18px; }
+dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) #transition-status[hidden] { display: block !important; visibility: hidden; }
+dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]).transition-locked #modal-content { opacity: 1; }
+dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) #modal-actions { margin-top: 14px; }
+.encounter-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); align-items: center; gap: 22px; }
+.encounter-art { position: relative; display: grid; place-items: center; min-width: 0; padding-bottom: 24px; isolation: isolate; }
+.encounter-art::before {
+  content: ''; position: absolute; z-index: -1; inset: 12% 0 16%; background: var(--pink);
+  clip-path: polygon(50% 0, 59% 21%, 80% 5%, 78% 32%, 100% 28%, 86% 50%, 100% 72%, 76% 70%, 83% 97%, 59% 81%, 50% 100%, 40% 79%, 16% 96%, 23% 70%, 0 74%, 13% 50%, 0 29%, 24% 31%, 19% 4%, 41% 21%);
+  opacity: .24; transform: rotate(-8deg);
+}
+[data-presentation="boss"] .encounter-art::before { background: var(--gold); opacity: .75; }
+.encounter-figure { width: 100%; height: 270px; object-fit: contain; position: relative; animation: threat-arrives .48s cubic-bezier(.2,.8,.2,1) both; }
+.encounter-stamp { position: absolute; inset: auto 0 3px; width: fit-content; max-width: 100%; margin: auto; padding: 5px 10px; background: var(--gold); color: var(--bg); font: 600 14px/1.15 var(--display); text-align: center; transform: rotate(-3deg); }
+.encounter-copy { min-width: 0; }
+.encounter-tagline { margin: 0 0 12px; font: 500 18px/1.15 var(--display); color: var(--ink); }
+.encounter-attack { border-left: 4px solid var(--pink); padding: 10px 12px; background: var(--panel); }
+.encounter-label { display: block; font: 10px/1.2 var(--mono); color: var(--muted); letter-spacing: 1px; }
+.encounter-attack h3 { margin: 5px 0 8px; font: 600 26px/1.05 var(--display); color: var(--gold); text-transform: uppercase; }
+.encounter-attack p, .encounter-tip { margin: 0; font: 14px/1.45 var(--body); }
+.encounter-tip { margin-top: 12px; color: var(--ink); }
+.encounter-tip strong { display: block; margin-bottom: 4px; font: 10px/1.2 var(--mono); color: var(--pink); }
+.encounter-story { margin: 0; font: 16px/1.65 var(--body); color: var(--ink); }
+[data-presentation="story"] .encounter-art::before { display: none; }
+[data-presentation="story"] .encounter-figure { height: 255px; object-fit: cover; object-position: center top; border: 1px solid var(--line); }
+@keyframes threat-arrives { from { opacity: 0; transform: translateX(-18px) scale(.85) rotate(-5deg); } to { opacity: 1; transform: none; } }
+@media (max-width: 560px) {
+  dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) .modal-inner { padding: 14px; }
+  dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) h2 { font-size: 28px; }
+  .encounter-card { grid-template-columns: 1fr; gap: 10px; }
+  .encounter-figure { height: clamp(120px, 23dvh, 190px); }
+  .encounter-art::before { inset-inline: 15%; }
+  .encounter-tagline { text-align: center; font-size: 16px; margin-bottom: 8px; }
+  .encounter-attack h3 { font-size: 23px; }
+  .encounter-attack p, .encounter-tip { font-size: 13px; line-height: 1.4; }
+  [data-presentation="story"] .encounter-figure { height: 160px; }
+  .encounter-story { font-size: 14px; line-height: 1.5; }
+}
+@media (max-height: 620px) and (orientation: portrait) {
+  dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) .modal-inner { padding: 10px 12px; }
+  dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) h2 { font-size: 24px; margin-block: 5px; }
+  .encounter-card { gap: 6px; }
+  .encounter-figure { height: 100px; }
+  .encounter-stamp { font-size: 12px; padding-block: 4px; }
+  .encounter-tagline { font-size: 14px; }
+  .encounter-attack { padding: 8px 10px; }
+  .encounter-attack h3 { font-size: 20px; margin-block: 4px; }
+  .encounter-tip { margin-top: 8px; }
+  [data-presentation="story"] .encounter-figure { height: 110px; }
+  .encounter-story { font-size: 13px; line-height: 1.45; }
+  dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) #modal-actions { margin-top: 10px; }
+  #encounter-next { min-height: 48px; padding-block: 10px; }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) .modal-inner { padding: 10px 18px; }
+  dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) h2 { font-size: 25px; margin-block: 4px; }
+  .encounter-card { grid-template-columns: minmax(0, .85fr) minmax(0, 1.5fr); gap: 16px; }
+  .encounter-figure, [data-presentation="story"] .encounter-figure { height: 148px; }
+  .encounter-tagline { font-size: 15px; margin-bottom: 6px; }
+  .encounter-attack { padding: 6px 10px; }
+  .encounter-attack h3 { font-size: 21px; margin-block: 3px; }
+  .encounter-attack p, .encounter-tip, .encounter-story { font-size: 12px; line-height: 1.35; }
+  .encounter-tip { margin-top: 6px; }
+  dialog:is([data-kind="floor-intro"], [data-kind="boss-reveal"]) #modal-actions { margin-top: 8px; }
+  #encounter-next { min-height: 44px; padding-block: 8px; }
 }
 
 /* A dedication on the cover, not a credit hidden below the fold. */

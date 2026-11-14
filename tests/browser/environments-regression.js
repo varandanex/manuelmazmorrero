@@ -12,7 +12,7 @@
   check('KYV is prominent rather than footer-sized', parseFloat(getComputedStyle(credit.querySelector('strong')).fontSize) >= 27);
   check('the dedication has a contrasting printed panel', getComputedStyle(credit).backgroundColor === 'rgb(244, 237, 221)');
   check('the cover has no horizontal overflow', document.documentElement.scrollWidth <= innerWidth);
-  for (const floor of [0, 1, 2]) {
+  for (const floor of [0, 1, 2, 3, 4]) {
     q.scene('boss', floor);
     const arena = document.getElementById('arena').getBoundingClientRect();
     check(`${floor}: arena fits the viewport`, arena.left >= 0 && arena.right <= innerWidth && arena.bottom <= innerHeight);

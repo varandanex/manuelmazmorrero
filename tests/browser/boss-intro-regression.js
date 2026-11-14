@@ -6,7 +6,7 @@
   const click = () => $('duel-next').click();
   const key = (type, repeat = false) => document.dispatchEvent(new KeyboardEvent(type, { code: 'Space', key: ' ', repeat, bubbles: true, cancelable: true }));
   const pointer = (type, id) => window.dispatchEvent(new PointerEvent(type, { pointerId: id, pointerType: 'touch', bubbles: true, cancelable: true }));
-  for (let floor = 0; floor < 3; floor++) {
+  for (let floor = 0; floor < 5; floor++) {
     q.introduction(floor);
     const before = q.state;
     check(`${floor}: the game pauses before creating the boss`, before.mode === 'boss-intro' && before.enemies.length === 0);
@@ -26,12 +26,14 @@
     check(`${floor}: a double tap cannot skip the reply`, q.state.dialogueIndex === 1);
     await wait(300); click();
     check(`${floor}: the final line is shown before combat`, q.state.dialogueIndex === 2 && q.state.mode === 'boss-intro');
-    check(`${floor}: the final action is explicit`, $('duel-next').textContent === '¡Al lío!');
+    check(`${floor}: the final action is explicit`, $('duel-next').textContent === 'Ver presentación');
     await wait(300); $('duel-line').click();
     check(`${floor}: tapping the final speech never starts combat`, q.state.mode === 'boss-intro');
     click();
+    check(`${floor}: the conversation leads to the boss reveal`, q.state.mode === 'boss-reveal' && q.state.enemies.length === 0);
+    await wait(1100); $('encounter-next').click();
     check(`${floor}: the explicit final button starts the boss`, q.state.mode === 'playing' && q.state.phase === 'boss' && q.state.modal === '');
-    check(`${floor}: the correct boss is spawned`, q.state.enemies.includes(['butcher', 'spore', 'host'][floor]));
+    check(`${floor}: the correct boss is spawned`, q.state.enemies.includes(['butcher', 'spore', 'mantaur', 'elemental', 'host'][floor]));
     check(`${floor}: old attack input is cleared`, q.state.keys.length === 0 && !q.state.touch.attack && !q.state.touch.dash);
   }
   q.start(); key('keydown'); q.introduction(); await wait(1150); click();

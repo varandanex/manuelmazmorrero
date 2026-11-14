@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "method": "Built-in image generation, one call per asset. Transparent characters; opaque arena backgrounds. Original PNGs preserved, delivery WebPs encoded with cwebp -q 90 -alpha_q 100.",
+  "prompts": "docs/level-expansion/art-prompts.json",
+  "canon": "docs/level-expansion/canon-research.md",
+  "mechanics": "Original game adaptations, not literal canonical encounters or abilities.",
+  "assets": [
+    {
+      "role": "drek",
+      "name": "Drek",
+      "floor": 3,
+      "png": "assets/art/enemies/enemy-drek.png",
+      "webp": "assets/webp/enemies/enemy-drek.webp",
+      "prompt": "enemy-drek"
+    },
+    {
+      "role": "jikininki",
+      "name": "Jikininki",
+      "floor": 3,
+      "png": "assets/art/enemies/enemy-jikininki.png",
+      "webp": "assets/webp/enemies/enemy-jikininki.webp",
+      "prompt": "enemy-jikininki"
+    },
+    {
+      "role": "mantaur",
+      "name": "Humanotauro",
+      "floor": 3,
+      "png": "assets/art/enemies/boss-mantaur.png",
+      "webp": "assets/webp/enemies/boss-mantaur.webp",
+      "prompt": "boss-mantaur"
+    },
+    {
+      "role": "acid",
+      "name": "Empalador ácido rastrero",
+      "floor": 4,
+      "png": "assets/art/enemies/enemy-acid-crawler.png",
+      "webp": "assets/webp/enemies/enemy-acid-crawler.webp",
+      "prompt": "enemy-acid-crawler"
+    },
+    {
+      "role": "engineer",
+      "name": "Ingeniero goblin",
+      "floor": 4,
+      "png": "assets/art/enemies/enemy-goblin-engineer.png",
+      "webp": "assets/webp/enemies/enemy-goblin-engineer.webp",
+      "prompt": "enemy-goblin-engineer"
+    },
+    {
+      "role": "elemental",
+      "name": "Elemental de furia",
+      "floor": 4,
+      "png": "assets/art/enemies/boss-rage-elemental.png",
+      "webp": "assets/webp/enemies/boss-rage-elemental.webp",
+      "prompt": "boss-rage-elemental"
+    },
+    {
+      "role": "room-railway",
+      "name": "La Maraña de Hierro",
+      "floor": 3,
+      "png": "assets/art/environments/room-railway.png",
+      "webp": "assets/webp/environments/room-railway.webp",
+      "prompt": "room-railway"
+    },
+    {
+      "role": "room-furnace",
+      "name": "El horno de la furia",
+      "floor": 4,
+      "png": "assets/art/environments/room-furnace.png",
+      "webp": "assets/webp/environments/room-furnace.webp",
+      "prompt": "room-furnace"
+    }
+  ]
+}
