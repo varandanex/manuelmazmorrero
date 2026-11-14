@@ -21,6 +21,8 @@ This is a local preview, not a public deployment. The public website can be host
 - Dodge: dodge button, Shift or K. Brief invulnerability, followed by a cooldown.
 - Pause: pause button, P or Escape. Losing window focus also pauses the game.
 - Audio: opt in with the sound toggle. Adjust effects and music independently in Help or Pause. Volume preferences are saved locally; sound remains off on a new page load.
+- Mobile combat owns touch gestures to avoid accidental pinch/double-tap zoom. Normal zoom remains available in the lobby and dialogs. Portrait prioritizes arena width over the large logo; shorter screens also omit the narrator/header, with audio still available in Pause.
+- Automatic result screens wait at least one second and require all held keys/fingers to be released, followed by a 200 ms quiet interval. Repeated attack input cannot choose an upgrade or restart a run. Explicit pause/help menus remain immediate.
 
 Each of three floors contains two enemy waves and one boss. El Juicer telegraphs charges, La Acaparadora uses projectile volleys and toxic pools, and the Clon de Krakaren uses destructible shield generators and warning beams. Goblins, Scatterers and malicious llamas replace the original regular enemies without changing their combat roles. These are game adaptations, not claims about canonical abilities. Choose one permanent advantage after each of the first two floors. Death restarts the current floor, not the entire run.
 
@@ -62,3 +64,7 @@ The original generic hero is preserved for provenance but is no longer loaded in
 ## Enemy artwork
 
 The approved six-role replacement set is stored as individual transparent PNGs under `assets/art/enemies/`, with WebP delivery copies under `assets/webp/enemies/`. Prompts and the mapping manifest are stored beside the PNGs. Technical role IDs and audio event names remain stable. The generators, increased sprite sizes and Manu player art are preserved. See `docs/enemy-redesign/verification.md`.
+
+## Mobile interaction regressions
+
+`src/transition-guard.js` tracks physical input separately from simulation input. Its deterministic tests run with `npm test`; local browser regression scripts live in `tests/browser/`. See `docs/mobile-fixes/verification.md` for before/after measurements, browser checks and physical-device limitations.

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "joystick and attack work together",
+    "pass": true
+  },
+  {
+    "name": "multitouch fallback cancels viewport manipulation",
+    "pass": true
+  },
+  {
+    "name": "multitouch fallback does not clear combat input",
+    "pass": true
+  },
+  {
+    "name": "releasing attack keeps the joystick active",
+    "pass": true
+  },
+  {
+    "name": "joystick and dash work together",
+    "pass": true
+  },
+  {
+    "name": "result clears movement and combat actions",
+    "pass": true
+  }
+]

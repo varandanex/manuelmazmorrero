@@ -1,0 +1,69 @@
+
+> manolo-el-mazmorrero@0.1.0 test
+> node --test tests/*.test.js
+
+✔ every shipped art asset is a PNG with usable dimensions (45.800416ms)
+✔ art loader waits for every required asset and reports complete progress (1.83275ms)
+✔ art loader rejects a missing enemy instead of silently rendering it invisible (0.655208ms)
+✔ every original has a delivery WebP asset (9.702333ms)
+✔ late image completions cannot overwrite the loading error message (27.116583ms)
+✔ all 31 manifest effects are mapped to real PCM WAVs and all six music files exist (30.323333ms)
+✔ audio is opt-in, decodes supplied effects once, and never replays stale loading cues (2.407083ms)
+✔ each screen selects its supplied music and music/effect sliders control separate buses (2.268458ms)
+✔ pause, background, mute and scene changes stop active effects and preserve music pause position (0.428083ms)
+✔ impact overlap is capped, danger can interrupt weaker voices, and swing/hit variants rotate (0.66075ms)
+✔ event batches sequence floor entry, select terminal-only cues and cancel pending work on pause (0.635292ms)
+✔ failed media play is reported, and stale rejection cannot overwrite a newer scene (3.325833ms)
+✔ failed SFX fetches do not block gameplay or replay late sounds after muting (0.943333ms)
+✔ delayed floor and victory music never leak into another scene or after mute/background (0.631833ms)
+✔ a finished victory track stays finished until another scene or an explicit restart (0.502083ms)
+✔ accepted attacks emit swing plus the actual impact outcome; cooldown input is silent (2.778625ms)
+✔ shield, generator destruction and recovery hits have distinct outcomes (0.472291ms)
+✔ terminal cues replace ordinary damage/death and floor entry is explicit (0.467833ms)
+✔ boss entry, butcher windup, charge and recovery sound once per transition (1.709667ms)
+✔ spore volleys share warning and activation cues without per-frame or per-projectile spam (0.811625ms)
+✔ host phase change and two-beam volley have one cue each; casters emit cast cues (0.96325ms)
+✔ a new run starts with full health and a floor announcement (0.986542ms)
+✔ input vectors are normalized and arena bounds contain the player (2.441583ms)
+✔ pause freezes every gameplay clock and health (0.246583ms)
+✔ attack auto-aims, respects range and awards one kill (0.5685ms)
+✔ holding attack respects its cooldown (0.263541ms)
+✔ dash avoids damage and cannot be retriggered before recharge (0.308083ms)
+✔ damage grants invulnerability and transitions to death only once (0.280375ms)
+✔ a floor has two waves, a warning and a boss (1.790042ms)
+✔ the butcher locks his charge and exposes a recovery window (3.98ms)
+✔ the spore boss fires projectiles and telegraphs poison pools (1.049083ms)
+✔ a shielded host takes no damage until generators are destroyed (0.237834ms)
+✔ host restores generators once at half health (0.156792ms)
+✔ a vulnerable boss takes increased damage (0.079583ms)
+✔ floor victory opens upgrades and rejects invalid choices (0.149541ms)
+✔ all three floors can progress through to the final victory (2.986166ms)
+✔ retry preserves advantages but resets score and kills to the checkpoint (0.189541ms)
+✔ checkpoints reject corrupt, unsupported and inconsistent data (0.180458ms)
+✔ resume restores a checkpoint at the beginning of its floor (0.107083ms)
+✔ healing pickups cannot exceed maximum health (0.081667ms)
+✔ expired hazards cannot damage the player (0.058375ms)
+✔ time formatting is stable across minute boundaries (0.063708ms)
+✔ local server delivers real WAV and Unicode/spaced MP3 assets with correct MIME (53.33ms)
+✔ media supports bounded, open and suffix ranges, rejects unsatisfiable ranges and handles HEAD (15.819375ms)
+✔ asset serving does not expose project documents, traversal, malformed paths or symlink targets (6.357458ms)
+✔ result actions wait one second even when no input is held (0.68875ms)
+✔ holding attack across a transition never unlocks the result screen (0.1335ms)
+✔ both joystick and attack fingers must be released (1.173584ms)
+✔ rapid taps during the delay require a quiet gap before menus accept input (0.209334ms)
+✔ a fresh deliberate press after unlocking remains allowed (0.121958ms)
+✔ closing and reopening a result uses a new delay without forgetting held input (0.181167ms)
+✔ lost focus clears missing releases but does not skip the transition delay (0.21725ms)
+ℹ tests 52
+ℹ suites 0
+ℹ pass 52
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 221.964667
+
+> manolo-el-mazmorrero@0.1.0 check
+> node --check src/game.js && node --check src/render.js && node --check src/main.js && node --check server.mjs && node --check src/audio.js && node --check src/audio-config.js && node --check src/transition-guard.js
+
+Identical simulation state for 28800 frames across 4 seeds and all 3 floors (audio events/metadata excluded).

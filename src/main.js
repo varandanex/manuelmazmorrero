@@ -1,6 +1,7 @@
 import { createGame, updateGame, chooseUpgrade, retryFloor, pauseGame, resumeGame, parseCheckpoint, formatTime, FLOORS, UPGRADES } from './game.js';
 import { loadArt, renderGame, renderPreview } from './render.js';
 import { createAudio } from './audio.js';
+import { createTransitionGuard } from './transition-guard.js';
 
 const $ = id => document.getElementById(id);
 const canvas = $('arena');
@@ -9,6 +10,7 @@ const previewCtx = $('preview').getContext('2d');
 const storageKey = 'manu-dungeon-checkpoint-v1';
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const keys = new Set();
+const transitionGuard = createTransitionGuard();
 const touch = { x: 0, y: 0, attack: false, dash: false };
 let game = null, saved = null, lastFrame = 0, accumulator = 0, hudAt = 0;
 let modalKind = '', helpWasPlaying = false, announcementUntil = 0, floorToastUntil = 0;
@@ -78,6 +80,9 @@ function addAudioControls() {
 }
 
 function clearInput() {
+  for (const [id, pointer] of [['joystick', joystickPointer], ['attack', attackPointer], ['dash', dashPointer]]) {
+    if (pointer !== null && $(id).hasPointerCapture(pointer)) $(id).releasePointerCapture(pointer);
+  }
   keys.clear(); touch.x = 0; touch.y = 0; touch.attack = false; touch.dash = false;
   joystickPointer = null; attackPointer = null; dashPointer = null;
   $('joystick-knob').style.transform = ''; $('attack').classList.remove('pressed'); $('dash').classList.remove('pressed');
@@ -85,9 +90,14 @@ function clearInput() {
 
 function setModal(kind, eyebrow, title, copy) {
   clearInput(); modalKind = kind;
+  if (['upgrade', 'dead', 'won'].includes(kind)) transitionGuard.begin();
+  else transitionGuard.close();
   $('modal-eyebrow').textContent = eyebrow; $('modal-title').textContent = title; $('modal-copy').textContent = copy;
   $('modal-content').replaceChildren(); $('modal-actions').replaceChildren();
+  updateModalLock();
   if (!$('modal').open) $('modal').showModal();
+  $('modal-title').focus({ preventScroll: true });
+  syncGestureMode();
 }
 
 function modalButton(label, action, secondary = false, confirm = true) {
@@ -95,7 +105,19 @@ function modalButton(label, action, secondary = false, confirm = true) {
   button.addEventListener('click', () => { unlockAudio(); action(); if (confirm) audio.play('ui_confirm'); }); $('modal-actions').append(button); return button;
 }
 
-function closeModal() { $('modal').close(); modalKind = ''; clearInput(); }
+function closeModal() {
+  transitionGuard.close(); updateModalLock(); $('modal').close(); modalKind = ''; clearInput();
+}
+
+function updateModalLock() {
+  const locked = transitionGuard.isLocked();
+  $('modal-content').inert = locked; $('modal-actions').inert = locked;
+  $('transition-status').hidden = !locked;
+  $('modal').classList.toggle('transition-locked', locked);
+}
+
+function isCombatActive() { return game?.mode === 'playing' && !$('modal').open; }
+function syncGestureMode() { document.documentElement.classList.toggle('in-combat', isCombatActive()); }
 
 function start(checkpoint = null) {
   if (!artReady) return;
@@ -160,7 +182,6 @@ Elige una ventaja. Recuperarás toda la vida.`);
     }); list.append(button);
   }
   $('modal-content').append(list);
-  list.querySelector('button').focus();
 }
 
 function showDeath() {
@@ -214,6 +235,7 @@ function consumeEvents() {
 }
 
 function updateHud() {
+  syncGestureMode();
   if (!game) return;
   const p = game.player;
   $('health-text').textContent = `${Math.ceil(p.hp)} / ${p.maxHp}`;
@@ -235,6 +257,8 @@ function updateHud() {
 }
 
 function frame(now) {
+  syncGestureMode();
+  if ($('modal').open) updateModalLock();
   const delta = lastFrame ? Math.min(.1, Math.max(0, (now - lastFrame) / 1000)) : 0;
   lastFrame = now;
   if (game) {
@@ -293,6 +317,42 @@ for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) $('dash
 $('attack').addEventListener('click', event => { if (!event.detail && game?.mode === 'playing') { unlockAudio(); touch.attack = true; setTimeout(() => { touch.attack = false; }, 100); } });
 $('dash').addEventListener('click', event => { if (!event.detail && game?.mode === 'playing') { unlockAudio(); touch.dash = true; } });
 
+// Capture physical releases even after clearInput() resets combat controls.
+window.addEventListener('pointerdown', event => {
+  const locked = transitionGuard.isLocked();
+  transitionGuard.hold(`pointer:${event.pointerId}`);
+  if ($('modal').open && locked) event.preventDefault();
+}, { capture: true, passive: false });
+for (const name of ['pointerup', 'pointercancel']) window.addEventListener(name, event => {
+  const locked = transitionGuard.isLocked();
+  transitionGuard.release(`pointer:${event.pointerId}`);
+  if ($('modal').open && locked) event.preventDefault();
+}, { capture: true, passive: false });
+window.addEventListener('keydown', event => {
+  const locked = transitionGuard.isLocked();
+  transitionGuard.hold(`key:${event.code}`);
+  if ($('modal').open && (locked || event.repeat)) {
+    event.preventDefault(); event.stopImmediatePropagation();
+  }
+}, true);
+window.addEventListener('keyup', event => {
+  const locked = transitionGuard.isLocked();
+  transitionGuard.release(`key:${event.code}`);
+  if ($('modal').open && locked) {
+    event.preventDefault(); event.stopImmediatePropagation();
+  }
+}, true);
+$('modal').addEventListener('click', event => {
+  if (transitionGuard.isLocked()) { event.preventDefault(); event.stopImmediatePropagation(); }
+}, true);
+// CSS owns standard pointer gestures; these also cover Safari's gesture events.
+for (const name of ['gesturestart', 'gesturechange', 'dblclick']) document.addEventListener(name, event => {
+  if (isCombatActive()) event.preventDefault();
+}, { passive: false });
+for (const name of ['touchstart', 'touchmove']) document.addEventListener(name, event => {
+  if (isCombatActive() && event.touches.length > 1) event.preventDefault();
+}, { passive: false });
+
 window.addEventListener('keydown', event => {
   if ($('modal').open || !game) return;
   if (['Escape', 'KeyP'].includes(event.code)) { event.preventDefault(); showPause(); return; }
@@ -303,11 +363,11 @@ window.addEventListener('keydown', event => {
   }
 });
 window.addEventListener('keyup', event => keys.delete(event.code));
-window.addEventListener('blur', () => { audio.setBackground(true); clearInput(); showPause(); });
+window.addEventListener('blur', () => { audio.setBackground(true); transitionGuard.resetHeld(); clearInput(); showPause(); });
 window.addEventListener('focus', () => { if (!document.hidden) audio.setBackground(false); });
 document.addEventListener('visibilitychange', () => {
   audio.setBackground(document.hidden || !document.hasFocus());
-  if (document.hidden) { clearInput(); showPause(); }
+  if (document.hidden) { transitionGuard.resetHeld(); clearInput(); showPause(); }
 });
 $('modal').addEventListener('cancel', event => {
   event.preventDefault();

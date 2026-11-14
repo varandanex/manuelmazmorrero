@@ -1,0 +1,86 @@
+[
+  {
+    "name": "upgrade: held attack cannot select even after delay",
+    "pass": true
+  },
+  {
+    "name": "upgrade: title receives focus instead of an action",
+    "pass": true
+  },
+  {
+    "name": "upgrade: release cannot activate a result action",
+    "pass": true
+  },
+  {
+    "name": "upgrade: actions unlock after release",
+    "pass": true
+  },
+  {
+    "name": "upgrade: repeated keyboard activation stays blocked",
+    "pass": true
+  },
+  {
+    "name": "upgrade: a fresh choice works",
+    "pass": true
+  },
+  {
+    "name": "dead: held attack cannot select even after delay",
+    "pass": true
+  },
+  {
+    "name": "dead: title receives focus instead of an action",
+    "pass": true
+  },
+  {
+    "name": "dead: release cannot activate a result action",
+    "pass": true
+  },
+  {
+    "name": "dead: actions unlock after release",
+    "pass": true
+  },
+  {
+    "name": "dead: repeated keyboard activation stays blocked",
+    "pass": true
+  },
+  {
+    "name": "dead: a fresh choice works",
+    "pass": true
+  },
+  {
+    "name": "won: held attack cannot select even after delay",
+    "pass": true
+  },
+  {
+    "name": "won: title receives focus instead of an action",
+    "pass": true
+  },
+  {
+    "name": "won: release cannot activate a result action",
+    "pass": true
+  },
+  {
+    "name": "won: actions unlock after release",
+    "pass": true
+  },
+  {
+    "name": "won: repeated keyboard activation stays blocked",
+    "pass": true
+  },
+  {
+    "name": "won: a fresh choice works",
+    "pass": true
+  },
+  {
+    "name": "two fingers: releasing attack alone cannot dismiss the result",
+    "pass": true
+  },
+  {
+    "name": "two fingers: cancellation releases the final held input",
+    "pass": true
+  },
+  {
+    "name": "idle result unlocks without extra interaction",
+    "pass": true
+  }
+]

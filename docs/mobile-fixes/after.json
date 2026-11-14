@@ -1,0 +1,78 @@
+[
+  {
+    "detail": {
+      "arena": 382,
+      "viewport": 390
+    },
+    "name": "portrait arena uses the viewport width",
+    "pass": true
+  },
+  {
+    "detail": {
+      "bottom": 605.5,
+      "height": 667
+    },
+    "name": "controls remain visible",
+    "pass": true
+  },
+  {
+    "name": "gameplay rejects native pinch gestures",
+    "pass": true
+  },
+  {
+    "name": "the whole game surface owns touch gestures",
+    "pass": true
+  },
+  {
+    "detail": {
+      "floor": 0,
+      "keys": [],
+      "modal": "upgrade",
+      "mode": "upgrade",
+      "touch": {
+        "attack": false,
+        "dash": false,
+        "x": 0,
+        "y": 0
+      }
+    },
+    "name": "upgrade ignores an immediate accidental click",
+    "pass": true
+  },
+  {
+    "detail": {
+      "floor": 0,
+      "keys": [],
+      "modal": "dead",
+      "mode": "dead",
+      "touch": {
+        "attack": false,
+        "dash": false,
+        "x": 0,
+        "y": 0
+      }
+    },
+    "name": "dead ignores an immediate accidental click",
+    "pass": true
+  },
+  {
+    "detail": {
+      "floor": 0,
+      "keys": [],
+      "modal": "won",
+      "mode": "won",
+      "touch": {
+        "attack": false,
+        "dash": false,
+        "x": 0,
+        "y": 0
+      }
+    },
+    "name": "won ignores an immediate accidental click",
+    "pass": true
+  },
+  {
+    "name": "lobby keeps normal browser zoom",
+    "pass": true
+  }
+]
