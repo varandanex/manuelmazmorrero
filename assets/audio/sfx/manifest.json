@@ -1,0 +1,257 @@
+{
+  "sample_rate": 44100,
+  "channels": 1,
+  "bit_depth": 16,
+  "source": "Original deterministic procedural synthesis; no samples or music.",
+  "integrated": true,
+  "sounds": [
+    {
+      "id": "attack_swing_01",
+      "label": "Ataque al aire 1",
+      "trigger": "Accepted player attack, including misses.",
+      "file": "attack_swing_01.wav",
+      "duration": 0.205,
+      "peak_dbfs": -9.37
+    },
+    {
+      "id": "hit_enemy_01",
+      "label": "Impacto en enemigo 1",
+      "trigger": "Successful nonlethal hit; alternate variants.",
+      "file": "hit_enemy_01.wav",
+      "duration": 0.277,
+      "peak_dbfs": -4.44
+    },
+    {
+      "id": "attack_swing_02",
+      "label": "Ataque al aire 2",
+      "trigger": "Accepted player attack, including misses.",
+      "file": "attack_swing_02.wav",
+      "duration": 0.205,
+      "peak_dbfs": -9.37
+    },
+    {
+      "id": "hit_enemy_02",
+      "label": "Impacto en enemigo 2",
+      "trigger": "Successful nonlethal hit; alternate variants.",
+      "file": "hit_enemy_02.wav",
+      "duration": 0.277,
+      "peak_dbfs": -4.44
+    },
+    {
+      "id": "attack_swing_03",
+      "label": "Ataque al aire 3",
+      "trigger": "Accepted player attack, including misses.",
+      "file": "attack_swing_03.wav",
+      "duration": 0.205,
+      "peak_dbfs": -9.37
+    },
+    {
+      "id": "hit_enemy_03",
+      "label": "Impacto en enemigo 3",
+      "trigger": "Successful nonlethal hit; alternate variants.",
+      "file": "hit_enemy_03.wav",
+      "duration": 0.277,
+      "peak_dbfs": -4.44
+    },
+    {
+      "id": "hit_heavy",
+      "label": "Impacto fuerte",
+      "trigger": "Successful hit during boss recovery; replaces ordinary impact.",
+      "file": "hit_heavy.wav",
+      "duration": 0.387,
+      "peak_dbfs": -3.35
+    },
+    {
+      "id": "dash",
+      "label": "Esquiva",
+      "trigger": "Accepted dodge, never on a cooldown-rejected input.",
+      "file": "dash.wav",
+      "duration": 0.265,
+      "peak_dbfs": -6.56
+    },
+    {
+      "id": "player_hurt",
+      "label": "Daño recibido",
+      "trigger": "Player takes damage; honor invulnerability interval.",
+      "file": "player_hurt.wav",
+      "duration": 0.387,
+      "peak_dbfs": -2.85
+    },
+    {
+      "id": "enemy_death",
+      "label": "Enemigo derrotado",
+      "trigger": "Enemy dies; replace ordinary impact for that target.",
+      "file": "enemy_death.wav",
+      "duration": 0.375,
+      "peak_dbfs": -5.85
+    },
+    {
+      "id": "projectile_cast",
+      "label": "Disparo enemigo",
+      "trigger": "Once per volley, not once per projectile.",
+      "file": "projectile_cast.wav",
+      "duration": 0.255,
+      "peak_dbfs": -7.33
+    },
+    {
+      "id": "poison_warning",
+      "label": "Aviso de veneno",
+      "trigger": "Once when poison telegraph appears, 1.25 seconds before activation.",
+      "file": "poison_warning.wav",
+      "duration": 0.725,
+      "peak_dbfs": -5.51
+    },
+    {
+      "id": "poison_activate",
+      "label": "Veneno activo",
+      "trigger": "Once when a pool delay crosses zero, never every update.",
+      "file": "poison_activate.wav",
+      "duration": 0.725,
+      "peak_dbfs": -7.96
+    },
+    {
+      "id": "beam_warning",
+      "label": "Aviso de rayo",
+      "trigger": "Once per beam volley at telegraph start; 1.15-second lead time.",
+      "file": "beam_warning.wav",
+      "duration": 1.125,
+      "peak_dbfs": -4.01
+    },
+    {
+      "id": "beam_fire",
+      "label": "Descarga del rayo",
+      "trigger": "Once when beam delay crosses zero.",
+      "file": "beam_fire.wav",
+      "duration": 0.425,
+      "peak_dbfs": -3.74
+    },
+    {
+      "id": "shield_block",
+      "label": "Golpe contra escudo",
+      "trigger": "Attack blocked by the host shield; not a successful hit.",
+      "file": "shield_block.wav",
+      "duration": 0.295,
+      "peak_dbfs": -6.38
+    },
+    {
+      "id": "generator_destroy",
+      "label": "Emisor destruido",
+      "trigger": "Generator dies; replaces ordinary enemy death.",
+      "file": "generator_destroy.wav",
+      "duration": 0.705,
+      "peak_dbfs": -3.35
+    },
+    {
+      "id": "shield_break",
+      "label": "Escudo desactivado",
+      "trigger": "Last living generator destroyed; once per shield phase.",
+      "file": "shield_break.wav",
+      "duration": 0.695,
+      "peak_dbfs": -4.88
+    },
+    {
+      "id": "boss_intro",
+      "label": "Entrada de jefe",
+      "trigger": "Once per boss encounter, not both announcement and spawn.",
+      "file": "boss_intro.wav",
+      "duration": 0.975,
+      "peak_dbfs": -3.74
+    },
+    {
+      "id": "butcher_windup",
+      "label": "Preparación de embestida",
+      "trigger": "Butcher enters windup, 1.1 seconds before charge.",
+      "file": "butcher_windup.wav",
+      "duration": 1.075,
+      "peak_dbfs": -4.44
+    },
+    {
+      "id": "butcher_charge",
+      "label": "Embestida",
+      "trigger": "Butcher transitions from windup to charge.",
+      "file": "butcher_charge.wav",
+      "duration": 0.475,
+      "peak_dbfs": -4.88
+    },
+    {
+      "id": "boss_recover",
+      "label": "Jefe vulnerable",
+      "trigger": "Butcher stops charging and enters recovery.",
+      "file": "boss_recover.wav",
+      "duration": 0.487,
+      "peak_dbfs": -4.88
+    },
+    {
+      "id": "host_phase_two",
+      "label": "Cambio de reglas",
+      "trigger": "Host reaches half health and restores shield; once.",
+      "file": "host_phase_two.wav",
+      "duration": 0.955,
+      "peak_dbfs": -3.48
+    },
+    {
+      "id": "heal",
+      "label": "Botiquín",
+      "trigger": "Pickup collected; do not duplicate during floor reset.",
+      "file": "heal.wav",
+      "duration": 0.345,
+      "peak_dbfs": -7.33
+    },
+    {
+      "id": "ui_confirm",
+      "label": "Confirmación",
+      "trigger": "One activation per menu button, not pointerdown plus click.",
+      "file": "ui_confirm.wav",
+      "duration": 0.105,
+      "peak_dbfs": -11.06
+    },
+    {
+      "id": "upgrade_select",
+      "label": "Mejora elegida",
+      "trigger": "Successful upgrade selection; replaces generic confirmation.",
+      "file": "upgrade_select.wav",
+      "duration": 0.425,
+      "peak_dbfs": -6.94
+    },
+    {
+      "id": "floor_start",
+      "label": "Inicio de piso",
+      "trigger": "Floor starts or restarts; delay if overlapping upgrade selection.",
+      "file": "floor_start.wav",
+      "duration": 0.587,
+      "peak_dbfs": -6.38
+    },
+    {
+      "id": "player_death",
+      "label": "Señal interrumpida",
+      "trigger": "Lethal player damage; replaces ordinary hurt.",
+      "file": "player_death.wav",
+      "duration": 1.015,
+      "peak_dbfs": -3.61
+    },
+    {
+      "id": "retry",
+      "label": "Reintento",
+      "trigger": "Retry confirmation; sequence before floor start.",
+      "file": "retry.wav",
+      "duration": 0.325,
+      "peak_dbfs": -7.96
+    },
+    {
+      "id": "boss_defeat",
+      "label": "Jefe derrotado",
+      "trigger": "Boss death; replaces generic kill, no musical fanfare.",
+      "file": "boss_defeat.wav",
+      "duration": 1.005,
+      "peak_dbfs": -3.35
+    },
+    {
+      "id": "victory",
+      "label": "Fin del espectáculo",
+      "trigger": "Final victory: use instead of boss_defeat, not on top of it.",
+      "file": "victory.wav",
+      "duration": 1.175,
+      "peak_dbfs": -3.35
+    }
+  ]
+}

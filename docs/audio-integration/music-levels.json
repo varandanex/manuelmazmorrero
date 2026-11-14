@@ -1,0 +1,32 @@
+[
+  {
+    "file": "assets/audio/Dungeon Showdown.mp3",
+    "mean_dbfs": -16.7,
+    "peak_dbfs": -0.7
+  },
+  {
+    "file": "assets/audio/Dungeon Game-Show Finale.mp3",
+    "mean_dbfs": -17.6,
+    "peak_dbfs": -2.8
+  },
+  {
+    "file": "assets/audio/毒花迷宫.mp3",
+    "mean_dbfs": -17.4,
+    "peak_dbfs": 0.0
+  },
+  {
+    "file": "assets/audio/Welcome to the Dungeon.mp3",
+    "mean_dbfs": -17.1,
+    "peak_dbfs": 0.0
+  },
+  {
+    "file": "assets/audio/Dungeon Upgrade.mp3",
+    "mean_dbfs": -16.0,
+    "peak_dbfs": -1.4
+  },
+  {
+    "file": "assets/audio/Victory Fanfare.mp3",
+    "mean_dbfs": -18.8,
+    "peak_dbfs": -3.3
+  }
+]

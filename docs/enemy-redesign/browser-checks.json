@@ -1,0 +1,8 @@
+{
+  "blockedWhileShielded": true,
+  "bossHp": 409,
+  "bossMaxHp": 450,
+  "damagedAfterGenerators": true,
+  "generatorAttacks": 4,
+  "generatorsRemaining": 0
+}

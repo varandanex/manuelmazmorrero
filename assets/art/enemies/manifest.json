@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "source": "docs/enemy-redesign/concept-sheet.png",
+  "method": "Built-in image generation: reference-guided extraction into isolated transparent sprites.",
+  "mechanics": "Retain existing simulation roles, balance, hitboxes, audio cues and shield generators.",
+  "sprites": [
+    {
+      "role": "grunt",
+      "name": "Goblin",
+      "png": "assets/art/enemies/enemy-goblin.png",
+      "webp": "assets/webp/enemies/enemy-goblin.webp",
+      "prompt": "assets/art/enemies/enemy-goblin-prompt.txt"
+    },
+    {
+      "role": "bat",
+      "name": "Scatterer",
+      "png": "assets/art/enemies/enemy-scatterer.png",
+      "webp": "assets/webp/enemies/enemy-scatterer.webp",
+      "prompt": "assets/art/enemies/enemy-scatterer-prompt.txt"
+    },
+    {
+      "role": "caster",
+      "name": "Llama maligna",
+      "png": "assets/art/enemies/enemy-evil-llama.png",
+      "webp": "assets/webp/enemies/enemy-evil-llama.webp",
+      "prompt": "assets/art/enemies/enemy-evil-llama-prompt.txt"
+    },
+    {
+      "role": "butcher",
+      "name": "El Juicer",
+      "png": "assets/art/enemies/boss-juicer.png",
+      "webp": "assets/webp/enemies/boss-juicer.webp",
+      "prompt": "assets/art/enemies/boss-juicer-prompt.txt"
+    },
+    {
+      "role": "spore",
+      "name": "La Acaparadora",
+      "png": "assets/art/enemies/boss-hoarder.png",
+      "webp": "assets/webp/enemies/boss-hoarder.webp",
+      "prompt": "assets/art/enemies/boss-hoarder-prompt.txt"
+    },
+    {
+      "role": "host",
+      "name": "Clon de Krakaren",
+      "png": "assets/art/enemies/boss-krakaren.png",
+      "webp": "assets/webp/enemies/boss-krakaren.webp",
+      "prompt": "assets/art/enemies/boss-krakaren-prompt.txt"
+    }
+  ],
+  "notes": [
+    "Scatterer uses the small agile insect from the sheet, not a two-creature sprite.",
+    "Llama's detached fireball is removed because the game renders projectiles separately.",
+    "Proper names follow the user-approved labels; surrounding interface text is Spanish.",
+    "Concept and original old assets are preserved."
+  ]
+}

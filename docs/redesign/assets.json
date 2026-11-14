@@ -1,0 +1,142 @@
+[
+  {
+    "name": "bat",
+    "original": "assets/art/bat.png",
+    "delivery": "assets/webp/bat.webp",
+    "size": [
+      1254,
+      1254
+    ],
+    "prompt": "assets/art/bat-prompt.txt"
+  },
+  {
+    "name": "butcher",
+    "original": "assets/art/butcher.png",
+    "delivery": "assets/webp/butcher.webp",
+    "size": [
+      1254,
+      1254
+    ],
+    "prompt": "assets/art/butcher-prompt.txt"
+  },
+  {
+    "name": "caster",
+    "original": "assets/art/caster.png",
+    "delivery": "assets/webp/caster.webp",
+    "size": [
+      1254,
+      1254
+    ],
+    "prompt": "assets/art/caster-prompt.txt"
+  },
+  {
+    "name": "generator",
+    "original": "assets/art/generator.png",
+    "delivery": "assets/webp/generator.webp",
+    "size": [
+      1254,
+      1254
+    ],
+    "prompt": "assets/art/generator-prompt.txt"
+  },
+  {
+    "name": "grunt",
+    "original": "assets/art/grunt.png",
+    "delivery": "assets/webp/grunt.webp",
+    "size": [
+      1254,
+      1254
+    ],
+    "prompt": "assets/art/grunt-prompt.txt"
+  },
+  {
+    "name": "hero",
+    "original": "assets/art/hero.png",
+    "delivery": "assets/webp/hero.webp",
+    "size": [
+      1254,
+      1254
+    ],
+    "prompt": "assets/art/hero-prompt.txt"
+  },
+  {
+    "name": "host",
+    "original": "assets/art/host.png",
+    "delivery": "assets/webp/host.webp",
+    "size": [
+      1254,
+      1254
+    ],
+    "prompt": "assets/art/host-prompt.txt"
+  },
+  {
+    "name": "logo",
+    "original": "assets/art/logo.png",
+    "delivery": "assets/webp/logo.webp",
+    "size": [
+      2172,
+      724
+    ],
+    "prompt": "assets/art/logo-prompt.txt"
+  },
+  {
+    "name": "pillar",
+    "original": "assets/art/pillar.png",
+    "delivery": "assets/webp/pillar.webp",
+    "size": [
+      1254,
+      1254
+    ],
+    "prompt": "assets/art/pillar-prompt.txt"
+  },
+  {
+    "name": "portrait",
+    "original": "assets/art/portrait.png",
+    "delivery": "assets/webp/portrait.webp",
+    "size": [
+      1254,
+      1254
+    ],
+    "prompt": "assets/art/portrait-prompt.txt"
+  },
+  {
+    "name": "room-host",
+    "original": "assets/art/room-host.png",
+    "delivery": "assets/webp/room-host.webp",
+    "size": [
+      1341,
+      1173
+    ],
+    "prompt": "assets/art/room-host-prompt.txt"
+  },
+  {
+    "name": "room-spore",
+    "original": "assets/art/room-spore.png",
+    "delivery": "assets/webp/room-spore.webp",
+    "size": [
+      1341,
+      1173
+    ],
+    "prompt": "assets/art/room-spore-prompt.txt"
+  },
+  {
+    "name": "room",
+    "original": "assets/art/room.png",
+    "delivery": "assets/webp/room.webp",
+    "size": [
+      1341,
+      1173
+    ],
+    "prompt": "assets/art/room-prompt.txt"
+  },
+  {
+    "name": "spore",
+    "original": "assets/art/spore.png",
+    "delivery": "assets/webp/spore.webp",
+    "size": [
+      1254,
+      1254
+    ],
+    "prompt": "assets/art/spore-prompt.txt"
+  }
+]

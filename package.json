@@ -1,0 +1,16 @@
+{
+  "name": "manolo-el-mazmorrero",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A mobile-first, original birthday dungeon crawler.",
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "test": "node --test tests/*.test.js",
+    "check": "node --check src/game.js && node --check src/render.js && node --check src/main.js && node --check server.mjs && node --check src/audio.js && node --check src/audio-config.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

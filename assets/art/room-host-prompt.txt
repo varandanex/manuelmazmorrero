@@ -1,0 +1,16 @@
+# Initial prompt
+
+Use case: precise-object-edit. Asset type: final-boss TV-production dungeon arena variant, opaque 2D mobile game background.
+Input image 1 is the EDIT TARGET. Preserve its exact camera, room geometry, canvas aspect ratio, open central floor, all four wall boundaries and centered doorway geometry. Output 1341 x 1173 pixels if possible, same 480:420 / 8:7 landscape aspect. Only modify wall decoration to evoke a sinister TV production set integrated into an industrial dungeon.
+INVARIANTS: keep centered open dark rectangular exit at top; the back-wall band remains the exact existing height, around y=0..185 on this image; left and right walls remain only within outer roughly60pixels; bottom wall retains its narrow strip around y=1145..1173. Do not move or enlarge these boundaries. No stage or raised floor. Preserve the calm continuous desaturated darkcharcoal empty stone floor, with sparse lowcontrast cracks/grain. Existing sparse yellowblack hazard trim may remain.
+CHANGES ALLOWED ONLY ON TOP AND SIDE WALLS: add three compact warmcream industrial broadcast-surveillance camera housings with black lenses, small mounting brackets contained fully inside the wall bands, magenta cables neatly following masonry seams, and tiny yellow indicator lights. Two cameras in the top band, one on a side wall. They should be integrated into masonry rather than free-standing floor props. No words, numbers, labels or illuminated lettering. Do not place camera bodies, mounts, cables or any other props onto the playable floor. The cameras look down into the room, not toward the viewer.
+Style: preserve the exact original flat inked pulp editorial screenprint, rough cream stone caps and black contour, sparse scratch/hatching. Strict palette nearblack #0B0B0E, warmcream #F4EDDD, yellow #FFE000, hotmagenta #ED147B, desaturated charcoal floor. No blue, purple lighting, sci-fi neon, glossy rendering, 3D gradients or dramatic shadows. Keep floor contrast low for gameplay readability.
+CRITICAL: absolutely NO characters, monsters, pillars, obstacles, props, furniture or clutter inside playable floor. No telegraphs or bright floor markings. No interface, title, logo, text, buttons, healthbars or surrounding poster border. Preserve the open door, exact wall dimensions, floor plan and viewpoint from input.
+Opaque full-canvas PNG, not transparent.
+
+# Targeted refinement prompt (final image)
+
+Use case: precise-object-edit. Input image 1 is the EDIT TARGET.
+Make only ONE targeted correction: remove the camera halfway down the RIGHT side and remove its magenta cables wherever they extend onto the playable floor. Restore the affected charcoal floor surface seamlessly. Keep the two TOP-wall cameras, all top-wall cables, the open centered doorway, all masonry, hazard stripes, exact wall geometry, image aspect ratio and all remaining floor unchanged.
+If retaining any right-side vertical cables, constrain them strictly to the narrow far-right wall face x=1285..1320 of this1341pixel wide image. There must be NO object or camera or cable overlapping the open floor x=60..1280 below y=185. Do not add anything else.
+Exact same original pulp editorial screenprint style, colors and camera. No text, characters, pillars, props or new elements. Keep output opaque, same1341x1173 dimensions.

@@ -1,0 +1,61 @@
+
+> manolo-el-mazmorrero@0.1.0 test
+> node --test tests/*.test.js
+
+✔ every shipped art asset is a PNG with usable dimensions (53.645833ms)
+✔ art loader waits for every required asset and reports complete progress (2.737083ms)
+✔ art loader rejects a missing enemy instead of silently rendering it invisible (0.649541ms)
+✔ every original has a delivery WebP asset (15.742292ms)
+✔ late image completions cannot overwrite the loading error message (27.306791ms)
+✔ all 31 manifest effects are mapped to real PCM WAVs and all six music files exist (53.020583ms)
+✔ audio is opt-in, decodes supplied effects once, and never replays stale loading cues (3.089458ms)
+✔ each screen selects its supplied music and music/effect sliders control separate buses (2.229583ms)
+✔ pause, background, mute and scene changes stop active effects and preserve music pause position (0.898708ms)
+✔ impact overlap is capped, danger can interrupt weaker voices, and swing/hit variants rotate (0.941291ms)
+✔ event batches sequence floor entry, select terminal-only cues and cancel pending work on pause (0.773791ms)
+✔ failed media play is reported, and stale rejection cannot overwrite a newer scene (5.41975ms)
+✔ failed SFX fetches do not block gameplay or replay late sounds after muting (0.920834ms)
+✔ delayed floor and victory music never leak into another scene or after mute/background (0.558666ms)
+✔ a finished victory track stays finished until another scene or an explicit restart (0.375334ms)
+✔ accepted attacks emit swing plus the actual impact outcome; cooldown input is silent (4.067292ms)
+✔ shield, generator destruction and recovery hits have distinct outcomes (0.500333ms)
+✔ terminal cues replace ordinary damage/death and floor entry is explicit (0.377125ms)
+✔ boss entry, butcher windup, charge and recovery sound once per transition (1.962084ms)
+✔ spore volleys share warning and activation cues without per-frame or per-projectile spam (1.447791ms)
+✔ host phase change and two-beam volley have one cue each; casters emit cast cues (1.681375ms)
+✔ a new run starts with full health and a floor announcement (1.126917ms)
+✔ input vectors are normalized and arena bounds contain the player (2.43225ms)
+✔ pause freezes every gameplay clock and health (0.298708ms)
+✔ attack auto-aims, respects range and awards one kill (0.721541ms)
+✔ holding attack respects its cooldown (0.311834ms)
+✔ dash avoids damage and cannot be retriggered before recharge (0.3675ms)
+✔ damage grants invulnerability and transitions to death only once (0.607375ms)
+✔ a floor has two waves, a warning and a boss (1.881792ms)
+✔ the butcher locks his charge and exposes a recovery window (3.628334ms)
+✔ the spore boss fires projectiles and telegraphs poison pools (1.527458ms)
+✔ a shielded host takes no damage until generators are destroyed (0.686333ms)
+✔ host restores generators once at half health (0.174833ms)
+✔ a vulnerable boss takes increased damage (0.091458ms)
+✔ floor victory opens upgrades and rejects invalid choices (0.135625ms)
+✔ all three floors can progress through to the final victory (3.287542ms)
+✔ retry preserves advantages but resets score and kills to the checkpoint (0.172709ms)
+✔ checkpoints reject corrupt, unsupported and inconsistent data (0.193167ms)
+✔ resume restores a checkpoint at the beginning of its floor (0.2055ms)
+✔ healing pickups cannot exceed maximum health (0.156208ms)
+✔ expired hazards cannot damage the player (0.076584ms)
+✔ time formatting is stable across minute boundaries (0.08075ms)
+✔ local server delivers real WAV and Unicode/spaced MP3 assets with correct MIME (64.370833ms)
+✔ media supports bounded, open and suffix ranges, rejects unsatisfiable ranges and handles HEAD (22.760375ms)
+✔ asset serving does not expose project documents, traversal, malformed paths or symlink targets (8.866208ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 45
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 375.170375
+
+> manolo-el-mazmorrero@0.1.0 check
+> node --check src/game.js && node --check src/render.js && node --check src/main.js && node --check server.mjs && node --check src/audio.js && node --check src/audio-config.js
+

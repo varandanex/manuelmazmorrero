@@ -1,0 +1,10 @@
+node_modules/
+.DS_Store
+output/
+.playwright-mcp/
+.codebase-memory/
+.env
+.env.*
+!.env.example
+*.log
+coverage/
