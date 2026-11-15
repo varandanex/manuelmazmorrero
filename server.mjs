@@ -8,7 +8,7 @@ import { createLeaderboard, handleLeaderboard } from './server/leaderboard.mjs';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 const port = Number(process.env.PORT || 4173);
-const mime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.png': 'image/png', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.ico': 'image/x-icon', '.ttf': 'font/ttf', '.wav': 'audio/wav', '.mp3': 'audio/mpeg', '.json': 'application/json', '.zip': 'application/zip' };
+const mime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.ico': 'image/x-icon', '.ttf': 'font/ttf', '.wav': 'audio/wav', '.mp3': 'audio/mpeg', '.json': 'application/json', '.zip': 'application/zip' };
 
 export function createStaticServer({ leaderboardFile = process.env.LEADERBOARD_FILE || path.join(root, 'data/leaderboard.json') } = {}) {
 const leaderboard = createLeaderboard(leaderboardFile);
@@ -20,7 +20,7 @@ return http.createServer(async (req, res) => {
     const relative = pathname === '/' ? 'index.html' : pathname.slice(1);
     const archiveFile = relative === 'assets/downloads/manolo-fichas-personajes.zip';
     const audioFile = /^assets\/audio\/(?:sfx\/[a-z0-9_]+\.(?:wav|json)|[\p{L}\p{N} _-]+\.mp3)$/u.test(relative);
-    if (!archiveFile && !audioFile && !['index.html', 'style.css', 'src/character-cards.css'].includes(relative) && !/^(src|assets)\/[\w/-]+\.(js|png|svg|webp|ico|ttf)$/.test(relative)) {
+    if (!archiveFile && !audioFile && !['index.html', 'style.css', 'src/character-cards.css', 'src/victory-reward.css'].includes(relative) && !/^(src|assets)\/[\w/-]+\.(js|png|jpg|jpeg|svg|webp|ico|ttf)$/.test(relative)) {
       res.writeHead(404); res.end('Not found'); return;
     }
     const file = path.resolve(root, relative);

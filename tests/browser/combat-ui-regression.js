@@ -39,7 +39,8 @@
   check('help entered from pause can return to play', q.state.mode === 'playing' && q.state.modal === '');
   for (const kind of ['upgrade', 'dead', 'won']) {
     q.start(); q.result(kind);
-    check(`${kind}: narrative remains in the result screen`, $('modal').open && $('modal-copy').textContent.length > 20);
+    const narrative = kind === 'won' ? document.querySelector('.victory-reward')?.alt : $('modal-copy').textContent;
+    check(`${kind}: narrative remains in the result screen`, $('modal').open && narrative?.length > 20);
     check(`${kind}: accidental input guard remains enabled`, $('modal-actions').inert);
   }
   q.menu();

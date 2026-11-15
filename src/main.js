@@ -342,11 +342,24 @@ function addResults() {
 
 function showVictory() {
   clearSave();
-  setModal('won', 'LOGRO DESBLOQUEADO · LEYENDA DE LA MAZMORRA', 'Feliz cumpleaños, mazmorrero.', `Cinco pisos. Cinco jefes. Cero respeto por el reglamento.
-«Has sobrevivido, Manolo. Ahora intenta sobrevivir a otro año.»`);
+  setModal('won', '', '¡Bono de fidelización del mazmorrero!', '');
+  const reward = document.createElement('a'); reward.className = 'victory-reward-link';
+  reward.href = '/assets/rewards/playstation-voucher.jpeg'; reward.target = '_blank'; reward.rel = 'noopener';
+  reward.title = 'Abrir el bono a tamaño completo en otra pestaña';
+  const image = document.createElement('img'); image.className = 'victory-reward';
+  image.src = reward.href; image.width = 992; image.height = 1072;
+  image.alt = `NOTIFICACIÓN DEL SISTEMA. ¡BONO DE FIDELIZACIÓN DEL MAZMORRERO!
+Hemos detectado que tu ansia de vicio dentro de la mazmorra está a niveles críticos.
+Para que te entregues al entretenimiento más desenfrenado (y juegues en paños menores, como más nos gusta), el sistema aprueba esta jugosa inversión.
+OBJETO: Bono de fidelización.
+RECOMPENSA: +100 € en créditos de PlayStation Store.
+EFECTO: Garantiza infinitas horas de vicio, desconexión... ¡y por fin unas pelucas para el Helldivers!
+ADVERTENCIA: Puede causar sudoración extrema, pérdida de la noción del tiempo y un deseo incontrolable de no soltar el mando ni para... bueno, tú ya sabes.
+¡Y AHORA VUELVE AL COMBATE, PEDAZO DE CARNE! — ¡EL SHOW DEBE CONTINUAR! —`;
+  reward.append(image); $('modal-content').append(reward);
   addResults();
   addLeaderboard($('modal-content'), game.score);
-  const note = document.createElement('p'); note.className = 'quiet-note'; note.textContent = `Criaturas derrotadas: ${game.kills} · Reintentos: ${game.deaths}. La organización niega toda responsabilidad.`; $('modal-content').append(note);
+  const note = document.createElement('p'); note.className = 'quiet-note'; note.textContent = `Criaturas derrotadas: ${game.kills} · Reintentos: ${game.deaths}.`; $('modal-content').append(note);
   modalButton('Otra ronda de malas decisiones', () => start(), false, false);
   modalButton('Volver al menú', backToMenu, true);
 }

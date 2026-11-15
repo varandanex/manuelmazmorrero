@@ -28,7 +28,8 @@
     } else {
       check('only the fifth boss completes the game', q.state.modal === 'won');
       check('victory clears the checkpoint', checkpoint() === null);
-      check('victory copy names five floors and five bosses', document.getElementById('modal-copy').textContent.includes('Cinco pisos. Cinco jefes.'));
+      check('defeating the final boss retains the victory music', q.state.audio.scene === 'won');
+      check('victory reveals the original reward poster', document.querySelector('.victory-reward')?.getAttribute('src').endsWith('/assets/rewards/playstation-voucher.jpeg'));
     }
   }
   q.menu();

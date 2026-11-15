@@ -4,6 +4,23 @@ import { once } from 'node:events';
 import { createStaticServer } from '../server.mjs';
 async function serve(t) { const server = createStaticServer(); server.listen(0, '127.0.0.1'); await once(server, 'listening'); t.after(() => new Promise(resolve => server.close(resolve))); return `http://127.0.0.1:${server.address().port}`; }
 
+test('victory voucher is delivered as the unmodified original JPEG', async t => {
+  const { readFile } = await import('node:fs/promises');
+  const { createHash } = await import('node:crypto');
+  const original = await readFile(new URL('../assets/rewards/playstation-voucher.jpeg', import.meta.url));
+  const base = await serve(t);
+  const response = await fetch(`${base}/assets/rewards/playstation-voucher.jpeg`);
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get('content-type'), 'image/jpeg');
+  assert.deepEqual(Buffer.from(await response.arrayBuffer()), original);
+  const stylesheet = await fetch(`${base}/src/victory-reward.css`);
+  assert.equal(stylesheet.status, 200);
+  assert.equal(stylesheet.headers.get('content-type'), 'text/css; charset=utf-8');
+  const page = await (await fetch(base)).text();
+  assert.match(page, /href="\/src\/victory-reward\.css"/);
+  assert.equal(createHash('sha256').update(original).digest('hex'), '9847b13b083cc997d4f6f899c964531163595dd7035a2fd9fb44979ad86d1971');
+});
+
 test('local server delivers real WAV and Unicode/spaced MP3 assets with correct MIME', async t => {
   const base = await serve(t);
   for (const [file, mime] of [['sfx/dash.wav', 'audio/wav'], ['毒花迷宫.mp3', 'audio/mpeg'], ['Welcome to the Dungeon.mp3', 'audio/mpeg']]) {
